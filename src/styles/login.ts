@@ -1,4 +1,5 @@
 import styled from "@emotion/styled"
+import { Link } from "react-router-dom"
 
 export const LoginForm = styled.div`
   display: flex;
@@ -6,18 +7,6 @@ export const LoginForm = styled.div`
   align-items: center;
   width: 400px;
   border-bottom: 1px solid black;
-`
-
-export const InputField = styled.input`
-  height: 40px;
-  border-radius: 10px;
-  border: 1.5px solid #646464;
-  font-size: 16px;
-  padding-left: 10px;
-
-  :focus {
-    outline: none;
-  }
 `
 
 export const FieldContainer = styled.div`
@@ -72,10 +61,12 @@ export const Signup = styled.div`
   width: 400px;
 `
 
-export const SignupButton = styled.button`
+export const SignupButton = styled(Link)`
+  display: flex;
+  justify-content: center;
   width: 100%;
   height: 50px;
-  text-align: center;
+  align-items: center;
   background-color: #96d3ff;
   font-size: 20px;
   font-weight: 700;

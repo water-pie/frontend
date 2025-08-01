@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import Input from "components/Input/Input";
+import { useEffect, useState } from "react";
 import * as S from 'styles/login';
 
 export default function Login() {
@@ -27,14 +28,14 @@ export default function Login() {
       <S.LoginForm>
         <h2>서비스 로그인</h2>
         <S.FieldContainer>
-          <S.InputField
+          <Input
             type="email"
             name="email"
             placeholder="이메일을 입력해주세요."
             value={form.email}
             onChange={handleChange}
           />
-          <S.InputField
+          <Input
             type="text"
             name="pw"
             placeholder="비밀번호를 입력해주세요."
@@ -64,10 +65,10 @@ export default function Login() {
           <h3>저희 서비스를 체험해보세요!</h3>
           <p>다양한 체험단 모집 공고가 있습니다!</p>
         </S.Description>
-        <S.SignupButton>
+        <S.SignupButton to="/signup">
           회원가입
         </S.SignupButton>
       </S.Signup>
     </>
   )
-}
+};
