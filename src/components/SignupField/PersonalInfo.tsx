@@ -50,7 +50,7 @@ export const PersonalInfo = ({ extra }: Props) => {
           value={form.email}
           onChange={handleChange}
         />
-        <SendCodeButton type="button" onClick={handleSendCode}>인증</SendCodeButton>
+        <SendCodeButton onClick={handleSendCode}>인증</SendCodeButton>
       </InputContainer>
 
       {emailSent && (
@@ -62,7 +62,7 @@ export const PersonalInfo = ({ extra }: Props) => {
             value={form.code}
             onChange={handleChange}
           />
-          <SendCodeButton type="button">확인</SendCodeButton>
+          <SendCodeButton>확인</SendCodeButton>
         </InputContainer>
       )}
 

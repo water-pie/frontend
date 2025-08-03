@@ -31,6 +31,7 @@ export const Platform = () => {
       {InputFields.map((field) => {
         return (
           <Input
+            key={field.name}
             name={field.name}
             type="text"
             placeholder={field.placeholder}

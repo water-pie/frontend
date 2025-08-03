@@ -1,4 +1,4 @@
-import { Input } from "../Input/Input";
+import { Input, SendInput } from "../Input/Input";
 import { useState } from "react";
 import styled from "@emotion/styled";
 
@@ -18,81 +18,56 @@ const Business = () => {
   };
 
   return (
-    <BusinessContainer>
-      <Title>사업자 등록증</Title>
-      <InputWrapper>
-        <Input
+    <>
+      <Input
+        type="text"
+        name="registrationNumber"
+        placeholder="사업자 등록증 번호를 입력해주세요."
+        value={businessInfo.registrationNumber}
+        onChange={handleChange}
+      />
+      <InputContanier>
+        <SendInput
           type="text"
-          name="registrationNumber"
-          placeholder="사업자 등록증 번호를 입력해주세요."
-          value={businessInfo.registrationNumber}
+          name="address"
+          placeholder="주소를 입력하세요."
+          value={businessInfo.address}
           onChange={handleChange}
         />
-      </InputWrapper>
-      <AddressWrapper>
-        <FlexInputWrapper>
-            <Input
-              type="text"
-              name="address"
-              placeholder="주소를 입력하세요"
-              value={businessInfo.address}
-              onChange={handleChange}
-            />
-        </FlexInputWrapper>
         <SearchButton>찾기</SearchButton>
-      </AddressWrapper>
-      <InputWrapper>
-        <Input
-          type="text"
-          name="detailedAddress"
-          placeholder="상세 주소를 입력해주세요."
-          value={businessInfo.detailedAddress}
-          onChange={handleChange}
-        />
-      </InputWrapper>
-    </BusinessContainer>
+      </InputContanier>
+      <Input
+        type="text"
+        name="detailedAddress"
+        placeholder="상세 주소를 입력해주세요."
+        value={businessInfo.detailedAddress}
+        onChange={handleChange}
+      />
+    </>
   );
 };
 
 export default Business;
 
-const BusinessContainer = styled.div`
+
+const InputContanier = styled.div`
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 400px;
+  gap: 8px;
 `;
 
-const Title = styled.h2`
-  font-size: 24px;
-  font-weight: bold;
-  margin: 0 0 20px 0;
-`;
-
-const InputWrapper = styled.div`
-    input {
-        width: 100%;
-        box-sizing: border-box;
-    }
-`;
-
-const FlexInputWrapper = styled(InputWrapper)`
-    flex-grow: 1;
-`;
-
-const AddressWrapper = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
-`;
-
-const SearchButton = styled.button`
-  width: 80px;
-  height: 44px;
+export const SearchButton = styled.button`
+  word-break: keep-all;
+  font-size: 18px;
+  font-weight: 600;
+  background-color: #96d3ff;
+  color: white;
   border-radius: 10px;
-  border: 1.5px solid #646464;
-  background-color: #d9d9d9;
-  font-size: 16px;
+  border: none;
+  padding: 0px 20px;
   cursor: pointer;
-  flex-shrink: 0;
-`;
+
+  :hover {
+    background-color: #68C0FF;
+  }
+`

@@ -36,7 +36,7 @@ export default function Login() {
             onChange={handleChange}
           />
           <Input
-            type="text"
+            type="password"
             name="pw"
             placeholder="비밀번호를 입력해주세요."
             value={form.pw}

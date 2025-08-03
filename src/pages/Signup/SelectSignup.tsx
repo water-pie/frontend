@@ -10,19 +10,19 @@ export default function SelectSignup() {
       <S.SignupBox>
         <S.SignupTypeBox to="/signup/influence">
           <S.ImgBox color="#FF7F00">
-            <img src="src/assets/influence.png" alt="인플루언서" />
+            <img src="/influence.png" alt="인플루언서" />
           </S.ImgBox>
           <span>인플루언서</span>
         </S.SignupTypeBox>
         <S.SignupTypeBox to="/signup/brand">
           <S.ImgBox color="#00932F">
-            <img src="src/assets/brand.png" alt="브랜드 담당자" />
+            <img src="/brand.png" alt="브랜드 담당자" />
           </S.ImgBox>
           <span>브랜드 담당자</span>
         </S.SignupTypeBox>
         <S.SignupTypeBox to="/signup/marketing">
           <S.ImgBox color="#0077FF">
-            <img src="src/assets/marketing.png" alt="마케팅 대행사" />
+            <img src="/marketing.png" alt="마케팅 대행사" />
           </S.ImgBox>
           <span>마케팅 대행사</span>
         </S.SignupTypeBox>

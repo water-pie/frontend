@@ -16,7 +16,7 @@ export const LeftHeader = styled.div`
   align-items: center;
 `
 
-export const Logo = styled.div`
+export const Logo = styled(Link)`
   font-size: 24px;
   font-weight: bold;
   color: #007bff;

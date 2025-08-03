@@ -4,9 +4,9 @@ export const Header = () => {
   return (
     <S.HeaderContainer>
       <S.LeftHeader>
-        <S.Logo>WaterPie</S.Logo>
+        <S.Logo to="/">WaterPie</S.Logo>
         <S.SearchBar>
-          <img src="src/assets/search.png" />
+          <img src="/search.png" />
           <S.SearchInput type="text" placeholder="원하는 체험단을 검색하세요!" />
         </S.SearchBar>
       </S.LeftHeader>
