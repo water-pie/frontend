@@ -1,13 +1,15 @@
 import ProductCard from "components/Campaign/CampaignCard";
 import * as S from "styles/main";
 import { campaigns } from "mocks/campaign";
+import Categories from "components/Category/Categories";
 
-export default function Main() {
+export default function Promotion() {
   return (
     <>
       <S.TitleBox>
-        <h2>인기 체험단</h2>
+        <h2>기자단 모집</h2>
       </S.TitleBox>
+      <Categories />
       <S.CampaignGrid>
         {campaigns.map((campaign, index) => (
           <ProductCard
@@ -24,5 +26,5 @@ export default function Main() {
         ))}
       </S.CampaignGrid>
     </>
-  );
-};
+  )
+}

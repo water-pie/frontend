@@ -39,19 +39,18 @@ export const LoginButton = styled.button<{ isFull: boolean }>`
   border-radius: 10px;
   margin-bottom: 35px;
   color: white;
+  background-color: ${({ isFull }) => isFull ? `#96d3ff` : `#AEAEAE`}
 
   ${({ isFull }) =>
-    isFull
-      ? `
-        background-color: #96d3ff;
-        &:hover {
-          background-color: #68C0FF;
-        }
-        cursor: pointer;
-      `
-      : `
-        background-color: #AEAEAE;
-      `}
+    isFull && 
+    `
+      background-color: #96d3ff;
+      &:hover {
+        background-color: #68C0FF;
+      }
+      cursor: pointer;
+    `
+  }
 `
 
 export const Signup = styled.div`

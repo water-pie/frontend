@@ -53,13 +53,16 @@ export const NavList = styled.div`
   align-items: center;
 `;
 
-export const Nav = styled(Link)`
+export const Nav = styled(Link)<{ selected: boolean }>`
   border-left: 1px solid #565656;
   padding: 0px 25px;
+  cursor: pointer;
+  color: ${({ selected }) => selected ? `#96D3FF` : `#565656`};
+  font-weight: ${({ selected }) => selected ? "700" : "500"};
 
   &:last-child {
     border-right: 1px solid #565656;
-  }
+  };
 `
 
 export const AuthButton = styled(Link)`

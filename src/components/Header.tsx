@@ -1,6 +1,9 @@
+import { useLocation } from "react-router-dom";
 import * as S from "styles/header";
 
 export const Header = () => {
+  const { pathname } = useLocation();
+
   return (
     <S.HeaderContainer>
       <S.LeftHeader>
@@ -12,10 +15,10 @@ export const Header = () => {
       </S.LeftHeader>
       <S.RightHeader>
         <S.NavList>
-          <S.Nav to="/">제품</S.Nav>
-          <S.Nav to="/">지역</S.Nav>
-          <S.Nav to="/">기자단</S.Nav>
-          <S.Nav to="/">공지/이벤트</S.Nav>
+          <S.Nav to="/product" selected={pathname === "/product"}>제품</S.Nav>
+          <S.Nav to="/location" selected={pathname === "/location"}>지역</S.Nav>
+          <S.Nav to="/promotion" selected={pathname === "/promotion"}>기자단</S.Nav>
+          <S.Nav to="/notices" selected={pathname === "/notices"}>공지/이벤트</S.Nav>
         </S.NavList>
         <S.AuthButton to="/login">로그인</S.AuthButton>
       </S.RightHeader>
