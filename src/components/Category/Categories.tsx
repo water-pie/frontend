@@ -74,7 +74,7 @@ const Container = styled.div`
 const CategoryBox = styled.div`
   display: flex;
   gap: 10px;
-  border-bottom: 1px solid #888;
+  border-bottom: 1px solid #ddd;
 `;
 
 const TextBox = styled.div<{ selected: boolean }>`
