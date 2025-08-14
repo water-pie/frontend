@@ -1,7 +1,8 @@
 export const campaigns = [
   {
-    image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "[충북] 에어 매트리스 체험 메트리스 체험 메트리스 체험",
+    image: "/card/card5.png",
+    title: "[충북] 컵빙수가 맛있는 동네 카페",
+    description: "컵빙수 무료 제공",
     status: 20,
     limitPerson: 3,
     remainingDays: 5,
@@ -10,18 +11,20 @@ export const campaigns = [
     type: "/blog.png"
   },
   {
-    image: "https://images.unsplash.com/photo-1599481238640-4c1288750d7a?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "[서울] 강아지 자동 장난감",
+    image: "/card/card1.png",
+    title: "[대전] 푹신한 에어 메트리스",
+    description: "에어 메트리스 제공",
     status: 12,
     limitPerson: 3,
-    remainingDays: 12,
+    remainingDays: 4,
     point: 30000,
     condition: "인스타그램 릴스 2회 생성",
     type: "/insta.png"
   },
   {
-    image: "https://images.unsplash.com/photo-1543512214-318c7553f230?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "[경기] 블루투스 스피커",
+    image: "/card/card2.png",
+    title: "[경기] 맛있는 텐동 음식 시식",
+    description: "텐동 무료 제공",
     status: 3,
     limitPerson: 3,
     remainingDays: 0,
@@ -30,8 +33,9 @@ export const campaigns = [
     type: "/tiktok.png"
   },
   {
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "[대전] 게이밍 마우스",
+    image: "/card/card3.png",
+    title: "[대천] 대천 해수욕장 노을",
+    description: "해수욕장 이용 + 노을 구경",
     status: 2,
     limitPerson: 3,
     remainingDays: 2,
@@ -39,9 +43,10 @@ export const campaigns = [
     condition: "실사용 영상 2회 게시",
     type: "/youtube.png"
   },
-  {
-    image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "[충북] 에어 매트리스 체험 메트리스 체험 메트리스 체험",
+    {
+    image: "/card/card5.png",
+    title: "[충북] 컵빙수가 맛있는 동네 카페",
+    description: "컵빙수 무료 제공",
     status: 20,
     limitPerson: 3,
     remainingDays: 5,
@@ -50,18 +55,20 @@ export const campaigns = [
     type: "/blog.png"
   },
   {
-    image: "https://images.unsplash.com/photo-1599481238640-4c1288750d7a?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "[서울] 강아지 자동 장난감",
+    image: "/card/card1.png",
+    title: "[대전] 푹신한 에어 메트리스",
+    description: "에어 메트리스 제공",
     status: 12,
     limitPerson: 3,
-    remainingDays: 12,
+    remainingDays: 4,
     point: 30000,
     condition: "인스타그램 릴스 2회 생성",
     type: "/insta.png"
   },
   {
-    image: "https://images.unsplash.com/photo-1543512214-318c7553f230?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "[경기] 블루투스 스피커",
+    image: "/card/card2.png",
+    title: "[경기] 맛있는 텐동 음식 시식",
+    description: "텐동 무료 제공",
     status: 3,
     limitPerson: 3,
     remainingDays: 0,
@@ -70,8 +77,9 @@ export const campaigns = [
     type: "/tiktok.png"
   },
   {
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "[대전] 게이밍 마우스",
+    image: "/card/card3.png",
+    title: "[대천] 대천 해수욕장 노을",
+    description: "해수욕장 이용 + 노을 구경",
     status: 2,
     limitPerson: 3,
     remainingDays: 2,

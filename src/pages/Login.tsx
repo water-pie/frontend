@@ -42,20 +42,22 @@ export default function Login() {
             value={form.pw}
             onChange={handleChange}
           />
-          <span>비밀번호 찾기</span>
         </S.FieldContainer>
-        <S.AutoLogin>
-          <input
-            type="checkbox"
-            name="autoLogin"
-            checked={form.autoLogin}
-            onChange={() => setForm((prev) => ({
-              ...prev,
-              autoLogin: !form.autoLogin
-            }))}
-          />
-          <span>자동 로그인</span>
-        </S.AutoLogin>
+        <S.Detail>
+          <S.AutoLogin>
+            <input
+              type="checkbox"
+              name="autoLogin"
+              checked={form.autoLogin}
+              onChange={() => setForm((prev) => ({
+                ...prev,
+                autoLogin: !form.autoLogin
+              }))}
+            />
+            <span>자동 로그인</span>
+          </S.AutoLogin>
+          <S.Pw>비밀번호 찾기</S.Pw>
+        </S.Detail>
         <S.LoginButton isFull={isFull} onClick={() => {console.log(form)}}>
           로그인
         </S.LoginButton>

@@ -5,7 +5,11 @@ const list = ["전체", "생활", "서비스", "유아", "식품", "디지털"];
 const filter = ["블로그", "유튜브", "틱톡", "인스타그램"];
 type Category = "전체" | "생활" | "서비스" | "유아" | "식품" | "디지털";
 
-export const Categories = () => {
+interface Props {
+  onList?: boolean
+}
+
+export const Categories = ({ onList = true }: Props) => {
   const [listSelected, setListSelected] = useState<Category>("전체");
   const [filterSelected, setFilterSelected] = useState<string[]>([]);
 
@@ -20,7 +24,7 @@ export const Categories = () => {
   return (
     <Container>
       <CategoryBox>
-        {list.map(ele => {
+        {onList && (list.map(ele => {
           return (
             <TextBox
               key={ele}
@@ -32,7 +36,7 @@ export const Categories = () => {
               </span>
             </TextBox>
           )
-        })}
+        }))}
       </CategoryBox>
       <FilterBox>
         <SelectBox name="sorting">
@@ -70,7 +74,7 @@ const Container = styled.div`
 const CategoryBox = styled.div`
   display: flex;
   gap: 10px;
-  border-bottom: 2px solid #AEAEAE;
+  border-bottom: 1px solid #888;
 `;
 
 const TextBox = styled.div<{ selected: boolean }>`
@@ -81,32 +85,32 @@ const TextBox = styled.div<{ selected: boolean }>`
   span {
     font-size: 16px;
     font-weight: ${({ selected }) => selected ? "700" : "500"};
-    color: ${({ selected }) => selected ? "#96d3ff" : "#656565"};
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background-color: ${({ selected }) => selected ? "#96d3ff" : "transparent"};
-    transition: background-color 0.2s ease, height 0.2s ease;
+    color: ${({ selected }) => selected ? "#96d3ff" : "#272727"};
   }
 `;
 
 const SelectBox = styled.select`
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  &::-ms-expand {
+    display: none; /* IE/Edge */
+  }
+
+  display: inline-block;
   border-radius: 10px;
   font-size: 16px;
   font-weight: 500;
-  color: #656565;
-  padding: 5px 10px;
+  color: #888888;
+  border: 1px solid #888888;
   cursor: pointer;
-  border: 1px solid #656565;
-  background-color: white;
-`;
+  padding: 8px 8px 8px 30px;
 
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'><path fill='%23888888' d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: 6px center;
+  background-size: 20px;
+`;
 
 const FilterBox = styled.div`
   display: flex;
@@ -119,8 +123,8 @@ const FilterTextBox = styled.div<{ selected: boolean }>`
   border-radius: 10px;
   font-size: 16px;
   font-weight: ${({ selected }) => selected ? "700" : "500"};
-  border: 1px solid ${({ selected }) => selected ? "#96d3ff" : "#656565"};
-  color: ${({ selected }) => selected ? "#96d3ff" : "#656565"};
+  border: 1px solid ${({ selected }) => selected ? "#96d3ff" : "#888888"};
+  color: ${({ selected }) => selected ? "#96d3ff" : "#888888"};
   padding: 5px 10px;
   cursor: pointer;
 `

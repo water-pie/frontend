@@ -24,16 +24,23 @@ export const Logo = styled(Link)`
 
 export const SearchBar = styled.div`
   display: flex;
-  border: 1px solid black;
-  border-radius: 10px;
-  padding: 10px 20px;
+  align-items: center;
+  border-bottom: 1px solid #888;
+  padding: 10px 30px 10px 10px;
+  gap: 16px;
+
+  img {
+    width: 18px;
+    height: 18px;
+  }
 `;
 
 export const SearchInput = styled.input`
   border: none;
   outline: none;
-  font-size: 18px;
+  font-size: 16px;
   color: #333;
+  width: 200px;
 
   &::placeholder {
     color: gray;
@@ -54,15 +61,10 @@ export const NavList = styled.div`
 `;
 
 export const Nav = styled(Link)<{ selected: boolean }>`
-  border-left: 1px solid #565656;
   padding: 0px 25px;
   cursor: pointer;
-  color: ${({ selected }) => selected ? `#96D3FF` : `#565656`};
+  color: ${({ selected }) => selected ? `#96D3FF` : `#272727`};
   font-weight: ${({ selected }) => selected ? "700" : "500"};
-
-  &:last-child {
-    border-right: 1px solid #565656;
-  };
 `
 
 export const AuthButton = styled(Link)`
@@ -72,8 +74,8 @@ export const AuthButton = styled(Link)`
   background-color: #96D3FF;
   border: none;
   padding: 10px 20px;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
   cursor: pointer;
 
   :hover {

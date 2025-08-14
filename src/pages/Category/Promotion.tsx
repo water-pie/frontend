@@ -9,18 +9,17 @@ export default function Promotion() {
       <S.TitleBox>
         <h2>기자단 모집</h2>
       </S.TitleBox>
-      <Categories />
+      <Categories onList={false}/>
       <S.CampaignGrid>
         {campaigns.map((campaign, index) => (
           <ProductCard
             key={index}
             image={campaign.image}
             title={campaign.title}
+            description={campaign.description}
             status={campaign.status}
             limit={campaign.limitPerson}
             remainingDays={campaign.remainingDays}
-            point={campaign.point}
-            condition={campaign.condition}
             type={campaign.type}
           />
         ))}

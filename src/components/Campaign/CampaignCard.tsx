@@ -3,46 +3,33 @@ import * as S from "styles/campaign"
 interface Props {
   image: string,
   title: string,
+  description: string;
   status: number,
   limit: number,
   remainingDays: number,
-  point: number,
   type: string,
-  condition: string
 }
 
 const ProductCard = ({
-  image, title, status, limit, remainingDays, point, type, condition
+  image, title, description, limit, remainingDays, type, status
 }: Props) => {
   return (
     <S.Card>
-      <S.ImageCard>
-        <S.Image src={image} alt={title} />
-        <S.StatusRow>
-          <span>신청 {(remainingDays !== 0) ? <S.StatusGreen>{status}</S.StatusGreen> : <span>{status}</span>} / {limit}</span>
-          {remainingDays !== 0 ? (
-            <span>
-              <S.StatusGreen>{remainingDays}</S.StatusGreen>일 남음
-            </span>
-          ) : (
-            <span>마감</span>
-          )}
-        </S.StatusRow>
-      </S.ImageCard>
+      <S.Image src={image} alt={title} />
       <S.Content>
-        <S.Title>{title}</S.Title>
+        <S.Top>
+          <img src={type} alt={title} />
+          <S.Limit>{remainingDays}일 남음</S.Limit>
+        </S.Top>
         <S.DescriptionBox>
-          <S.Description>
-            에어 매트리스 제공 및 실사용 가능
-          </S.Description>
-          <S.Condition>
-            <S.Type>
-              <img src={type} alt={"로고"}/>
-              {condition}
-            </S.Type>
-            <S.Point>{point.toLocaleString()}P</S.Point>
-          </S.Condition>
+          <S.Title>{title}</S.Title>
+          <S.Description>{description}</S.Description>
         </S.DescriptionBox>
+        <S.Status>
+          <span>신청 {status}명</span>
+          <S.LimitStatus>/</S.LimitStatus>
+          <S.LimitStatus>모집 {limit}명</S.LimitStatus>
+        </S.Status>
       </S.Content>
     </S.Card>
   );

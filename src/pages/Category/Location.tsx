@@ -27,11 +27,10 @@ export default function Location() {
             key={index}
             image={campaign.image}
             title={campaign.title}
+            description={campaign.description}
             status={campaign.status}
             limit={campaign.limitPerson}
             remainingDays={campaign.remainingDays}
-            point={campaign.point}
-            condition={campaign.condition}
             type={campaign.type}
           />
         ))}

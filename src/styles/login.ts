@@ -6,20 +6,30 @@ export const LoginForm = styled.div`
   flex-direction: column;
   align-items: center;
   width: 400px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #272727;
+  gap: 10px;
 `
 
 export const FieldContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  text-align: end;
+  gap: 16px;
+`
 
-  span {
-    font-size: 12px;
-    cursor: pointer;
-  }
+export const Detail = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1px;
+  margin-top: 20px;
+`
+
+export const Pw = styled.div`
+  display: flex;
+  width: 100%;
+  font-size: 12px;
+  justify-content: end;
 `
 
 export const AutoLogin = styled.div`
@@ -27,28 +37,29 @@ export const AutoLogin = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
+  font-size: 12px;
 `
 
 export const LoginButton = styled.button<{ isFull: boolean }>`
   width: 100%;
   height: 50px;
-  margin-top: 20px;
   font-size: 20px;
   font-weight: 700;
   border: none;
   border-radius: 10px;
   margin-bottom: 35px;
   color: white;
-  background-color: ${({ isFull }) => isFull ? `#96d3ff` : `#AEAEAE`}
 
   ${({ isFull }) =>
-    isFull && 
+    isFull ? 
     `
       background-color: #96d3ff;
       &:hover {
         background-color: #68C0FF;
       }
       cursor: pointer;
+    ` : `
+      background-color: #AEAEAE
     `
   }
 `

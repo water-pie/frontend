@@ -28,18 +28,18 @@ export const LocationFilter = ({ onClose }: Props) => {
     <ModalOverlay ref={backgroundRef} onClick={handleClick}>
       <ModalContent>
         <Header>
-          <SelectedRegion>
-            {selectedRegion} {selectedDistrict && `> ${selectedDistrict}`}
-          </SelectedRegion>
-          <CloseIcon
-            onClick={() => {
-              setSelectedRegion('');
-              setSelectedDistrict('');
-              onClose();
-            }}
-          >
-            ×
-          </CloseIcon>
+            <SelectedRegion>
+              {selectedRegion} {selectedDistrict && `> ${selectedDistrict}`}
+            </SelectedRegion>
+            <CloseIcon
+              onClick={() => {
+                setSelectedRegion('');
+                setSelectedDistrict('');
+                onClose();
+              }}
+            >
+              ×
+            </CloseIcon>
         </Header>
 
         <ButtonGrid>
@@ -98,12 +98,12 @@ const ModalContent = styled.div`
 `;
 
 const Header = styled.div`
+  padding: 16px 20px 10px 20px;
   display: flex;
-  justify-content: space-between; /* 좌측 타이틀, 우측 닫기 버튼 */
+  justify-content: space-between;
+  border-bottom: 1px solid #f0f0f0;
   align-items: center;
-  padding: 16px 20px;
-  border-bottom: 0.5px solid #ccc;
-  background-color: #F3F3F3;
+  padding-bottom: 10px;
 `;
 
 const SelectedRegion = styled.div`
@@ -123,7 +123,7 @@ const ButtonGrid = styled.div<{ borderNone?: boolean }>`
   flex-wrap: wrap;
   gap: 10px;
   padding: 20px;
-  border-bottom: ${({ borderNone }) => (borderNone ? 'none' : '0.5px solid #ccc')};
+  border-bottom: ${({ borderNone }) => (borderNone ? 'none' : '1px solid #f0f0f0')};
 `;
 
 const RegionButton = styled.button<{ selected: boolean }>`
