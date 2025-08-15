@@ -24,8 +24,8 @@ export const Input = ({
 
 export const InputField = styled.input`
   height: 40px;
-  border-radius: 10px;
-  border: 1.5px solid #888;
+  border-radius: 5px;
+  border: 1px solid #888;
   font-size: 16px;
   padding-left: 10px;
   
@@ -37,8 +37,8 @@ export const InputField = styled.input`
 export const SendInput = styled.input`
   width: 100%;
   height: 40px;
-  border-radius: 10px;
-  border: 1.5px solid #888;
+  border-radius: 5px;
+  border: 1px solid #888;
   font-size: 16px;
   padding-left: 10px;
   

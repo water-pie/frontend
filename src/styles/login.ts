@@ -46,7 +46,7 @@ export const LoginButton = styled.button<{ isFull: boolean }>`
   font-size: 20px;
   font-weight: 700;
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   margin-bottom: 35px;
   color: white;
 
@@ -81,9 +81,10 @@ export const SignupButton = styled(Link)`
   font-size: 20px;
   font-weight: 700;
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   color: white;
   cursor: pointer;
+  margin-top: 20px;
 
   :hover {
     background-color: #68C0FF;
@@ -95,10 +96,12 @@ export const Description = styled.div`
   justify-content: start;
   gap: 2px;
   h3 {
-    font-size: 22px;
+    font-size: 20px;
     margin-bottom: 0;
   }
   p {
+    font-size: 14px;
     margin-top: 0;
+    color: #888;
   }
 `

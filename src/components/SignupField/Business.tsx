@@ -2,7 +2,7 @@ import { Input, SendInput } from "../Input/Input";
 import { useState } from "react";
 import styled from "@emotion/styled";
 
-const Business = () => {
+export const Business = () => {
   const [businessInfo, setBusinessInfo] = useState({
     registrationNumber: "",
     address: "",

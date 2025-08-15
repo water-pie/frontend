@@ -68,7 +68,7 @@ export const Nav = styled(Link)<{ selected: boolean }>`
 `
 
 export const AuthButton = styled(Link)`
-  border-radius: 10px;
+  border-radius: 5px;
   color: white;
   font-weight: 700;
   background-color: #96D3FF;

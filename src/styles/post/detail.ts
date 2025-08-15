@@ -4,7 +4,7 @@ export const RightContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding-top: 20px;
+  margin-top: 10px;
   width: 900px;
 `;
 

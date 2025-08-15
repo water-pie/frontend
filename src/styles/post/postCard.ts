@@ -8,7 +8,6 @@ export const Container = styled(Link)`
   border-radius: 5px;
   padding: 15px 40px;
   border: 1px solid #888;
-  width: 900px;
 `
 
 export const Title = styled.span`

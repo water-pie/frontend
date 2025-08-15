@@ -1,4 +1,4 @@
-import * as S from 'styles/signup';
+import * as S from 'styles/Signup/signup';
 
 export default function SelectSignup() {
   return (
