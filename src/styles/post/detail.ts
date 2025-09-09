@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { borderColor2 } from "../common";
 
 export const RightContent = styled.div`
   display: flex;
@@ -27,7 +28,7 @@ export const PostMeta = styled.div`
   display: flex;
   align-items: flex-end;
   font-size: 14px;
-  color: #888;
+  color: ${borderColor2};
   gap: 20px;
 `;
 

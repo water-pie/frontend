@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { borderColor1, borderColor2, buttonColor, textColor } from "../common";
 
 const DOT_SIZE = 20; // StepCircle 크기(px)
 const DOT_RADIUS = DOT_SIZE / 2;
@@ -25,7 +26,7 @@ export const StepItem = styled.div<{ active?: boolean; completed?: boolean }>`
     left: calc(50% + ${DOT_RADIUS}px); /* 현재 원의 중심에서 반지름만큼 오른쪽 */
     width: calc(100% - ${DOT_RADIUS * 2}px); /* 다음 원 중심까지 길이 맞춤 */
     height: 2px;
-    background-color: ${({ completed }) => (completed ? "#96d3ff" : "#f0f0f0")};
+    background-color: ${({ completed }) => (completed ? buttonColor : borderColor1)};
     transform: translateY(-50%);
     z-index: 0;
   }
@@ -35,7 +36,7 @@ export const StepCircle = styled.div<{ active?: boolean; completed?: boolean }>`
   width: ${DOT_SIZE}px;
   height: ${DOT_SIZE}px;
   border-radius: 50%;
-  background-color: ${({ active, completed }) => (active || completed ? "#96d3ff" : "#f0f0f0")};
+  background-color: ${({ active, completed }) => (active || completed ? buttonColor : borderColor1)};
   z-index: 1;
 `;
 
@@ -44,5 +45,5 @@ export const StepLabel = styled.span<{ active?: boolean }>`
   margin-top: 6px;
   font-size: 14px;
   font-weight: ${({ active }) => (active ? "500" : "400")};
-  color: ${({ active }) => (active ? "#272727" : "#888")};
+  color: ${({ active }) => (active ? textColor : borderColor2)};
 `;

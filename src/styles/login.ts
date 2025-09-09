@@ -1,12 +1,13 @@
 import styled from "@emotion/styled"
 import { Link } from "react-router-dom"
+import { borderColor2, buttonColor, buttonHoverColor, textColor } from "./common"
 
 export const LoginForm = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 400px;
-  border-bottom: 1px solid #272727;
+  border-bottom: 1px solid ${textColor};
   gap: 10px;
 `
 
@@ -53,9 +54,9 @@ export const LoginButton = styled.button<{ isFull: boolean }>`
   ${({ isFull }) =>
     isFull ? 
     `
-      background-color: #96d3ff;
+      background-color: ${buttonColor};
       &:hover {
-        background-color: #68C0FF;
+        background-color: ${buttonHoverColor};
       }
       cursor: pointer;
     ` : `
@@ -77,7 +78,7 @@ export const SignupButton = styled(Link)`
   width: 100%;
   height: 50px;
   align-items: center;
-  background-color: #96d3ff;
+  background-color: ${buttonColor};
   font-size: 20px;
   font-weight: 700;
   border: none;
@@ -87,7 +88,7 @@ export const SignupButton = styled(Link)`
   margin-top: 20px;
 
   :hover {
-    background-color: #68C0FF;
+    background-color: ${buttonHoverColor};
   }
 `
 
@@ -102,6 +103,6 @@ export const Description = styled.div`
   p {
     font-size: 14px;
     margin-top: 0;
-    color: #888;
+    color: ${borderColor2};
   }
 `

@@ -1,5 +1,6 @@
 import styled from "@emotion/styled"
 import { Link } from "react-router-dom"
+import { borderColor2, textColor } from "../common"
 
 export const NoticeContainer = styled.div`
   width: 1180px;
@@ -20,7 +21,7 @@ export const ClassificationBox = styled.div`
 `
 
 export const Classification = styled(Link)<{ selected?: boolean }>`
-  color: ${({ selected }) => selected ? "#272727" : "#888888"};
+  color: ${({ selected }) => selected ? textColor : borderColor2};
   font-weight: ${({ selected }) => selected ? "700" : "500"};
   font-size: 18px;
   cursor: pointer;

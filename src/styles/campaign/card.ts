@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { borderColor2 } from "../common";
 
 export const Card = styled.div`
   width: 100%;
@@ -6,6 +7,7 @@ export const Card = styled.div`
   flex-direction: column;
   min-height: 400px;
   gap: 10px;
+  cursor: pointer;
 `;
 
 export const ImageCard = styled.div`
@@ -59,7 +61,7 @@ export const Title = styled.span`
 export const Description = styled.span`
   font-size: 14px;
   font-weight: 400;
-  color: #888;
+  color: ${borderColor2};
 `
 
 export const Status = styled.div`
@@ -72,5 +74,5 @@ export const Status = styled.div`
 
 export const LimitStatus = styled.span`
   font-weight: 400;
-  color: #888;
+  color: ${borderColor2};
 `

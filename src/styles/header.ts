@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
+import { borderColor2, buttonColor, buttonHoverColor, textColor } from "./common";
 
 export const HeaderContainer = styled.header`  
   display: flex;
@@ -25,7 +26,7 @@ export const Logo = styled(Link)`
 export const SearchBar = styled.div`
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #888;
+  border-bottom: 1px solid ${borderColor2};
   padding: 10px 30px 10px 10px;
   gap: 16px;
 
@@ -63,7 +64,7 @@ export const NavList = styled.div`
 export const Nav = styled(Link)<{ selected: boolean }>`
   padding: 0px 25px;
   cursor: pointer;
-  color: ${({ selected }) => selected ? `#96D3FF` : `#272727`};
+  color: ${({ selected }) => selected ? buttonColor : textColor};
   font-weight: ${({ selected }) => selected ? "700" : "500"};
 `
 
@@ -71,7 +72,7 @@ export const AuthButton = styled(Link)`
   border-radius: 5px;
   color: white;
   font-weight: 700;
-  background-color: #96D3FF;
+  background-color: ${buttonColor};
   border: none;
   padding: 10px 20px;
   font-size: 16px;
@@ -79,6 +80,6 @@ export const AuthButton = styled(Link)`
   cursor: pointer;
 
   :hover {
-    background-color: #68C0FF;
+    background-color: ${buttonHoverColor};
   }
 `;

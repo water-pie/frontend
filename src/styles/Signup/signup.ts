@@ -1,5 +1,6 @@
 import styled from "@emotion/styled"
 import { Link } from "react-router-dom"
+import { borderColor2, buttonColor, buttonHoverColor } from "../common"
 
 export const Textarea = styled.div`
   display: flex;
@@ -75,7 +76,7 @@ export const SignupTextBox = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 20px;
-  border-bottom: 1px solid #888888;
+  border-bottom: 1px solid ${borderColor2};
 
   h2, p {
     margin-bottom: 0;
@@ -106,7 +107,7 @@ export const SignupButton = styled.button`
   width: 100%;
   height: 40px;
   align-items: center;
-  background-color: #96d3ff;
+  background-color: ${buttonColor};
   font-size: 16px;
   font-weight: 700;
   border: none;
@@ -115,6 +116,6 @@ export const SignupButton = styled.button`
   cursor: pointer;
 
   :hover {
-    background-color: #68C0FF;
+    background-color: ${buttonHoverColor};
   }
 `
