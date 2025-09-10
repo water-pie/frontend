@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import * as S from 'styles/campaign/visiting';
 import * as S2 from 'styles/main';
 import { productTypeMapping } from 'apis/Mapping/typeMapping';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import type { CampaignData } from 'mocks/campaign';
 import { campaigns } from 'mocks/campaign';
 import CampaignCard from 'components/Campaign/CampaignCard';
 
 export default function VisitingPage() {
   const { id } = useParams(); // id 파라미터 가져오기
+  const navigate = useNavigate(); // Initialize useNavigate
   const [campaignData, setCampaignData] = useState<CampaignData | null>(null);
 
   useEffect(() => {
@@ -22,6 +23,10 @@ export default function VisitingPage() {
 
   // Helper to format dates
   const formatDate = (dateStr: string) => new Date(dateStr).toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit', weekday: 'short' });
+
+  const handleApplyClick = () => {
+    navigate(`/campaign/${id}/apply`); // Navigate to the application page
+  };
 
   return (
     <>
@@ -144,7 +149,7 @@ export default function VisitingPage() {
                 </S.DetailRow>
 
                 {/* Apply Button */}
-                <S.ApplyButton>
+                <S.ApplyButton onClick={handleApplyClick}>
                   신청하기
                 </S.ApplyButton>
               </S.FloatingCard>

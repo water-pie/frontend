@@ -1,5 +1,7 @@
 import Input from "components/Input/Input";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useUserStore from "store/useUserStore";
 import * as S from 'styles/login';
 
 export default function Login() {
@@ -9,6 +11,8 @@ export default function Login() {
     autoLogin: false,
   });
   const [isFull, setIsFull] = useState(false);
+  const navigate = useNavigate();
+  const { login } = useUserStore();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -17,6 +21,13 @@ export default function Login() {
       ...prev,
       [name]: value
     }))
+  }
+
+  const handleSubmit = () => {
+    if (isFull) {
+      login(form.email);
+      navigate('/');
+    }
   }
 
   useEffect(() => {
@@ -58,7 +69,7 @@ export default function Login() {
           </S.AutoLogin>
           <S.Pw>비밀번호 찾기</S.Pw>
         </S.Detail>
-        <S.LoginButton isFull={isFull} onClick={() => {console.log(form)}}>
+        <S.LoginButton isFull={isFull} onClick={handleSubmit}>
           로그인
         </S.LoginButton>
       </S.LoginForm>

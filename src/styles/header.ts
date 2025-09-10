@@ -83,3 +83,11 @@ export const AuthButton = styled(Link)`
     background-color: ${buttonHoverColor};
   }
 `;
+
+export const UserProfile = styled(Link)`
+  border-radius: 100%;
+  background-color: #d7d7d7;
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+`

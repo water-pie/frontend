@@ -20,6 +20,7 @@ export default function Router() {
           <Route path="signup" element={<P.SelectSignup />} />
           <Route path="signup/:type" element={<P.Signup />} />
           <Route path="campaign/:id" element={<P.CampaignPage />} />
+          <Route path="campaign/:id/apply" element={<P.Application />} />
           <Route path="*" element={<P.NotFound />} />
         </Route>
       </Routes>
