@@ -2,14 +2,15 @@ import styled from "@emotion/styled";
 
 interface Props {
   type: string;
-  name: string;
-  placeholder: string;
+  name?: string;
+  placeholder?: string;
   value: string;
+  disable?: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const Input = ({
-  type, name, placeholder, value, onChange
+  type, name, placeholder, value, onChange, disable
 }: Props) => {
   return (
     <InputField
@@ -18,6 +19,7 @@ export const Input = ({
       placeholder={placeholder}
       value={value}
       onChange={onChange}
+      disabled={disable}
     />
   )
 };

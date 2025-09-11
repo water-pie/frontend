@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom';
-import * as S from '../../styles/my/layout';
+import * as S from 'styles/my/layout';
 
 const MyPageLayout = () => {
   return (
@@ -10,13 +10,13 @@ const MyPageLayout = () => {
           <h3>내 정보</h3>
           <ul>
             <li>
-              <NavLink to="/mypage/profile">프로필 수정</NavLink>
+              <NavLink to="/my/profile">프로필 수정</NavLink>
             </li>
             <li>
-              <NavLink to="/mypage/points">포인트 관리</NavLink>
+              <NavLink to="/my/points">포인트 관리</NavLink>
             </li>
             <li>
-              <NavLink to="/mypage/penalty">패널티 현황</NavLink>
+              <NavLink to="/my/penalty">패널티 현황</NavLink>
             </li>
           </ul>
         </S.NavBlock>
@@ -24,13 +24,13 @@ const MyPageLayout = () => {
           <h3>캠페인 관리</h3>
           <ul>
             <li>
-              <NavLink to="/mypage/campaigns/applied">신청한 캠페인</NavLink>
+              <NavLink to="/my/campaigns/applied">신청한 캠페인</NavLink>
             </li>
             <li>
-              <NavLink to="/mypage/campaigns/ongoing">진행중인 캠페인</NavLink>
+              <NavLink to="/my/campaigns/ongoing">진행중인 캠페인</NavLink>
             </li>
             <li>
-              <NavLink to="/mypage/campaigns/finished">종료된 캠페인</NavLink>
+              <NavLink to="/my/campaigns/finished">종료된 캠페인</NavLink>
             </li>
           </ul>
         </S.NavBlock>
@@ -38,7 +38,7 @@ const MyPageLayout = () => {
           <h3>고객센터</h3>
           <ul>
             <li>
-              <NavLink to="/mypage/inquiry">1:1 문의</NavLink>
+              <NavLink to="/my/inquiry">1:1 문의</NavLink>
             </li>
           </ul>
         </S.NavBlock>

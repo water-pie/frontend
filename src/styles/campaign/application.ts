@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Input } from "../../components/Input/Input";
+import { Input } from "components/Input/Input";
 import { buttonColor, buttonHoverColor, borderColor1, borderColor2 } from "../common";
 
 export const Wrapper = styled.div`

@@ -1,10 +1,10 @@
-import * as S from '../../styles/my/main';
+import * as S from 'styles/my/main';
 import {
   blog,
   youtube,
   insta,
   tiktok,
-} from '../../utils/importing';
+} from 'utils/importing';
 
 const MyPageMain = () => {
   return (
@@ -12,7 +12,7 @@ const MyPageMain = () => {
       <S.WelcomeSection>
         <S.ProfileImage />
         <S.WelcomeText>
-          <p>오신 것을 환영합니다</p>
+          <span>오신 것을 환영합니다</span>
           <h2>Username님</h2>
         </S.WelcomeText>
       </S.WelcomeSection>
@@ -20,45 +20,47 @@ const MyPageMain = () => {
       <S.InfoSection>
         <S.InfoBox>
           <label>이메일</label>
-          <p>waterpie1234@gmail.com</p>
+          <span>waterpie1234@gmail.com</span>
         </S.InfoBox>
         <S.InfoBox>
           <label>보유 포인트</label>
-          <p>0 P</p>
+          <span>0 P</span>
         </S.InfoBox>
         <S.InfoBox>
           <label>참여한 캠페인</label>
-          <p>0 개</p>
+          <span>0 개</span>
         </S.InfoBox>
         <S.InfoBox>
           <label>패널티</label>
-          <p>0 개</p>
+          <span>0 개</span>
         </S.InfoBox>
       </S.InfoSection>
 
-      <S.SocialSection>
+      <S.SocialContainer>
         <h3>소셜 미디어 연동</h3>
-        <S.SocialLink>
-          <img src={blog} alt="blog" />
-          <span>블로그를 등록해주세요.</span>
-          <S.Arrow />
-        </S.SocialLink>
-        <S.SocialLink>
-          <img src={tiktok} alt="tiktok" />
-          <span>틱톡을 등록해주세요.</span>
-          <S.Arrow />
-        </S.SocialLink>
-        <S.SocialLink>
-          <img src={youtube} alt="youtube" />
-          <span>유튜브를 등록해주세요.</span>
-          <S.Arrow />
-        </S.SocialLink>
-        <S.SocialLink>
-          <img src={insta} alt="instagram" />
-          <span>인스타그램을 등록해주세요.</span>
-          <S.Arrow />
-        </S.SocialLink>
-      </S.SocialSection>
+        <S.SocialSection>
+          <S.SocialLink>
+            <img src={blog} alt="blog" />
+            <span>블로그를 등록해주세요.</span>
+            <S.Arrow />
+          </S.SocialLink>
+          <S.SocialLink>
+            <img src={tiktok} alt="tiktok" />
+            <span>틱톡을 등록해주세요.</span>
+            <S.Arrow />
+          </S.SocialLink>
+          <S.SocialLink>
+            <img src={youtube} alt="youtube" />
+            <span>유튜브를 등록해주세요.</span>
+            <S.Arrow />
+          </S.SocialLink>
+          <S.SocialLink>
+            <img src={insta} alt="instagram" />
+            <span>인스타그램을 등록해주세요.</span>
+            <S.Arrow />
+          </S.SocialLink>
+        </S.SocialSection>
+      </S.SocialContainer>
 
       <S.CampaignActivitySection>
         <h3>캠페인 활동</h3>

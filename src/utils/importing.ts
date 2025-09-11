@@ -1,11 +1,11 @@
-import blog from '/public/blog.png';
-import brand from '/public/brand.png';
-import influence from '/public/influence.png';
-import insta from '/public/insta.png';
-import marketing from '/public/marketing.png';
-import search from '/public/search.png';
-import tiktok from '/public/tiktok.png';
-import youtube from '/public/youtube.png';
+import blog from '../assets/images/blog.png';
+import brand from '../assets/images/brand.png';
+import influence from '../assets/images/influence.png';
+import insta from '../assets/images/insta.png';
+import marketing from '../assets/images/marketing.png';
+import search from '../assets/images/search.png';
+import tiktok from '../assets/images/tiktok.png';
+import youtube from '../assets/images/youtube.png';
 
 export {
   blog,

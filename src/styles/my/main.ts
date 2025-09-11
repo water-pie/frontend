@@ -1,4 +1,4 @@
-import { styled } from 'styled-components';
+import styled from '@emotion/styled';
 
 export const MainContainer = styled.div`
   width: 100%;
@@ -19,11 +19,12 @@ export const ProfileImage = styled.div`
 `;
 
 export const WelcomeText = styled.div`
-  p {
+  span {
     font-size: 16px;
     color: #555;
   }
   h2 {
+    margin: 0;
     font-size: 24px;
     font-weight: bold;
   }
@@ -38,9 +39,11 @@ export const InfoSection = styled.section`
 
 export const InfoBox = styled.div`
   background-color: #f9f9f9;
-  padding: 20px;
+  padding: 10px 20px;
   border-radius: 8px;
   text-align: left;
+  font-size: 18px;
+  font-weight: bold;
 
   label {
     display: block;
@@ -48,14 +51,9 @@ export const InfoBox = styled.div`
     color: #888;
     margin-bottom: 8px;
   }
-
-  p {
-    font-size: 18px;
-    font-weight: bold;
-  }
 `;
 
-export const SocialSection = styled.section`
+export const SocialContainer = styled.section`
   margin-bottom: 40px;
 
   h3 {
@@ -63,11 +61,13 @@ export const SocialSection = styled.section`
     font-weight: bold;
     margin-bottom: 20px;
   }
+`;
 
+export const SocialSection = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
-`;
+`
 
 export const SocialLink = styled.a`
   display: flex;
@@ -96,6 +96,7 @@ export const Arrow = styled.span`
     font-size: 18px;
     color: #888;
   }
+  text-align: right;
 `;
 
 export const CampaignActivitySection = styled.section`

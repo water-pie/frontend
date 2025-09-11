@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import * as S from "styles/header";
 import useUserStore from "store/useUserStore";
+import Search from "assets/images/search.png"
 
 export const Header = () => {
   const { pathname } = useLocation();
@@ -19,7 +20,7 @@ export const Header = () => {
       </S.LeftHeader>
       <S.RightHeader>
         <S.SearchBar>
-          <img src="/search.png" />
+          <img src={Search} />
           <S.SearchInput type="text" placeholder="원하는 체험단을 검색하세요!" />
         </S.SearchBar>
         {isLoggedIn ? 

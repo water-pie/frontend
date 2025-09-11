@@ -1,10 +1,10 @@
-import { styled } from 'styled-components';
+import styled from '@emotion/styled';
 
 export const MyPageLayout = styled.div`
   display: flex;
   gap: 80px;
   padding: 40px 0;
-  max-width: 1200px;
+  width: 1180px;
   margin: 0 auto;
 `;
 

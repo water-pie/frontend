@@ -1,8 +1,8 @@
 import { useState } from "react";
 import * as S from "styles/campaign/application";
-import CampaignImage from "/public/card/card1.png";
-import InstaIcon from "/public/insta.png";
-import WidgetNoticeImage from "../../assets/A - 체험단 신청 페이지.png";
+import CampaignImage from "assets/images/card1.png";
+import InstaIcon from "assets/images/insta.png";
+import WidgetNoticeImage from "assets/guideBlog.png";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function Application() {

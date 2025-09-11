@@ -1,4 +1,4 @@
-import * as S from "../../styles/campaign/card"
+import * as S from "styles/campaign/card"
 import { useNavigate } from "react-router-dom";
 
 // Mapping for channel numbers to icon paths
