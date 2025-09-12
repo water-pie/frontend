@@ -5,7 +5,7 @@ interface InquiryCardProps {
   id: number;
   title: string;
   date: string;
-  status: '답변 됨' | '답변 완료'; // Assuming these are the two statuses
+  status: '답변 중' | '답변 완료'; // Assuming these are the two statuses
 }
 
 const InquiryCard = ({ id, title, date, status }: InquiryCardProps) => {

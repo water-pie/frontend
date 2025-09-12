@@ -5,7 +5,7 @@ import Search from "assets/images/search.png"
 
 export const Header = () => {
   const { pathname } = useLocation();
-  const { isLoggedIn } = useUserStore();
+  const isLoggedIn = useUserStore().isLoggedIn;
 
   return (
     <S.HeaderContainer>
@@ -24,9 +24,7 @@ export const Header = () => {
           <S.SearchInput type="text" placeholder="원하는 체험단을 검색하세요!" />
         </S.SearchBar>
         {isLoggedIn ? 
-          <S.UserProfile to="/my">
-            
-          </S.UserProfile> : 
+          <S.UserProfile to="/my" /> : 
           <S.AuthButton to="/login">로그인</S.AuthButton>
         }
       </S.RightHeader>

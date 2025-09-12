@@ -7,11 +7,11 @@ interface InquiryItem {
   id: number;
   title: string;
   date: string;
-  status: '답변 됨' | '답변 완료';
+  status: '답변 중' | '답변 완료';
 }
 
 const mockInquiries: InquiryItem[] = [
-  { id: 1, title: '문의사항 제목 문의사항 제목 문의사항 제목 문의사항 제목', date: '2025년 9월 2일', status: '답변 됨' },
+  { id: 1, title: '문의사항 제목 문의사항 제목 문의사항 제목 문의사항 제목', date: '2025년 9월 2일', status: '답변 중' },
   { id: 2, title: '문의사항 제목 문의사항 제목 문의사항 제목 문의사항 제목', date: '2025년 9월 2일', status: '답변 완료' },
 ];
 

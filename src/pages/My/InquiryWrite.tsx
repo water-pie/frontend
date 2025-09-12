@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import * as S from 'styles/my/inquiryWrite';
 import { Input } from 'components/Input/Input';
+import { useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 const InquiryWrite = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const navigator = useNavigate();
 
   const handleSubmit = () => {
     alert('문의가 등록되었습니다.');
+    navigator(-1);
   };
 
   return (

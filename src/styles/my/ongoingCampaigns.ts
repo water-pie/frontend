@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { borderColor1, textColor, buttonColor, buttonHoverColor } from '../common';
 
 export const OngoingCampaignsContainer = styled.div`
-  width: 1180px; // Fixed width
+  width: 100%; // Fixed width
   padding: 20px;
 `;
 
@@ -70,7 +70,7 @@ export const StatusItem = styled.div`
 `;
 
 export const StatusLabel = styled.span`
-  color: ${borderColor1};
+  color: ${textColor};
   margin-bottom: 5px;
 `;
 

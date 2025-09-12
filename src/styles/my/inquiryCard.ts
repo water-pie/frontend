@@ -40,11 +40,11 @@ export const Date = styled.span`
   color: ${textColor};
 `;
 
-export const Status = styled.span<{ status: '답변 됨' | '답변 완료' }>`
+export const Status = styled.span<{ status: '답변 중' | '답변 완료' }>`
   font-size: 14px;
   font-weight: 500;
   padding: 5px 10px;
   border-radius: 5px;
-  background-color: ${({ status }) => (status === '답변 됨' ? buttonColor : borderColor1)};
-  color: ${({ status }) => (status === '답변 됨' ? 'white' : textColor)};
+  background-color: ${({ status }) => (status === '답변 중' ? borderColor1 : buttonColor)};
+  color: ${({ status }) => (status === '답변 중' ? textColor : 'white')};
 `;

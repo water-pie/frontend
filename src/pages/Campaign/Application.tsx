@@ -1,7 +1,6 @@
 import { useState } from "react";
 import * as S from "styles/campaign/application";
-import CampaignImage from "assets/images/card1.png";
-import InstaIcon from "assets/images/insta.png";
+import { insta } from "utils/importing";
 import WidgetNoticeImage from "assets/guideBlog.png";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -65,9 +64,9 @@ export default function Application() {
 
       <S.RightContent>
         <S.StickyCard>
-          <S.CafeImage src={CampaignImage} alt="캠페인 이미지" />
+          <S.CafeImage src="/card/card1.png" alt="캠페인 이미지" />
           <S.DetailRow>
-            <img src={InstaIcon} alt="인스타그램" />
+            <img src={insta} alt="인스타그램" />
             <span>방문형</span>
           </S.DetailRow>
           <S.CampaignTitle>[충북] 컵빙수가 맛있는 동네 카페</S.CampaignTitle>

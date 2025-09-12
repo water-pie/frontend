@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { borderColor1, textColor, buttonColor, buttonHoverColor } from '../common';
 
 export const InquiryContainer = styled.div`
-  width: 1180px; // Fixed width as requested
+  width: 100%; // Fixed width as requested
   padding: 20px;
 `;
 

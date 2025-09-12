@@ -1,12 +1,13 @@
 import * as S from "styles/campaign/card"
 import { useNavigate } from "react-router-dom";
+import { blog, insta, tiktok, youtube } from "utils/importing";
 
 // Mapping for channel numbers to icon paths
 const channelIconMap: { [key: number]: string } = {
-  1: "/blog.png",
-  2: "/insta.png",
-  3: "/tiktok.png",
-  4: "/youtube.png",
+  1: blog,
+  2: insta,
+  3: tiktok,
+  4: youtube,
 };
 
 // Helper function to calculate remaining days
@@ -30,7 +31,7 @@ interface Props {
   member_num: number;
   chennels: number[];
   possible_time_application: [string, string];
-}
+};
 
 const CampaignCard = ({
   id, image_urls, title, offer_content, applicated_num, member_num, chennels, possible_time_application

@@ -1,19 +1,15 @@
 import { useState } from 'react';
 import * as S from 'styles/modal/reviewRegistrationModal'; // Will create this file
 import { Input } from '../Input/Input'; // Assuming a generic Input component exists
+import type { CampaignItem } from 'types/campaign';
 
 interface ReviewRegistrationModalProps {
   isOpen: boolean;
   onClose: () => void;
-  campaignDetails: {
-    id: number;
-    title: string;
-    mission: string;
-    missionDeadline: string;
-  };
+  campaignDetails: CampaignItem
 }
 
-const ReviewRegistrationModal = ({ isOpen, onClose, campaignDetails }: ReviewRegistrationModalModalProps) => {
+const ReviewRegistrationModal = ({ isOpen, onClose, campaignDetails }: ReviewRegistrationModalProps) => {
   const [url1, setUrl1] = useState('');
   const [url2, setUrl2] = useState('');
   const [messageToOwner, setMessageToOwner] = useState('');
@@ -81,7 +77,7 @@ const ReviewRegistrationModal = ({ isOpen, onClose, campaignDetails }: ReviewReg
 
           <S.FormGroup>
             <S.Label>사장님께 드리고 싶은 말씀이 있다면 적어주세요. (선택)</S.Label>
-            <S.Textarea
+            <textarea
               placeholder="예) 감사합니다."
               value={messageToOwner}
               onChange={(e) => setMessageToOwner(e.target.value)}

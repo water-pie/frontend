@@ -18,7 +18,7 @@ export const ModalContainer = styled.div`
   background-color: white;
   padding: 30px;
   border-radius: 8px;
-  width: 500px; // Fixed width for the modal
+  width: 700px; // Fixed width for the modal
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
@@ -56,8 +56,8 @@ export const ModalBody = styled.div`
 
 export const CampaignInfo = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px 20px;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
   margin-bottom: 10px;
 `;
 
@@ -68,7 +68,7 @@ export const InfoItem = styled.div`
 
 export const Label = styled.span`
   font-size: 14px;
-  color: ${borderColor1};
+  color: ${textColor};
   margin-bottom: 5px;
 `;
 
