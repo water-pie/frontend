@@ -80,14 +80,7 @@ export const TabButton = styled.button<{ active: boolean }>`
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
-  color: ${({ active }) => (active ? textColor : borderColor1)};
-  border-bottom: ${({ active }) => (active ? `2px solid ${buttonColor}` : 'none')};
-  margin-bottom: -3px; // To make the active tab border overlap the bottom border
-  transition: color 0.2s, border-bottom 0.2s;
-
-  &:hover {
-    color: ${textColor};
-  }
+  color: ${({ active }) => (active ? buttonColor : textColor)};
 `;
 
 export const Content = styled.div`
