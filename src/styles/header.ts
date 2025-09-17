@@ -84,6 +84,22 @@ export const AuthButton = styled(Link)`
   }
 `;
 
+export const LogoutButton = styled.button`
+  border-radius: 5px;
+  color: white;
+  font-weight: 700;
+  background-color: ${buttonColor};
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+
+  :hover {
+    background-color: ${buttonHoverColor};
+  }
+`;
+
 export const UserProfile = styled(Link)`
   border-radius: 100%;
   background-color: #d7d7d7;

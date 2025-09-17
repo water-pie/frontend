@@ -2,3 +2,8 @@ export { default as Buying } from "./Buying";
 export { default as CampaignPage } from "./CampaignPage";
 export { default as Visiting } from "./Visiting";
 export { default as Application } from "./Application";
+export { default as CreationStep1 } from "./CreationStep1";
+export { default as CreationStep2 } from "./CreationStep2";
+export { default as CreationStep3 } from "./CreationStep3";
+export { default as CreationStep4 } from "./CreationStep4";
+export { default as CreationStep5 } from "./CreationStep5";

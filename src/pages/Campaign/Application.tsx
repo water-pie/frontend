@@ -5,7 +5,7 @@ import WidgetNoticeImage from "assets/guideBlog.png";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function Application() {
-  const { id } = useParams();
+  useParams();
   const [applicationText, setApplicationText] = useState("");
   const [address, setAddress] = useState("");
   const [detailAddress, setDetailAddress] = useState("");

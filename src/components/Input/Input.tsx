@@ -1,12 +1,12 @@
 import styled from "@emotion/styled";
 
 interface Props {
-  type: string;
+  type?: string;
   name?: string;
   placeholder?: string;
-  value: string;
+  value?: any;
   disable?: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const Input = ({
@@ -25,11 +25,13 @@ export const Input = ({
 };
 
 export const InputField = styled.input`
+  width: 100%;
   height: 40px;
   border-radius: 5px;
   border: 1px solid #888;
   font-size: 16px;
   padding-left: 10px;
+  box-sizing: border-box;
   
   :focus {
     outline: none;

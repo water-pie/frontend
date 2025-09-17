@@ -2,8 +2,6 @@ import { useState } from 'react';
 import * as S from 'styles/my/inquiryWrite';
 import { Input } from 'components/Input/Input';
 import { useNavigate } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 
 const InquiryWrite = () => {
   const [title, setTitle] = useState('');

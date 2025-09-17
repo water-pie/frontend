@@ -1,11 +1,18 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import * as S from "styles/header";
 import useUserStore from "store/useUserStore";
 import Search from "assets/images/search.png"
 
 export const Header = () => {
   const { pathname } = useLocation();
-  const isLoggedIn = useUserStore().isLoggedIn;
+  const navigate = useNavigate();
+  const { isLoggedIn, logout, userInfo } = useUserStore();
+  const userType = userInfo?.type;
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   return (
     <S.HeaderContainer>
@@ -23,10 +30,14 @@ export const Header = () => {
           <img src={Search} />
           <S.SearchInput type="text" placeholder="원하는 체험단을 검색하세요!" />
         </S.SearchBar>
-        {isLoggedIn ? 
-          <S.UserProfile to="/my" /> : 
+        {isLoggedIn ? (
+          <>
+            <S.UserProfile to={(userType === 2 || userType === 3) ? "/business" : "/my"} />
+            <S.LogoutButton onClick={handleLogout}>로그아웃</S.LogoutButton>
+          </>
+        ) : (
           <S.AuthButton to="/login">로그인</S.AuthButton>
-        }
+        )}
       </S.RightHeader>
     </S.HeaderContainer>
   )

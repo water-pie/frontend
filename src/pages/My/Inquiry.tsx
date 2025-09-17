@@ -16,7 +16,7 @@ const mockInquiries: InquiryItem[] = [
 ];
 
 const Inquiry = () => {
-  const [inquiries, setInquiries] = useState<InquiryItem[]>(mockInquiries);
+  const [inquiries] = useState<InquiryItem[]>(mockInquiries);
   const navigate = useNavigate();
 
   const handleRegisterInquiry = () => {

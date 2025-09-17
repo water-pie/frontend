@@ -35,7 +35,7 @@ const mockInquiryDetail: InquiryDetailItem = {
 };
 
 const InquiryDetail = () => {
-  const { id } = useParams();
+  useParams();
 
   const inquiry = mockInquiryDetail;
 

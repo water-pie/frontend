@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { borderColor1, textColor, buttonColor, buttonHoverColor } from '../common';
+import { borderColor1, textColor } from '../common';
 
 export const FinishedCampaignsContainer = styled.div`
   width: 100%; // Fixed width
