@@ -1,6 +1,7 @@
 import { Input, SendInput } from "../Input/Input";
 import { useState } from "react";
 import styled from "@emotion/styled";
+import DaumPost from "components/Address/DaumPost";
 
 export const Business = () => {
   const [businessInfo, setBusinessInfo] = useState({
@@ -8,6 +9,7 @@ export const Business = () => {
     address: "",
     detailedAddress: "",
   });
+  const [popup, setPopup] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -15,6 +17,10 @@ export const Business = () => {
       ...businessInfo,
       [name]: value,
     });
+  };
+
+  const handleComplete = () => {
+    setPopup(!popup);
   };
 
   return (
@@ -32,9 +38,9 @@ export const Business = () => {
           name="address"
           placeholder="주소를 입력하세요."
           value={businessInfo.address}
-          onChange={handleChange}
+          disabled={true}
         />
-        <SearchButton>찾기</SearchButton>
+        <SearchButton onClick={handleComplete}>찾기</SearchButton>
       </InputContanier>
       <Input
         type="text"
@@ -43,6 +49,7 @@ export const Business = () => {
         value={businessInfo.detailedAddress}
         onChange={handleChange}
       />
+      {popup && <DaumPost address={businessInfo} setAddress={setBusinessInfo} handleComplete={handleComplete}/>}
     </>
   );
 };

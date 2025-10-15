@@ -110,6 +110,7 @@ const SelectBox = styled.select`
   background-repeat: no-repeat;
   background-position: 6px center;
   background-size: 20px;
+  background-color: white;
 `;
 
 const FilterBox = styled.div`

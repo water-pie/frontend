@@ -32,6 +32,7 @@ export const InputField = styled.input`
   font-size: 16px;
   padding-left: 10px;
   box-sizing: border-box;
+  color: black;
   
   :focus {
     outline: none;

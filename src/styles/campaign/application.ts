@@ -222,3 +222,24 @@ export const ApplyButton = styled.button`
     background-color: ${buttonHoverColor};
   }
 `;
+
+export const SearchButton = styled.button`
+  word-break: keep-all;
+  font-size: 18px;
+  font-weight: 600;
+  background-color: #96d3ff;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  padding: 0px 20px;
+  cursor: pointer;
+
+  :hover {
+    background-color: #68C0FF;
+  }
+`
+
+export const AddressBox = styled.div`
+  display: flex;
+  gap: 10px;
+`

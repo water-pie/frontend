@@ -6,6 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import type { CampaignData } from 'mocks/campaign';
 import { campaigns } from 'mocks/campaign';
 import CampaignCard from 'components/Campaign/CampaignCard';
+import { insta } from 'utils/importing';
 
 export default function VisitingPage() {
   const { id } = useParams(); // id 파라미터 가져오기
@@ -38,7 +39,7 @@ export default function VisitingPage() {
             <h1>{campaignData.title}</h1>
             <S.TagContainer>
               <S.Tag>
-                <img src="/insta.png" alt="인스타" />
+                <img src={insta} alt="인스타" />
                 인스타
               </S.Tag>
               <S.Tag>{productTypeMapping[campaignData.product_offer_type as keyof typeof productTypeMapping]}</S.Tag>

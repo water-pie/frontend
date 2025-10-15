@@ -1,3 +1,4 @@
+import { loginApi } from "apis/login";
 import Input from "components/Input/Input";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -23,21 +24,10 @@ export default function Login() {
     }))
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (isFull) {
-      const email = form.email.toLowerCase();
-      let userType: number;
-
-      if (email.includes("influencer")) {
-        userType = 1; // Influencer
-      } else if (email.includes("marketing")) {
-        userType = 2; // Marketing
-      } else if (email.includes("brand") || email.includes("agency")) {
-        userType = 3; // Advertising Agency
-      } else {
-        userType = 1;
-      }
-      login(form.email, userType);
+      const { data } = await loginApi({email: form.email, password: form.pw});
+      login(data.user.userType, data.access_token);
       navigate('/');
     }
   }

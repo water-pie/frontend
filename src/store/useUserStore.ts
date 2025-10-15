@@ -4,10 +4,10 @@ import { persist } from 'zustand/middleware';
 interface UserState {
   isLoggedIn: boolean;
   userInfo: {
-    email: string;
-    type: number; // 1: Influencer, 2: Marketing, 3: Advertising Agency
+    token: string;
+    type: string;
   } | null;
-  login: (email: string, type: number) => void;
+  login: (type: string, token: string) => void;
   logout: () => void;
 }
 
@@ -15,7 +15,7 @@ const useUserStore = create(
   persist<UserState>((set) => ({
     isLoggedIn: false,
     userInfo: null,
-    login: (email, type) => set({ isLoggedIn: true, userInfo: { email, type } }),
+    login: (type, token) => set({ isLoggedIn: true, userInfo: { type, token } }),
     logout: () => set({ isLoggedIn: false, userInfo: null }),
   }), {
     name: "userStore",

@@ -7,7 +7,7 @@ const MyPageWrapper = () => {
   const userType = userInfo?.type;
   const navigator = useNavigate();
 
-  if (userType === 2 || userType === 3) {
+  if (userType === "MARKETING" || userType === "BRAND_AGENCY") {
     navigator("/business");
   } else {
     return <MyPageLayout />;

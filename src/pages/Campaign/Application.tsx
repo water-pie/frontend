@@ -3,18 +3,46 @@ import * as S from "styles/campaign/application";
 import { insta } from "utils/importing";
 import WidgetNoticeImage from "assets/guideBlog.png";
 import { useNavigate, useParams } from "react-router-dom";
+import DaumPost from "components/Address/DaumPost";
+
+interface postCode {
+  address : string,
+}
 
 export default function Application() {
   useParams();
-  const [applicationText, setApplicationText] = useState("");
-  const [address, setAddress] = useState("");
-  const [detailAddress, setDetailAddress] = useState("");
   const navigator = useNavigate();
+  const [applicationText, setApplicationText] = useState("");
+  const [detailAddress, setDetailAddress] = useState("");
+  const [term1, setTerm1] = useState(false);
+  const [term2, setTerm2] = useState(false);
+  const [popup, setPopup] = useState(false);
+
+  const [form, setForm] = useState<postCode>({
+    address : '',
+  });
+
+  const handleComplete = () => {
+    setPopup(!popup);
+  };
 
   const handleApply = () => {
+    if (!form.address) {
+      alert("주소를 입력해주세요.");
+      return ;
+    }
+    if (!detailAddress) {
+      alert("상세 주소를 입력해주세요.");
+      return ;
+    }
+    if (!term1 || !term2) {
+      alert("필수 동의 사항에 체크해주세요.");
+      return ;
+    }
     alert("신청이 완료되었습니다.");
     navigator("/");
-  }
+  };
+
   return (
     <S.Wrapper>
       <S.LeftContent>
@@ -33,13 +61,20 @@ export default function Application() {
         <S.Section>
           <h2>주소</h2>
           <S.AddressInputs>
-            <S.FullWidthInput
-              type="text"
-              name="address"
-              placeholder="예) 판교역로 167, 분당 주공211, 분평동 123"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
+            <S.AddressBox>
+              <S.FullWidthInput
+                type="text"
+                name="address"
+                placeholder="예) 판교역로 167, 분당 주공211, 분평동 123"
+                value={form.address}
+                disable={true}
+              />
+              <S.SearchButton
+                onClick={handleComplete}
+              >
+                찾기
+              </S.SearchButton>
+            </S.AddressBox>
             <S.FullWidthInput
               type="text"
               name="detailAddress"
@@ -74,17 +109,29 @@ export default function Application() {
           <S.Point>12,000P</S.Point>
           <S.CheckboxSection>
             <S.RightCheckboxWrapper>
-              <input type="checkbox" id="terms1" />
+              <input
+                type="checkbox"
+                id="terms1"
+                checked={term1}
+                onChange={() => setTerm1(!term1)}
+              />
               <label htmlFor="terms1">체험단 유의사항, 개인정보 및 콘텐츠 제3자 제공, 저작물 이용에 동의합니다.</label>
             </S.RightCheckboxWrapper>
             <S.RightCheckboxWrapper>
-              <input type="checkbox" id="terms2" />
+              <input
+                type="checkbox"
+                id="terms2"
+                checked={term2}
+                onChange={() => setTerm2(!term2)}
+              />
               <label htmlFor="terms2">체험단 미션을 모두 확인했습니다.</label>
             </S.RightCheckboxWrapper>
           </S.CheckboxSection>
           <S.ApplyButton onClick={handleApply}>신청하기</S.ApplyButton>
         </S.StickyCard>
       </S.RightContent>
+
+      {popup && <DaumPost address={form} setAddress = {setForm} handleComplete={handleComplete}/>}
     </S.Wrapper>
   );
 };
