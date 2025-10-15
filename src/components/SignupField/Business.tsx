@@ -3,21 +3,18 @@ import { useState } from "react";
 import styled from "@emotion/styled";
 import DaumPost from "components/Address/DaumPost";
 
-export const Business = () => {
-  const [businessInfo, setBusinessInfo] = useState({
-    registrationNumber: "",
-    address: "",
-    detailedAddress: "",
-  });
-  const [popup, setPopup] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setBusinessInfo({
-      ...businessInfo,
-      [name]: value,
-    });
+interface Props {
+  form: {
+    registrationNumber: string;
+    address: string;
+    detailedAddress: string;
   };
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setForm: React.Dispatch<React.SetStateAction<any>>; // Use a more specific type if available
+}
+
+export const Business = ({ form, handleChange, setForm }: Props) => {
+  const [popup, setPopup] = useState(false);
 
   const handleComplete = () => {
     setPopup(!popup);
@@ -29,7 +26,7 @@ export const Business = () => {
         type="text"
         name="registrationNumber"
         placeholder="사업자 등록증 번호를 입력해주세요."
-        value={businessInfo.registrationNumber}
+        value={form.registrationNumber}
         onChange={handleChange}
       />
       <InputContanier>
@@ -37,7 +34,7 @@ export const Business = () => {
           type="text"
           name="address"
           placeholder="주소를 입력하세요."
-          value={businessInfo.address}
+          value={form.address}
           disabled={true}
         />
         <SearchButton onClick={handleComplete}>찾기</SearchButton>
@@ -46,10 +43,10 @@ export const Business = () => {
         type="text"
         name="detailedAddress"
         placeholder="상세 주소를 입력해주세요."
-        value={businessInfo.detailedAddress}
+        value={form.detailedAddress}
         onChange={handleChange}
       />
-      {popup && <DaumPost address={businessInfo} setAddress={setBusinessInfo} handleComplete={handleComplete}/>}
+      {popup && <DaumPost address={form} setAddress={setForm} handleComplete={handleComplete}/>}
     </>
   );
 };

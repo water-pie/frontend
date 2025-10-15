@@ -1,6 +1,7 @@
 import * as S from "styles/Signup";
 import { Business, PersonalInfo, Platform } from "components/SignupField";
 import { useState } from "react";
+import type { FormState } from "types/input";
 
 interface Props {
   type: string,
@@ -8,12 +9,71 @@ interface Props {
 
 export default function Brand({ type }: Props) {
   const [step, setStep] = useState(1);
+  const [personalInfoForm, setPersonalInfoForm] = useState<FormState>({
+    email: '',
+    code: '',
+    pw: '',
+    checkPw: '',
+    name: '',
+    phone: '',
+    subPhone: '',
+  });
+  const [isCodeSent, setIsCodeSent] = useState<boolean>(false);
+  const [isEmailVerified, setIsEmailVerified] = useState<boolean>(false);
+  const [platformForm, setPlatformForm] = useState({
+    youtube: "",
+    blog: "",
+    insta: "",
+    tiktok: "",
+  });
+  const [businessInfoForm, setBusinessInfoForm] = useState({
+    registrationNumber: "",
+    address: "",
+    detailedAddress: "",
+  });
+
+  const handlePersonalInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setPersonalInfoForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handlePlatformChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setPlatformForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleBusinessInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setBusinessInfoForm({
+      ...businessInfoForm,
+      [name]: value,
+    });
+  };
 
   const handlePrevStep = () => {
     setStep(step-1);
   }
 
   const handleNextStep = () => {
+    if (step === 1 && !isEmailVerified) {
+      alert("이메일 인증을 완료해주세요.");
+      return;
+    }
+    if (step === 2) {
+      const hasPlatformUrl = Object.values(platformForm).some(url => url.trim() !== '');
+      if (!hasPlatformUrl) {
+        alert("하나 이상의 플랫폼 URL을 입력해주세요.");
+        return;
+      }
+    }
     setStep(step+1);
   }
 
@@ -41,6 +101,12 @@ export default function Brand({ type }: Props) {
           <S.SignupField>
             <PersonalInfo
               extra={type !== "influence"}
+              form={personalInfoForm}
+              handleChange={handlePersonalInfoChange}
+              isCodeSent={isCodeSent}
+              setIsCodeSent={setIsCodeSent}
+              isEmailVerified={isEmailVerified}
+              setIsEmailVerified={setIsEmailVerified}
             />
           </S.SignupField>
           <S.SignupTerms>
@@ -57,7 +123,7 @@ export default function Brand({ type }: Props) {
       {step === 2 && (
         <>
           <S.SignupField>
-            <Platform />
+            <Platform form={platformForm} handleChange={handlePlatformChange} />
           </S.SignupField>
           <S.SignupTerms>
             <S.ButtonBox>
@@ -70,7 +136,11 @@ export default function Brand({ type }: Props) {
       {step === 3 && (
         <>
           <S.SignupField>
-            <Business />
+            <Business
+              form={businessInfoForm}
+              handleChange={handleBusinessInfoChange}
+              setForm={setBusinessInfoForm}
+            />
           </S.SignupField>
           <S.SignupTerms>
             <S.ButtonBox>

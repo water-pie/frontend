@@ -1,10 +1,16 @@
 import styled from "@emotion/styled";
 import Input, { SendInput } from "components/Input/Input";
-import { useState } from "react";
+import { generateLicenseCodeApi, verifyLicenseCodeApi } from "apis/license";
 import type { FormState } from "types/input";
 
 interface Props {
   extra?: boolean;
+  form: FormState;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isCodeSent: boolean;
+  setIsCodeSent: React.Dispatch<React.SetStateAction<boolean>>;
+  isEmailVerified: boolean;
+  setIsEmailVerified: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const otherInputFields = [
@@ -14,30 +20,43 @@ const otherInputFields = [
   { name: 'phone', type: 'tel', placeholder: '연락처를 입력해주세요.' },
 ];
 
-export const PersonalInfo = ({ extra }: Props) => {
-  const [form, setForm] = useState<FormState>({
-    email: '',
-    code: '',
-    pw: '',
-    checkPw: '',
-    name: '',
-    phone: '',
-    subPhone: '',
-  });
-  const [emailSent, setEmailSent] = useState<boolean>(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+export const PersonalInfo = ({
+  extra,
+  form,
+  handleChange,
+  isCodeSent,
+  setIsCodeSent,
+  isEmailVerified,
+  setIsEmailVerified,
+}: Props) => {
+  const handleSendCode = async () => {
+    try {
+      const response = await generateLicenseCodeApi(form.email);
+      if (response.data.sent) {
+        setIsCodeSent(true);
+        alert("인증 코드가 이메일로 전송되었습니다.");
+      } else {
+        alert("인증 코드 전송에 실패했습니다.");
+      }
+    } catch (error) {
+      alert("인증 코드 전송 중 오류가 발생했습니다.");
+      console.error("Error sending verification code:", error);
+    }
   };
 
-  const handleSendCode = () => {
-    // NOTE: In a real application, you would make an API call here.
-    setEmailSent(true);
+  const handleVerifyCode = async () => {
+    try {
+      const response = await verifyLicenseCodeApi(form.email, form.code);
+      if (response.data.verified) {
+        setIsEmailVerified(true);
+        alert("이메일이 성공적으로 인증되었습니다.");
+      } else {
+        alert("인증 코드 확인에 실패했습니다.");
+      }
+    } catch (error) {
+      alert("인증 코드 확인 중 오류가 발생했습니다.");
+      console.error("Error verifying code:", error);
+    }
   };
 
   return (
@@ -49,11 +68,14 @@ export const PersonalInfo = ({ extra }: Props) => {
           placeholder="이메일을 입력해주세요."
           value={form.email}
           onChange={handleChange}
+          disabled={isCodeSent}
         />
-        <SendCodeButton onClick={handleSendCode}>인증</SendCodeButton>
+        <SendCodeButton onClick={handleSendCode} disabled={isCodeSent}>
+          인증
+        </SendCodeButton>
       </InputContainer>
 
-      {emailSent && (
+      {isCodeSent && (
         <InputContainer>
           <SendInput
             type="text"
@@ -61,8 +83,11 @@ export const PersonalInfo = ({ extra }: Props) => {
             placeholder="인증코드를 입력해주세요."
             value={form.code}
             onChange={handleChange}
+            disabled={isEmailVerified}
           />
-          <SendCodeButton>확인</SendCodeButton>
+          <SendCodeButton onClick={handleVerifyCode} disabled={isEmailVerified}>
+            확인
+          </SendCodeButton>
         </InputContainer>
       )}
 

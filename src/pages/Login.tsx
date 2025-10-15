@@ -22,7 +22,7 @@ export default function Login() {
       ...prev,
       [name]: value
     }))
-  }
+  };
 
   const handleSubmit = async () => {
     if (isFull) {
@@ -30,11 +30,11 @@ export default function Login() {
       login(data.user.userType, data.access_token);
       navigate('/');
     }
-  }
+  };
 
   useEffect(() => {
     (form.email && form.pw) ? setIsFull(true) : setIsFull(false);
-  }, [form])
+  }, [form]);
 
   return (
     <>

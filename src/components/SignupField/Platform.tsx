@@ -1,6 +1,10 @@
 import Input from "components/Input/Input";
-import { useState } from "react";
 import type { URLFormState } from "types/input";
+
+interface Props {
+  form: URLFormState;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
 const InputFields = [
   { name: 'youtube', placeholder: '유튜브 URL을 입력해주세요.' },
@@ -9,23 +13,7 @@ const InputFields = [
   { name: 'tiktok', placeholder: '틱톡 URL을 입력해주세요.' },
 ];
 
-export const Platform = () => {
-  const [form, setForm] = useState<URLFormState>({
-    youtube: "",
-    blog: "",
-    insta: "",
-    tiktok: "",
-  })
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
+export const Platform = ({ form, handleChange }: Props) => {
   return (
     <>
       {InputFields.map((field) => {
