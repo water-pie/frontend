@@ -2,6 +2,8 @@ import * as S from "styles/Signup";
 import { PersonalInfo, Platform } from "components/SignupField";
 import { useState } from "react";
 import type { FormState } from "types/input";
+import { signupAsInfluencer } from "apis/signup";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   type: string,
@@ -26,6 +28,7 @@ export default function Influence({ type }: Props) {
     insta: "",
     tiktok: "",
   });
+  const navigate = useNavigate();
 
   const handlePersonalInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -54,15 +57,37 @@ export default function Influence({ type }: Props) {
       alert("이메일 인증을 완료해주세요.");
       return;
     }
-    if (step === 2) {
-      const hasPlatformUrl = Object.values(platformForm).some(url => url.trim() !== '');
-      if (!hasPlatformUrl) {
-        alert("하나 이상의 플랫폼 URL을 입력해주세요.");
-        return;
-      }
+    if (step === 1 && (personalInfoForm.pw !== personalInfoForm.checkPw)) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
     }
     setStep(step+1);
   }
+
+  const handleSignup = async () => {
+    const hasPlatformUrl = Object.values(platformForm).some(url => url.trim() !== '');
+    if (!hasPlatformUrl) {
+      alert("하나 이상의 플랫폼 URL을 입력해주세요.");
+      return;
+    }
+
+    try {
+      await signupAsInfluencer({
+        email: personalInfoForm.email,
+        password: personalInfoForm.pw,
+        name: personalInfoForm.name,
+        phoneNumber: personalInfoForm.phone,
+        youtubeUrl: platformForm.youtube || undefined,
+        blogUrl: platformForm.blog || undefined,
+        instagramUrl: platformForm.insta || undefined,
+        tiktokUrl: platformForm.tiktok || undefined,
+      });
+      alert("회원가입이 완료되었습니다.");
+      navigate("/login");
+    } catch (e) {
+      alert(`회원가입 중 오류가 발생했습니다: ${e}`);
+    }
+  };
 
   return (
     <>
@@ -110,7 +135,7 @@ export default function Influence({ type }: Props) {
           <S.SignupTerms>
             <S.ButtonBox>
               <S.SignupButton onClick={handlePrevStep}>&larr; 이전</S.SignupButton>
-              <S.SignupButton>회원가입</S.SignupButton>
+              <S.SignupButton onClick={handleSignup}>회원가입</S.SignupButton>
             </S.ButtonBox>
           </S.SignupTerms>
         </>

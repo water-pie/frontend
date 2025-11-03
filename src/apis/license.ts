@@ -2,7 +2,7 @@ import { api } from "./instance";
 
 export const generateLicenseCodeApi = async (email: string) => {
   try {
-    const response = await api.post(`/licence-code/generate/${email}`);
+    const response = await api.get(`/licence-code/generate/${email}`);
     return response.data;
   } catch (e) {
     throw new Error(`${e}`);

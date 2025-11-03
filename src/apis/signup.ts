@@ -4,6 +4,7 @@ import { api } from "./instance";
 // Influencer
 export const signupAsInfluencer = async (data: {
   email: string;
+  password: string;
   name: string;
   phoneNumber: string;
   youtubeUrl?: string;
@@ -22,6 +23,7 @@ export const signupAsInfluencer = async (data: {
 // Brand Manager
 export const signupAsBrandManager = async (data: {
   email: string;
+  password: string;
   name: string;
   phoneNumber: string;
   youtubeUrl?: string;
@@ -43,6 +45,7 @@ export const signupAsBrandManager = async (data: {
 // Marketing Agency
 export const signupAsMarketingAgency = async (data: {
   email: string;
+  password: string;
   name: string;
   phoneNumber: string;
   businessRegistrationNumber: string;

@@ -26,9 +26,13 @@ export default function Login() {
 
   const handleSubmit = async () => {
     if (isFull) {
-      const { data } = await loginApi({email: form.email, password: form.pw});
-      login(data.user.userType, data.access_token);
-      navigate('/');
+      try {
+        const { data } = await loginApi({email: form.email, password: form.pw});
+        login(data.user.userType, data.access_token);
+        navigate('/');
+      } catch (error: any) {
+        alert(error.message);
+      }
     }
   };
 

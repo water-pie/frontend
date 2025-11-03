@@ -2,6 +2,8 @@ import * as S from "styles/Signup";
 import { Business, PersonalInfo, Platform } from "components/SignupField";
 import { useState } from "react";
 import type { FormState } from "types/input";
+import { signupAsBrandManager } from "apis/signup";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   type: string,
@@ -31,6 +33,7 @@ export default function Brand({ type }: Props) {
     address: "",
     detailedAddress: "",
   });
+  const navigate = useNavigate();
 
   const handlePersonalInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -67,6 +70,10 @@ export default function Brand({ type }: Props) {
       alert("이메일 인증을 완료해주세요.");
       return;
     }
+    if (step === 1 && (personalInfoForm.pw !== personalInfoForm.checkPw)) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
     if (step === 2) {
       const hasPlatformUrl = Object.values(platformForm).some(url => url.trim() !== '');
       if (!hasPlatformUrl) {
@@ -76,6 +83,33 @@ export default function Brand({ type }: Props) {
     }
     setStep(step+1);
   }
+
+  const handleSignup = async () => {
+    if (!businessInfoForm.registrationNumber || !businessInfoForm.address || !businessInfoForm.detailedAddress) {
+        alert("사업자 정보를 모두 입력해주세요.");
+        return;
+    }
+
+    try {
+        await signupAsBrandManager({
+            email: personalInfoForm.email,
+            password: personalInfoForm.pw,
+            name: personalInfoForm.name,
+            phoneNumber: personalInfoForm.phone,
+            youtubeUrl: platformForm.youtube || undefined,
+            blogUrl: platformForm.blog || undefined,
+            instagramUrl: platformForm.insta || undefined,
+            tiktokUrl: platformForm.tiktok || undefined,
+            businessRegistrationNumber: businessInfoForm.registrationNumber,
+            address: businessInfoForm.address,
+            detailedAddress: businessInfoForm.detailedAddress,
+        });
+        alert("회원가입이 완료되었습니다.");
+        navigate("/login");
+    } catch (e) {
+        alert(`회원가입 중 오류가 발생했습니다: ${e}`);
+    }
+  };
 
   return (
     <>
@@ -92,7 +126,7 @@ export default function Brand({ type }: Props) {
 
          <S.StepItem active={step === 3}>
           <S.StepCircle active={step === 3}/>
-          <S.StepLabel active={step === 3}>플랫폼 등록</S.StepLabel>
+          <S.StepLabel active={step === 3}>사업자 등록</S.StepLabel>
         </S.StepItem>
       </S.StepIndicator>
 
@@ -145,7 +179,7 @@ export default function Brand({ type }: Props) {
           <S.SignupTerms>
             <S.ButtonBox>
               <S.SignupButton onClick={handlePrevStep}>&larr; 이전</S.SignupButton>
-              <S.SignupButton>회원가입</S.SignupButton>
+              <S.SignupButton onClick={handleSignup}>회원가입</S.SignupButton>
             </S.ButtonBox>
           </S.SignupTerms>
         </>
