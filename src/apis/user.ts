@@ -1,78 +1,47 @@
 import { api } from "./instance";
+import {
+  type UpdateUserInfoPayload,
+  type ChangePasswordPayload,
+  type UserInfoResponse,
+  type UpdatePlatformInfoPayload,
+  type InfluencerListResponse,
+  type BrandManagerListResponse,
+  type MarketingAgencyListResponse,
+} from "types/apis/user";
 
-interface UpdateUserInfoPayload {
-  name: string;
-  email: string;
-  phoneNumber: string;
-}
-
-interface ChangePasswordPayload {
-  currentPassword: string;
-  newPassword: string;
-}
-
-interface InfluencerInfo {
-  email: string;
-  name: string;
-  phoneNumber: string;
-  youtubeUrl?: string;
-  blogUrl?: string;
-  instagramUrl?: string;
-  tiktokUrl?: string;
-}
-
-interface BrandManagerInfo {
-  email: string;
-  name: string;
-  phoneNumber: string;
-  youtubeUrl?: string;
-  blogUrl?: string;
-  instagramUrl?: string;
-  tiktokUrl?: string;
-  businessRegistrationNumber: string;
-  address: string;
-  detailedAddress: string;
-}
-
-interface MarketingAgencyInfo {
-  email: string;
-  name: string;
-  phoneNumber: string;
-  businessRegistrationNumber: string;
-  address: string;
-  detailedAddress: string;
-}
-
-interface UpdatePlatformInfoPayload {
-  youtubeUrl?: string;
-  blogUrl?: string;
-  instagramUrl?: string;
-  tiktokUrl?: string;
-}
-
-export type UserInfoResponse = InfluencerInfo | BrandManagerInfo | MarketingAgencyInfo;
-
-export const updateUserInfoApi = async (data: UpdateUserInfoPayload) => {
+export const updateUserInfoApi = async (data: UpdateUserInfoPayload, token: string) => {
   try {
-    const response = await api.put("/users/me", data);
+    const response = await api.put("/users/me", data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (e) {
     throw new Error(`${e}`);
   }
 };
 
-export const changePasswordApi = async (data: ChangePasswordPayload) => {
+export const changePasswordApi = async (data: ChangePasswordPayload, token: string) => {
   try {
-    const response = await api.put("/users/me/change-password", data);
+    const response = await api.put("/users/me/change-password", data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (e) {
     throw new Error(`${e}`);
   }
 };
 
-export const getUserInfoApi = async (): Promise<UserInfoResponse> => {
+export const getUserInfoApi = async (token: string): Promise<UserInfoResponse> => {
   try {
-    const response = await api.get<UserInfoResponse>("/users/me");
+    const response = await api.get<UserInfoResponse>("/users/me", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (e) {
     throw new Error(`${e}`);
@@ -80,10 +49,56 @@ export const getUserInfoApi = async (): Promise<UserInfoResponse> => {
 };
 
 // 인플루언서 연결
-export const updatePlatformInfoApi = async (data: UpdatePlatformInfoPayload) => {
+export const updatePlatformInfoApi = async (data: UpdatePlatformInfoPayload, token: string) => {
   try {
-    const response = await api.patch("/users/update/platform", data);
+    const response = await api.patch("/users/update/platform", data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
+  } catch (e) {
+    throw new Error(`${e}`);
+  }
+};
+
+// 인플루언서 목록 (관리자)
+export const getInfluencerListApi = async (token: string) => {
+  try {
+    const response = await api.get<InfluencerListResponse>("/users/type/influencer", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data.data;
+  } catch (e) {
+    throw new Error(`${e}`);
+  }
+};
+
+// 브랜드 매니저 목록 (관리자)
+export const getBrandManagerListApi = async (token: string) => {
+  try {
+    const response = await api.get<BrandManagerListResponse>("/users/type/brand-manager", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data.data;
+  } catch (e) {
+    throw new Error(`${e}`);
+  }
+};
+
+// 마케팅 대행사 목록 (관리자)
+export const getMarketingAgencyListApi = async (token: string) => {
+  try {
+    const response = await api.get<MarketingAgencyListResponse>("/users/type/marketing-agency", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data.data;
   } catch (e) {
     throw new Error(`${e}`);
   }
