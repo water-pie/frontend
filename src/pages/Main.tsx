@@ -1,8 +1,21 @@
 import CampaignCard from "components/Campaign/CampaignCard";
 import * as S from "styles/main";
-import { campaigns } from "mocks/campaign";
+import { campaigns as mockCampaings } from "mocks/campaign";
+import { getExperienceListApi } from "apis/experience";
+import { useEffect, useState } from "react";
 
 export default function Main() {
+  const [campaigns, setCampaigns] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchCampaigns = async () => {
+      const response = await getExperienceListApi();
+      setCampaigns(response.data.length > 0 ? response.data : mockCampaings);
+    };
+
+    fetchCampaigns();
+  }, []);
+
   return (
     <>
       <S.TitleBox>

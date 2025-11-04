@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import Input, { SendInput } from "components/Input/Input";
 import { generateLicenseCodeApi, verifyLicenseCodeApi } from "apis/license";
 import type { FormState } from "types/input";
+import { useState } from "react";
 
 interface Props {
   extra?: boolean;
@@ -29,9 +30,14 @@ export const PersonalInfo = ({
   isEmailVerified,
   setIsEmailVerified,
 }: Props) => {
+  const [sendLoading, setSendLoading] = useState(false);
+  const [verifyLoading, setVerifyLoading] = useState(false);
+
   const handleSendCode = async () => {
+    setSendLoading(true);
     try {
       const response = await generateLicenseCodeApi(form.email);
+      console.log('API Response Data:', response.data);
       if (response.data.sent) {
         setIsCodeSent(true);
         alert("인증 코드가 이메일로 전송되었습니다.");
@@ -41,13 +47,16 @@ export const PersonalInfo = ({
     } catch (error) {
       alert("인증 코드 전송 중 오류가 발생했습니다.");
       console.error("Error sending verification code:", error);
+    } finally {
+      setSendLoading(false);
     }
   };
 
   const handleVerifyCode = async () => {
+    setVerifyLoading(true);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
     try {
       const response = await verifyLicenseCodeApi(form.email, form.code);
-      if (response.data.verified) {
+      if (response.data.valid) {
         setIsEmailVerified(true);
         alert("이메일이 성공적으로 인증되었습니다.");
       } else {
@@ -56,6 +65,8 @@ export const PersonalInfo = ({
     } catch (error) {
       alert("인증 코드 확인 중 오류가 발생했습니다.");
       console.error("Error verifying code:", error);
+    } finally {
+      setVerifyLoading(false);
     }
   };
 
@@ -70,8 +81,8 @@ export const PersonalInfo = ({
           onChange={handleChange}
           disabled={isCodeSent}
         />
-        <SendCodeButton onClick={handleSendCode} disabled={isCodeSent}>
-          인증
+        <SendCodeButton onClick={handleSendCode} disabled={isCodeSent || sendLoading}>
+          {sendLoading ? '전송중' : '인증'}
         </SendCodeButton>
       </InputContainer>
 
@@ -85,8 +96,8 @@ export const PersonalInfo = ({
             onChange={handleChange}
             disabled={isEmailVerified}
           />
-          <SendCodeButton onClick={handleVerifyCode} disabled={isEmailVerified}>
-            확인
+          <SendCodeButton onClick={handleVerifyCode} disabled={isEmailVerified || verifyLoading}>
+            {verifyLoading ? '확인중' : '확인'}
           </SendCodeButton>
         </InputContainer>
       )}
@@ -133,5 +144,10 @@ export const SendCodeButton = styled.button`
 
   :hover {
     background-color: #68C0FF;
+  }
+
+  :disabled {
+    background-color: #c0c0c0;
+    cursor: not-allowed;
   }
 `

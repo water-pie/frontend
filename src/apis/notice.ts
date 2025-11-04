@@ -42,7 +42,7 @@ interface DeleteNoticeResponse {
   data: {};
 }
 
-// 공지사항 목록 조회
+// 공지사항 목록 조회 todo
 export const getNoticeListApi = async (): Promise<GetNoticeListResponse> => {
   try {
     const response = await api.get<GetNoticeListResponse>("/notice/list");
@@ -52,7 +52,7 @@ export const getNoticeListApi = async (): Promise<GetNoticeListResponse> => {
   }
 };
 
-// 공지사항 상세 조회
+// 공지사항 상세 조회 todo
 export const getNoticeDetailApi = async (id: number): Promise<GetNoticeDetailResponse> => {
   try {
     const response = await api.get<GetNoticeDetailResponse>(`/notice/${id}`);

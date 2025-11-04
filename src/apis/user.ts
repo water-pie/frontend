@@ -9,6 +9,7 @@ import {
   type MarketingAgencyListResponse,
 } from "types/apis/user";
 
+// todo
 export const updateUserInfoApi = async (data: UpdateUserInfoPayload, token: string) => {
   try {
     const response = await api.put("/users/me", data, {
@@ -22,6 +23,7 @@ export const updateUserInfoApi = async (data: UpdateUserInfoPayload, token: stri
   }
 };
 
+// todo
 export const changePasswordApi = async (data: ChangePasswordPayload, token: string) => {
   try {
     const response = await api.put("/users/me/change-password", data, {
@@ -35,6 +37,7 @@ export const changePasswordApi = async (data: ChangePasswordPayload, token: stri
   }
 };
 
+// todo
 export const getUserInfoApi = async (token: string): Promise<UserInfoResponse> => {
   try {
     const response = await api.get<UserInfoResponse>("/users/me", {
@@ -48,7 +51,7 @@ export const getUserInfoApi = async (token: string): Promise<UserInfoResponse> =
   }
 };
 
-// 인플루언서 연결
+// 인플루언서 연결 todo
 export const updatePlatformInfoApi = async (data: UpdatePlatformInfoPayload, token: string) => {
   try {
     const response = await api.patch("/users/update/platform", data, {

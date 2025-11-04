@@ -45,7 +45,7 @@ export const getUserPenaltyCount = async (userId: number, token: string) => {
   return response.data;
 };
 
-// 페널티 확인
+// 페널티 확인 todo
 export const getMyPenalties = async (token: string) => {
   const response = await api.get("/penalties/me", {
     headers: {
@@ -55,7 +55,7 @@ export const getMyPenalties = async (token: string) => {
   return response.data;
 };
 
-// 페널티 수 확인
+// 페널티 수 확인 todo
 export const getMyPenaltyCount = async (token: string) => {
   const response = await api.get("/penalties/me/count", {
     headers: {

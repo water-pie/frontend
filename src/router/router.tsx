@@ -1,10 +1,19 @@
+import AdminLayout from "components/Layouts/AdminLayout";
+import AdminPage from "pages/Admin/Main";
+import UserManagement from "pages/Admin/UserManagement";
+import PostManagement from "pages/Admin/PostManagement";
+import InquiryManagement from "pages/Admin/InquiryManagement";
+import PointManagement from "pages/Admin/PointManagement";
+import PenaltyManagement from "pages/Admin/PenaltyManagement";
 import Layout from "components/Layouts/Layout";
 import PostLayout from "components/Layouts/PostLayout";
 import CampaignCreationLayout from "components/Layouts/CampaignCreationLayout";
 import BusinessMyPageLayout from 'components/Layouts/BusinessMyPageLayout';
 import MyPageLayout from "components/Layouts/MyPageLayout";
 import * as P from "pages";
+import Search from "pages/Search";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute";
 
 export default function Router() {
   return (
@@ -23,6 +32,7 @@ export default function Router() {
           <Route path="product" element={<P.Product />} />
           <Route path="location" element={<P.Location />} />
           <Route path="promotion" element={<P.Promotion />} />
+          <Route path="search" element={<Search />} />
           <Route path="notices" element={<PostLayout />}>
             <Route index element={<P.NoticesAndEvents />} />
             <Route path=":id" element={<P.PostDetail />} />
@@ -53,6 +63,16 @@ export default function Router() {
             <Route path="inquiry" element={<P.Inquiry />} />
           </Route>
           <Route path="*" element={<P.NotFound />} />
+        </Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminPage />} />
+            <Route path="users" element={<UserManagement />} />
+            <Route path="posts" element={<PostManagement />} />
+            <Route path="inquiries" element={<InquiryManagement />} />
+            <Route path="points" element={<PointManagement />} />
+            <Route path="penalties" element={<PenaltyManagement />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

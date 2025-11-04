@@ -69,6 +69,7 @@ interface UpdateExperienceStatusResponse {
   data: Record<string, never>;
 }
 
+// todo
 export const registerExperienceApi = async (
   data: RegisterExperienceRequest,
   president_image: File,
@@ -97,7 +98,7 @@ export const registerExperienceApi = async (
   }
 };
 
-// 체험단 목록 조회 (담당자가 등록한 체험단만 조회)
+// 체험단 목록 조회 (담당자가 등록한 체험단만 조회) todo
 export const getManagedExperienceListApi = async (): Promise<GetManagedExperienceListResponse> => {
   try {
     const response = await api.get<GetManagedExperienceListResponse>(
@@ -109,7 +110,7 @@ export const getManagedExperienceListApi = async (): Promise<GetManagedExperienc
   }
 };
 
-// 체험단 삭제
+// 체험단 삭제 todo
 export const deleteExperienceApi = async (id: number): Promise<DeleteExperienceResponse> => {
   try {
     const response = await api.delete<DeleteExperienceResponse>(`/experience-manage/${id}`);
@@ -119,7 +120,7 @@ export const deleteExperienceApi = async (id: number): Promise<DeleteExperienceR
   }
 };
 
-// 체험단 선정
+// 체험단 선정 todo
 export const selectExperienceMembersApi = async (
   id: number,
   data: SelectExperienceMembersRequest
@@ -135,7 +136,7 @@ export const selectExperienceMembersApi = async (
   }
 };
 
-// 체험단 수정
+// 체험단 수정 todo
 export const updateExperienceApi = async (
   id: number,
   data: RegisterExperienceRequest,
@@ -169,7 +170,7 @@ export const updateExperienceApi = async (
   }
 };
 
-// 체험단 상세 조회
+// 체험단 상세 조회 todo
 export const getManagedExperienceDetailApi = async (id: number): Promise<GetManagedExperienceDetailResponse> => {
   try {
     const response = await api.get<GetManagedExperienceDetailResponse>(`/experience-manage/detail/${id}`);
@@ -179,7 +180,7 @@ export const getManagedExperienceDetailApi = async (id: number): Promise<GetMana
   }
 };
 
-// 체험단 신청 목록 조회
+// 체험단 신청 목록 조회 todo
 export const getExperienceApplicationListApi = async (
   id: number,
   status?: "PENDING" | "APPROVED" | "REJECTED" | "CANCELLED"
@@ -199,7 +200,7 @@ export const getExperienceApplicationListApi = async (
   }
 };
 
-// 캠페인 리뷰 목록 조회
+// 캠페인 리뷰 목록 조회 todo
 export const getCampaignReviewListApi = async (id: number): Promise<GetCampaignReviewListResponse> => {
   try {
     const response = await api.get<GetCampaignReviewListResponse>(`/experience-manage/${id}/reviews`);
@@ -209,7 +210,7 @@ export const getCampaignReviewListApi = async (id: number): Promise<GetCampaignR
   }
 };
 
-// 체험단 리뷰 심사
+// 체험단 리뷰 심사 todo
 export const moderateReviewApi = async (
   applicationId: number,
   decision: "approve" | "reject"
@@ -224,7 +225,7 @@ export const moderateReviewApi = async (
   }
 };
 
-// 체험단 상태 변경
+// 체험단 상태 변경 todo
 export const updateExperienceStatusApi = async (
   id: number,
   data: UpdateExperienceStatusRequest

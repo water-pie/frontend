@@ -81,7 +81,6 @@ interface GetMyReviewsResponse {
   data: MyReviewSummary[];
 }
 
-// 체험단 목록 조회
 export const getExperienceListApi = async (): Promise<GetExperienceListResponse> => {
   try {
     const response = await api.get<GetExperienceListResponse>("/experience/list");
@@ -91,7 +90,6 @@ export const getExperienceListApi = async (): Promise<GetExperienceListResponse>
   }
 };
 
-// 체험단 검색
 export const searchExperienceListApi = async (keyword: string): Promise<GetExperienceListResponse> => {
   try {
     const response = await api.get<GetExperienceListResponse>(`/experience/list?keyword=${keyword}`);
@@ -101,7 +99,7 @@ export const searchExperienceListApi = async (keyword: string): Promise<GetExper
   }
 };
 
-// 체험단 상세 조회
+// 체험단 상세 조회 todo
 export const getExperienceDetailApi = async (id: number): Promise<GetExperienceDetailResponse> => {
   try {
     const response = await api.get<GetExperienceDetailResponse>(`/experience/${id}`);
@@ -111,7 +109,7 @@ export const getExperienceDetailApi = async (id: number): Promise<GetExperienceD
   }
 };
 
-// 체험 신청
+// 체험 신청 todo
 export const applyExperienceApi = async (id: number): Promise<ApplyExperienceResponse> => {
   try {
     const response = await api.post<ApplyExperienceResponse>(`/experience/${id}`);
@@ -121,7 +119,7 @@ export const applyExperienceApi = async (id: number): Promise<ApplyExperienceRes
   }
 };
 
-// 체험 신청 취소
+// 체험 신청 취소 todo 
 export const cancelExperienceApi = async (id: number): Promise<CancelExperienceResponse> => {
   try {
     const response = await api.delete<CancelExperienceResponse>(`/experience/${id}`);
@@ -131,7 +129,7 @@ export const cancelExperienceApi = async (id: number): Promise<CancelExperienceR
   }
 };
 
-// 진행중 체험 조회
+// 진행중 체험 조회 todo
 export const getOngoingExperiencesApi = async (): Promise<GetOngoingExperiencesResponse> => {
   try {
     const response = await api.get<GetOngoingExperiencesResponse>("/experience/me");
@@ -141,7 +139,7 @@ export const getOngoingExperiencesApi = async (): Promise<GetOngoingExperiencesR
   }
 };
 
-// 지난 체험 조회
+// 지난 체험 조회 todo
 export const getPastExperiencesApi = async (): Promise<GetPastExperiencesResponse> => {
   try {
     const response = await api.get<GetPastExperiencesResponse>("/experience/me/before");
@@ -151,7 +149,7 @@ export const getPastExperiencesApi = async (): Promise<GetPastExperiencesRespons
   }
 };
 
-// 리뷰 등록
+// 리뷰 등록 todo
 export const registerReviewApi = async (id: number, data: RegisterReviewRequest): Promise<RegisterReviewResponse> => {
   try {
     const response = await api.post<RegisterReviewResponse>(`/experience/${id}/review`, data);
@@ -161,7 +159,7 @@ export const registerReviewApi = async (id: number, data: RegisterReviewRequest)
   }
 };
 
-// 리뷰 삭제
+// 리뷰 삭제 todo 
 export const deleteReviewApi = async (exp_id: number, review_id: number): Promise<DeleteReviewResponse> => {
   try {
     const response = await api.delete<DeleteReviewResponse>(`/experience/${exp_id}/${review_id}`);
@@ -171,7 +169,7 @@ export const deleteReviewApi = async (exp_id: number, review_id: number): Promis
   }
 };
 
-// 내 리뷰 목록 조회
+// 내 리뷰 목록 조회 todo
 export const getMyReviewsApi = async (): Promise<GetMyReviewsResponse> => {
   try {
     const response = await api.get<GetMyReviewsResponse>("/experience/me/reviews");

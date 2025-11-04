@@ -31,15 +31,16 @@ interface Props {
   member_num: number;
   chennels: number[];
   possible_time_application: [string, string];
+  product_offer_type: 1 | 2 | 3 | 4;
 };
 
 const CampaignCard = ({
-  id, image_urls, title, offer_content, applicated_num, member_num, chennels, possible_time_application
+  id, image_urls, title, offer_content, applicated_num, member_num, chennels, possible_time_application, product_offer_type
 }: Props) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/campaign/${id}`);
+    navigate(`/campaign/${id}`, { state: { product_offer_type } });
   };
 
   const remainingDays = possible_time_application

@@ -22,6 +22,7 @@ export default function Marketing({ type }: Props) {
   });
   const [isCodeSent, setIsCodeSent] = useState<boolean>(false);
   const [isEmailVerified, setIsEmailVerified] = useState<boolean>(false);
+  const [termsAgreed, setTermsAgreed] = useState<boolean>(false);
   const [businessInfoForm, setBusinessInfoForm] = useState({
     registrationNumber: "",
     address: "",
@@ -31,10 +32,26 @@ export default function Marketing({ type }: Props) {
 
   const handlePersonalInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    let formattedValue = value;
+
+    if (name === 'phone') {
+      const digitsOnly = value.replace(/\D/g, '');
+
+      if (digitsOnly.length > 10) {
+        formattedValue = digitsOnly.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+      } else if (digitsOnly.length > 6) {
+        formattedValue = digitsOnly.replace(/(\d{3})(\d{4})(\d{1,4})/, '$1-$2-$3');
+      } else if (digitsOnly.length > 2) {
+        formattedValue = digitsOnly.replace(/(\d{3})(\d{1,4})/, '$1-$2');
+      }
+      if (formattedValue.length > 13) {
+        formattedValue = formattedValue.substring(0, 13);
+      }
+    }
 
     setPersonalInfoForm((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: formattedValue,
     }));
   };
 
@@ -51,13 +68,23 @@ export default function Marketing({ type }: Props) {
   }
 
   const handleNextStep = () => {
-    if (step === 1 && !isEmailVerified) {
-      alert("이메일 인증을 완료해주세요.");
-      return;
-    }
-    if (step === 1 && (personalInfoForm.pw !== personalInfoForm.checkPw)) {
-      alert("비밀번호가 일치하지 않습니다.");
-      return;
+    if (step === 1) {
+      if (!isEmailVerified) {
+        alert("이메일 인증을 완료해주세요.");
+        return;
+      }
+      if (personalInfoForm.pw.length < 8) {
+        alert("비밀번호는 8자 이상이어야 합니다.");
+        return;
+      }
+      if (personalInfoForm.pw !== personalInfoForm.checkPw) {
+        alert("비밀번호가 일치하지 않습니다.");
+        return;
+      }
+      if (!termsAgreed) {
+        alert("약관에 동의해주세요. (필수)");
+        return;
+      }
     }
     setStep(step+1);
   }
@@ -114,7 +141,7 @@ export default function Marketing({ type }: Props) {
           </S.SignupField>
           <S.SignupTerms>
             <S.TermsBox>
-              <input type="checkbox" />
+              <input type="checkbox" checked={termsAgreed} onChange={(e) => setTermsAgreed(e.target.checked)} />
               <span>약관에 동의합니다. (필수)</span>
             </S.TermsBox>
             <S.ButtonBox>

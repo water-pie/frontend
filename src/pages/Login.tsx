@@ -29,7 +29,11 @@ export default function Login() {
       try {
         const { data } = await loginApi({email: form.email, password: form.pw});
         login(data.user.userType, data.access_token);
-        navigate('/');
+        if (data.user.userType === 'ADMIN') {
+          navigate('/admin');
+        } else {
+          navigate('/');
+        }
       } catch (error: any) {
         alert(error.message);
       }
