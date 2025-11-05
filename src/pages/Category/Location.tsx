@@ -33,6 +33,7 @@ export default function Location() {
             member_num={campaign.member_num}
             chennels={campaign.chennals}
             possible_time_application={campaign.possible_time_application}
+            product_offer_type={campaign.product_offer_type}
           />
         ))}
       </S.CampaignGrid>

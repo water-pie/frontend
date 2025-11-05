@@ -1,35 +1,56 @@
 import { useState } from 'react';
-import * as S from 'styles/modal/reviewRegistrationModal'; // Will create this file
-import { Input } from '../Input/Input'; // Assuming a generic Input component exists
+import * as S from 'styles/modal/reviewRegistrationModal';
+import { Input } from '../Input/Input';
 import type { CampaignItem } from 'types/campaign';
+import { registerReviewApi } from 'apis/experience';
+import useUserStore from 'store/useUserStore';
 
 interface ReviewRegistrationModalProps {
   isOpen: boolean;
   onClose: () => void;
-  campaignDetails: CampaignItem
+  campaignDetails: CampaignItem & { exp_id: number }; // Add exp_id to campaignDetails
 }
 
 const ReviewRegistrationModal = ({ isOpen, onClose, campaignDetails }: ReviewRegistrationModalProps) => {
+  const { userInfo } = useUserStore();
   const [url1, setUrl1] = useState('');
   const [url2, setUrl2] = useState('');
   const [messageToOwner, setMessageToOwner] = useState('');
 
   if (!isOpen) return null;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    if (!userInfo?.token) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
     if (!url1) {
       alert('URL 1을 입력해주세요.');
       return;
     }
-    alert('리뷰가 성공적으로 등록되었습니다!');
-    // Here you would typically send the data to a backend
-    console.log({
-      campaignId: campaignDetails.id,
-      url1,
-      url2,
-      messageToOwner,
-    });
-    onClose(); // Close modal after submission
+
+    const reviewUrls = [url1];
+    if (url2) {
+      reviewUrls.push(url2);
+    }
+
+    try {
+      const response = await registerReviewApi(campaignDetails.exp_id, {
+        urls: reviewUrls,
+        message: messageToOwner,
+      }, userInfo.token);
+
+      if (response.status === "success") {
+        alert('리뷰가 성공적으로 등록되었습니다!');
+        onClose(); // Close modal after submission
+        // Optionally, refresh the ongoing campaigns list here if needed
+      } else {
+        alert(`리뷰 등록 실패: ${response.message}`);
+      }
+    } catch (error) {
+      console.error("리뷰 등록 중 오류 발생:", error);
+      alert("리뷰 등록 중 오류가 발생했습니다.");
+    }
   };
 
   return (

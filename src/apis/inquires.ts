@@ -5,7 +5,6 @@ interface InquiryData {
   content: string;
 }
 
-// 문의사항 등록 todo
 export const createInquiry = async (data: InquiryData, token: string) => {
   const response = await api.post("/inquiries", data, {
     headers: {
@@ -15,7 +14,6 @@ export const createInquiry = async (data: InquiryData, token: string) => {
   return response.data;
 };
 
-// 자신의 문의사항 조회 todo
 export const getMyInquiries = async (token: string) => {
   const response = await api.get("/inquiries", {
     headers: {
@@ -25,14 +23,12 @@ export const getMyInquiries = async (token: string) => {
   return response.data;
 };
 
-// 특정 문의사항 조회 todo 
 export const getInquiryById = async (id: number, token?: string) => {
   const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
   const response = await api.get(`/inquiries/${id}`, config);
   return response.data;
 };
 
-// 문의사항 수정 todo
 export const updateInquiry = async (id: number, data: InquiryData, token: string) => {
   const response = await api.put(`/inquiries/${id}`, data, {
     headers: {
@@ -42,7 +38,6 @@ export const updateInquiry = async (id: number, data: InquiryData, token: string
   return response.data;
 };
 
-// 문의사항 삭제 todo
 export const deleteInquiry = async (id: number, token: string) => {
   const response = await api.delete(`/inquiries/${id}`, {
     headers: {

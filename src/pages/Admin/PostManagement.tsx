@@ -73,8 +73,8 @@ const PostTable = ({ posts, onDelete, onEdit, onView }: { posts: any[], onDelete
 };
 
 export default function PostManagement() {
-  const [activeTab, setActiveTab] = useState('notice');
-  const [posts, setPosts] = useState([]);
+  const [activeTab, setActiveTab] = useState<'notice' | 'event'>('notice');
+  const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const { userInfo } = useUserStore();
 

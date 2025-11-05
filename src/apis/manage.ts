@@ -69,11 +69,11 @@ interface UpdateExperienceStatusResponse {
   data: Record<string, never>;
 }
 
-// todo
 export const registerExperienceApi = async (
   data: RegisterExperienceRequest,
   president_image: File,
-  images: File[]
+  images: File[],
+  token: string
 ): Promise<RegisterExperienceResponse> => {
   const formData = new FormData();
   formData.append("data", JSON.stringify(data));
@@ -89,6 +89,7 @@ export const registerExperienceApi = async (
       {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
         },
       }
     );

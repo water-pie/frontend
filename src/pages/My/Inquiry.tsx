@@ -1,27 +1,47 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as S from 'styles/my/inquiry';
 import InquiryCard from 'components/My/InquiryCard';
 import { useNavigate } from 'react-router-dom';
+import { getMyInquiries } from 'apis/inquires';
+import useUserStore from 'store/useUserStore';
 
-interface InquiryItem {
+interface ApiInquiryItem {
   id: number;
   title: string;
-  date: string;
-  status: '답변 중' | '답변 완료';
+  created_at: string;
+  status: number; // Assuming 0 for '답변 중', 1 for '답변 완료'
 }
 
-const mockInquiries: InquiryItem[] = [
-  { id: 1, title: '문의사항 제목 문의사항 제목 문의사항 제목 문의사항 제목', date: '2025년 9월 2일', status: '답변 중' },
-  { id: 2, title: '문의사항 제목 문의사항 제목 문의사항 제목 문의사항 제목', date: '2025년 9월 2일', status: '답변 완료' },
-];
-
 const Inquiry = () => {
-  const [inquiries] = useState<InquiryItem[]>(mockInquiries);
+  const [inquiries, setInquiries] = useState<ApiInquiryItem[]>([]);
   const navigate = useNavigate();
+  const { userInfo } = useUserStore();
+
+  const fetchInquiries = async () => {
+    if (!userInfo?.token) return;
+    try {
+      const response = await getMyInquiries(userInfo.token);
+      if (response.status === "success" && response.data) {
+        setInquiries(response.data);
+      } else {
+        setInquiries([]);
+      }
+    } catch (error) {
+      console.error("Failed to fetch inquiries:", error);
+      setInquiries([]);
+    }
+  };
+
+  useEffect(() => {
+    fetchInquiries();
+  }, [userInfo?.token]);
 
   const handleRegisterInquiry = () => {
-    // alert('문의 등록 페이지로 이동');
     navigate('/my/inquiry/write');
+  };
+
+  const getStatusText = (status: number) => {
+    return status === 0 ? '답변 중' : '답변 완료';
   };
 
   return (
@@ -40,8 +60,8 @@ const Inquiry = () => {
               key={inquiry.id}
               id={inquiry.id}
               title={inquiry.title}
-              date={inquiry.date}
-              status={inquiry.status}
+              date={new Date(inquiry.created_at).toLocaleDateString('ko-KR')}
+              status={getStatusText(inquiry.status)}
             />
           ))}
         </S.InquiryList>

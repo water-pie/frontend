@@ -16,6 +16,12 @@ interface GetExperienceDetailResponse {
   data: ExperienceDetail;
 }
 
+interface ApplyExperienceRequest {
+  pitchText: string;
+  address?: string;
+  detailAddress?: string;
+}
+
 interface ApplyExperienceResponse {
   status: string;
   message: string;
@@ -99,7 +105,6 @@ export const searchExperienceListApi = async (keyword: string): Promise<GetExper
   }
 };
 
-// 체험단 상세 조회 todo
 export const getExperienceDetailApi = async (id: number): Promise<GetExperienceDetailResponse> => {
   try {
     const response = await api.get<GetExperienceDetailResponse>(`/experience/${id}`);
@@ -109,70 +114,113 @@ export const getExperienceDetailApi = async (id: number): Promise<GetExperienceD
   }
 };
 
-// 체험 신청 todo
-export const applyExperienceApi = async (id: number): Promise<ApplyExperienceResponse> => {
+export const applyExperienceApi = async (id: number, data: ApplyExperienceRequest, token: string): Promise<ApplyExperienceResponse> => {
   try {
-    const response = await api.post<ApplyExperienceResponse>(`/experience/${id}`);
+    const response = await api.post<ApplyExperienceResponse>(
+      `/experience/${id}/apply`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (e) {
     throw new Error(`${e}`);
   }
 };
 
-// 체험 신청 취소 todo 
-export const cancelExperienceApi = async (id: number): Promise<CancelExperienceResponse> => {
+export const cancelExperienceApi = async (id: number, token: string): Promise<CancelExperienceResponse> => {
   try {
-    const response = await api.delete<CancelExperienceResponse>(`/experience/${id}`);
+    const response = await api.delete<CancelExperienceResponse>(
+      `/experience/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (e) {
+    throw new Error(`${e}`);
+  }
+};
+export const getOngoingExperiencesApi = async (token: string): Promise<GetOngoingExperiencesResponse> => {
+  try {
+    const response = await api.get<GetOngoingExperiencesResponse>(
+      "/experience/me",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (e) {
     throw new Error(`${e}`);
   }
 };
 
-// 진행중 체험 조회 todo
-export const getOngoingExperiencesApi = async (): Promise<GetOngoingExperiencesResponse> => {
+export const getPastExperiencesApi = async (token: string): Promise<GetPastExperiencesResponse> => {
   try {
-    const response = await api.get<GetOngoingExperiencesResponse>("/experience/me");
+    const response = await api.get<GetPastExperiencesResponse>(
+      "/experience/me/before",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (e) {
     throw new Error(`${e}`);
   }
 };
 
-// 지난 체험 조회 todo
-export const getPastExperiencesApi = async (): Promise<GetPastExperiencesResponse> => {
+export const registerReviewApi = async (id: number, data: RegisterReviewRequest, token: string): Promise<RegisterReviewResponse> => {
   try {
-    const response = await api.get<GetPastExperiencesResponse>("/experience/me/before");
+    const response = await api.post<RegisterReviewResponse>(
+      `/experience/${id}/review`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (e) {
     throw new Error(`${e}`);
   }
 };
 
-// 리뷰 등록 todo
-export const registerReviewApi = async (id: number, data: RegisterReviewRequest): Promise<RegisterReviewResponse> => {
+export const deleteReviewApi = async (exp_id: number, review_id: number, token: string): Promise<DeleteReviewResponse> => {
   try {
-    const response = await api.post<RegisterReviewResponse>(`/experience/${id}/review`, data);
+    const response = await api.delete<DeleteReviewResponse>(
+      `/experience/${exp_id}/${review_id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (e) {
     throw new Error(`${e}`);
   }
 };
 
-// 리뷰 삭제 todo 
-export const deleteReviewApi = async (exp_id: number, review_id: number): Promise<DeleteReviewResponse> => {
+export const getMyReviewsApi = async (token: string): Promise<GetMyReviewsResponse> => {
   try {
-    const response = await api.delete<DeleteReviewResponse>(`/experience/${exp_id}/${review_id}`);
-    return response.data;
-  } catch (e) {
-    throw new Error(`${e}`);
-  }
-};
-
-// 내 리뷰 목록 조회 todo
-export const getMyReviewsApi = async (): Promise<GetMyReviewsResponse> => {
-  try {
-    const response = await api.get<GetMyReviewsResponse>("/experience/me/reviews");
+    const response = await api.get<GetMyReviewsResponse>(
+      "/experience/me/reviews",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (e) {
     throw new Error(`${e}`);

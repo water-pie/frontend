@@ -1,86 +1,64 @@
 
+import { useState, useEffect } from 'react';
 import * as S from 'styles/my/finishedCampaigns';
 import { campaigns } from 'mocks/campaign';
-import type { CampaignItem } from 'types/campaign';
+import { getPastExperiencesApi } from 'apis/experience';
+import useUserStore from 'store/useUserStore';
 
-const finishedCampaigns: CampaignItem[] = [
-  {
-    id: 1,
-    image: campaigns[0].image_urls[0],
-    title: campaigns[0].title,
-    offerContent: campaigns[0].offer_content,
-    mission: '릴스 1회 업로드',
-    missionDeadline: '2025.08.31',
-    status: '리뷰 등록 완료',
-  },
-  {
-    id: 2,
-    image: campaigns[0].image_urls[0],
-    title: campaigns[0].title,
-    offerContent: campaigns[0].offer_content,
-    mission: '릴스 1회 업로드',
-    missionDeadline: '2025.08.31',
-    status: '리뷰 등록 완료',
-  },
-  {
-    id: 3,
-    image: campaigns[0].image_urls[0],
-    title: campaigns[0].title,
-    offerContent: campaigns[0].offer_content,
-    mission: '릴스 1회 업로드',
-    missionDeadline: '2025.08.31',
-    status: '리뷰 등록 완료',
-  },
-  {
-    id: 4,
-    image: campaigns[0].image_urls[0],
-    title: campaigns[0].title,
-    offerContent: campaigns[0].offer_content,
-    mission: '릴스 1회 업로드',
-    missionDeadline: '2025.08.31',
-    status: '리뷰 등록 완료',
-  },
-  {
-    id: 5,
-    image: campaigns[0].image_urls[0],
-    title: campaigns[0].title,
-    offerContent: campaigns[0].offer_content,
-    mission: '릴스 1회 업로드',
-    missionDeadline: '2025.08.31',
-    status: '리뷰 등록 완료',
-  },
-];
+interface FinishedCampaign {
+  exp_id: number;
+  title: string;
+  schedule: string;
+  process_status: number;
+}
 
 const FinishedCampaigns = () => {
+  const { userInfo } = useUserStore();
+  const [finishedCampaigns, setFinishedCampaigns] = useState<FinishedCampaign[]>([]);
+
+  const fetchFinishedCampaigns = async () => {
+    if (!userInfo?.token) return;
+    try {
+      const response = await getPastExperiencesApi(userInfo.token);
+      if (response.status === "success" && response.data) {
+        // Assuming UserExperienceSummary is compatible with FinishedCampaign
+        setFinishedCampaigns(response.data as FinishedCampaign[]);
+      } else {
+        setFinishedCampaigns([]);
+      }
+    } catch (error) {
+      console.error("Failed to fetch finished campaigns:", error);
+      setFinishedCampaigns([]);
+    }
+  };
+
+  useEffect(() => {
+    fetchFinishedCampaigns();
+  }, [userInfo?.token]);
+
   return (
     <S.FinishedCampaignsContainer>
       <S.Title>종료된 캠페인</S.Title>
       <S.CampaignList>
-        {finishedCampaigns.map((campaign) => (
-          <S.CampaignCard key={campaign.id}>
-            <S.CampaignImage src={campaign.image} alt={campaign.title} />
-            <S.CampaignInfo>
-              <S.CampaignTitle>{campaign.title}</S.CampaignTitle>
-              <S.CampaignDescription>{campaign.offerContent}</S.CampaignDescription>
-            </S.CampaignInfo>
-            <S.CampaignStatusInfo>
-              <S.StatusItem>
-                <S.StatusLabel>미션</S.StatusLabel>
-                <S.StatusValue>{campaign.mission}</S.StatusValue>
-              </S.StatusItem>
-              <S.StatusItem>
-                <S.StatusLabel>미션 마감일</S.StatusLabel>
-                <S.StatusValue>{campaign.missionDeadline}</S.StatusValue>
-              </S.StatusItem>
-              <S.StatusItem>
-                <S.StatusLabel>캠페인 상태</S.StatusLabel>
-                <S.StatusButton disabled>
-                  {campaign.status}
-                </S.StatusButton>
-              </S.StatusItem>
-            </S.CampaignStatusInfo>
-          </S.CampaignCard>
-        ))}
+        {finishedCampaigns.length > 0 ? (
+          finishedCampaigns.map((campaign) => (
+            <S.CampaignCard key={campaign.exp_id}>
+              <S.CampaignImage src={campaigns[0].image_urls[0]} alt={campaign.title} /> {/* Placeholder */}
+              <S.CampaignInfo>
+                <S.CampaignTitle>{campaign.title}</S.CampaignTitle>
+                <S.CampaignDescription>일정: {campaign.schedule}</S.CampaignDescription>
+              </S.CampaignInfo>
+              <S.CampaignStatusInfo>
+                <S.StatusItem>
+                  <S.StatusLabel>상태</S.StatusLabel>
+                  <S.StatusValue>{campaign.process_status}</S.StatusValue>
+                </S.StatusItem>
+              </S.CampaignStatusInfo>
+            </S.CampaignCard>
+          ))
+        ) : (
+          <p>종료된 캠페인이 없습니다.</p>
+        )}
       </S.CampaignList>
     </S.FinishedCampaignsContainer>
   );

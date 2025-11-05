@@ -5,7 +5,7 @@ export interface CampaignData {
   data_type: number; // 1: 지역, 2: 제품
   company_name: string;
   manager_call_num: string;
-  product_offer_type: number; // 1: 방문형, 2: 포장형, 3: 배송형, 4: 구매형
+  product_offer_type: 1 | 2 | 3 | 4; // 1: 방문형, 2: 포장형, 3: 배송형, 4: 구매형
   address: string;
   detail_address: string;
   cartegory: string;

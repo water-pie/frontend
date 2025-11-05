@@ -33,13 +33,43 @@ export const Date = styled.span`
   color: ${textColor};
 `;
 
-export const Status = styled.span<{ status: '답변 됨' | '답변 완료' }>`
+export const Status = styled.span<{ status: string }>`
   font-size: 14px;
   font-weight: 500;
   padding: 5px 10px;
   border-radius: 5px;
-  background-color: ${({ status }) => (status === '답변 됨' ? buttonColor : borderColor1)};
-  color: ${({ status }) => (status === '답변 됨' ? 'white' : textColor)};
+  background-color: ${({ status }) => (status === '답변 완료' ? buttonColor : borderColor1)};
+  color: ${({ status }) => (status === '답변 완료' ? 'white' : textColor)};
+`;
+
+export const EditButton = styled.button`
+  background-color: #4CAF50; /* Green */
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 10px;
+
+  &:hover {
+    background-color: #45a049;
+  }
+`;
+
+export const DeleteButton = styled.button`
+  background-color: #f44336; /* Red */
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 10px;
+
+  &:hover {
+    background-color: #da190b;
+  }
 `;
 
 export const ContentSection = styled.div`

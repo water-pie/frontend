@@ -3,19 +3,38 @@ import * as S from 'styles/campaign/visiting';
 import * as S2 from 'styles/main';
 import { productTypeMapping } from 'apis/Mapping/typeMapping';
 import { useParams, useNavigate } from 'react-router-dom';
-import type { CampaignData } from 'mocks/campaign';
 import { campaigns } from 'mocks/campaign';
 import CampaignCard from 'components/Campaign/CampaignCard';
 import { insta } from 'utils/importing';
+import { getExperienceDetailApi } from 'apis/experience';
+import { type ExperienceDetail } from 'types/apis/experience';
 
 export default function BuyingPage() {
-  const { id } = useParams(); // id 파라미터 가져오기
-  const navigate = useNavigate(); // Initialize useNavigate
-  const [campaignData, setCampaignData] = useState<CampaignData | null>(null);
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [campaignData, setCampaignData] = useState<ExperienceDetail | null>(null);
 
   useEffect(() => {
-    const mockData = campaigns.find(campaign => campaign.id.toString() === id);
-    setCampaignData(mockData || null);
+    const fetchCampaignDetail = async () => {
+      if (!id) return;
+      try {
+        const response = await getExperienceDetailApi(Number(id));
+        if (response.status === "success" && response.data) {
+          setCampaignData(response.data);
+        } else {
+          // Fallback to mock data if API returns no data or status is not success
+          const mockData = campaigns.find(campaign => campaign.id.toString() === id);
+          setCampaignData(mockData as ExperienceDetail || null);
+        }
+      } catch (error) {
+        console.error("Failed to fetch campaign detail:", error);
+        // Fallback to mock data on API error
+        const mockData = campaigns.find(campaign => campaign.id.toString() === id);
+        setCampaignData(mockData as ExperienceDetail || null);
+      }
+    };
+
+    fetchCampaignDetail();
   }, [id]);
 
   if (!campaignData) {
@@ -161,6 +180,7 @@ export default function BuyingPage() {
             member_num={campaign.member_num}
             chennels={campaign.chennals}
             possible_time_application={campaign.possible_time_application}
+            product_offer_type={campaign.product_offer_type}
           />
         ))}
       </S2.CampaignGrid>

@@ -4,13 +4,16 @@ import { insta } from "utils/importing";
 import WidgetNoticeImage from "assets/guideBlog.png";
 import { useNavigate, useParams } from "react-router-dom";
 import DaumPost from "components/Address/DaumPost";
+import { applyExperienceApi } from "apis/experience";
+import useUserStore from "store/useUserStore";
 
 interface postCode {
   address : string,
 }
 
 export default function Application() {
-  useParams();
+  const { id } = useParams<{ id: string }>();
+  const { userInfo } = useUserStore();
   const navigator = useNavigate();
   const [applicationText, setApplicationText] = useState("");
   const [detailAddress, setDetailAddress] = useState("");
@@ -26,7 +29,11 @@ export default function Application() {
     setPopup(!popup);
   };
 
-  const handleApply = () => {
+  const handleApply = async () => {
+    if (!id) {
+      alert("캠페인 ID를 찾을 수 없습니다.");
+      return;
+    }
     if (!form.address) {
       alert("주소를 입력해주세요.");
       return ;
@@ -39,12 +46,25 @@ export default function Application() {
       alert("필수 동의 사항에 체크해주세요.");
       return ;
     }
-    alert("신청이 완료되었습니다.");
-    navigator("/");
+
+    try {
+      const response = await applyExperienceApi(Number(id), {
+        pitchText: applicationText,
+      }, userInfo!.token);
+
+      if (response.status === "success") {
+        alert("신청이 완료되었습니다.");
+        navigator("/");
+      } else {
+        alert(`신청 실패: ${response.message}`);
+      }
+    } catch (error) {
+      console.error("체험 신청 중 오류 발생:", error);
+      alert("체험 신청 중 오류가 발생했습니다.");
+    }
   };
 
-  return (
-    <S.Wrapper>
+  return (    <S.Wrapper>
       <S.LeftContent>
         <S.Title>체험단 신청</S.Title>
 
@@ -84,7 +104,6 @@ export default function Application() {
             />
           </S.AddressInputs>
         </S.Section>
-
         <S.Section>
           <S.NoticeBox>
             <h3>잠깐! 방문자 위젯 설정하셨나요?</h3>
