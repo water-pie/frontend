@@ -1,11 +1,11 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 import * as S from 'styles/my/layout';
 
 const MyPageLayout = () => {
   return (
     <S.MyPageLayout>
       <S.MyPageNav>
-        <h2>마이페이지</h2>
+        <Link to="/my"><h2>마이페이지</h2></Link>
         <S.NavBlock>
           <h3>내 정보</h3>
           <ul>

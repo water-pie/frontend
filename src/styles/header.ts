@@ -18,6 +18,8 @@ export const LeftHeader = styled.div`
 `
 
 export const Logo = styled(Link)`
+  display: flex;
+  align-items: center;
   font-size: 24px;
   font-weight: bold;
   color: #007bff;
@@ -102,7 +104,9 @@ export const LogoutButton = styled.button`
 
 export const UserProfile = styled(Link)`
   border-radius: 100%;
-  background-color: #d7d7d7;
+  background-image: url('/account.png');
+  background-size: cover;
+  background-position: center;
   width: 3rem;
   height: 3rem;
   cursor: pointer;

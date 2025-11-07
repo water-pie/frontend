@@ -28,7 +28,6 @@ export const StepItem = styled.div<{ active?: boolean; completed?: boolean }>`
     height: 2px;
     background-color: ${({ completed }) => (completed ? buttonColor : borderColor1)};
     transform: translateY(-50%);
-    z-index: 0;
   }
 `;
 
@@ -37,7 +36,6 @@ export const StepCircle = styled.div<{ active?: boolean; completed?: boolean }>`
   height: ${DOT_SIZE}px;
   border-radius: 50%;
   background-color: ${({ active, completed }) => (active || completed ? buttonColor : borderColor1)};
-  z-index: 1;
 `;
 
 

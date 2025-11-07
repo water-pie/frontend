@@ -99,11 +99,15 @@ export const registerExperienceApi = async (
   }
 };
 
-// 체험단 목록 조회 (담당자가 등록한 체험단만 조회) todo
-export const getManagedExperienceListApi = async (): Promise<GetManagedExperienceListResponse> => {
+export const getManagedExperienceListApi = async (token: string): Promise<GetManagedExperienceListResponse> => {
   try {
     const response = await api.get<GetManagedExperienceListResponse>(
-      "/experience-manage/list"
+      "/experience-manage/list",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     return response.data;
   } catch (e) {
@@ -111,25 +115,37 @@ export const getManagedExperienceListApi = async (): Promise<GetManagedExperienc
   }
 };
 
-// 체험단 삭제 todo
-export const deleteExperienceApi = async (id: number): Promise<DeleteExperienceResponse> => {
+export const deleteExperienceApi = async (id: number, token: string): Promise<DeleteExperienceResponse> => {
   try {
-    const response = await api.delete<DeleteExperienceResponse>(`/experience-manage/${id}`);
+    const response = await api.delete<DeleteExperienceResponse>(
+      `/experience-manage/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (e) {
     throw new Error(`${e}`);
   }
 };
 
-// 체험단 선정 todo
+// 체험단 선정
 export const selectExperienceMembersApi = async (
   id: number,
-  data: SelectExperienceMembersRequest
+  data: SelectExperienceMembersRequest,
+  token: string
 ): Promise<SelectExperienceMembersResponse> => {
   try {
     const response = await api.post<SelectExperienceMembersResponse>(
       `/experience-manage/${id}/select`,
-      data
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     return response.data;
   } catch (e) {
@@ -137,10 +153,11 @@ export const selectExperienceMembersApi = async (
   }
 };
 
-// 체험단 수정 todo
+// 체험단 수정 ?
 export const updateExperienceApi = async (
   id: number,
   data: RegisterExperienceRequest,
+  token: string,
   president_image?: File,
   images?: File[]
 ): Promise<UpdateExperienceResponse> => {
@@ -162,6 +179,7 @@ export const updateExperienceApi = async (
       {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -171,19 +189,30 @@ export const updateExperienceApi = async (
   }
 };
 
-// 체험단 상세 조회 todo
-export const getManagedExperienceDetailApi = async (id: number): Promise<GetManagedExperienceDetailResponse> => {
+// 체험단 상세 조회 ?
+export const getManagedExperienceDetailApi = async (
+  id: number,
+  token: string
+): Promise<GetManagedExperienceDetailResponse> => {
   try {
-    const response = await api.get<GetManagedExperienceDetailResponse>(`/experience-manage/detail/${id}`);
+    const response = await api.get<GetManagedExperienceDetailResponse>(
+      `/experience-manage/detail/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (e) {
     throw new Error(`${e}`);
   }
 };
 
-// 체험단 신청 목록 조회 todo
+// 체험단 신청 목록 조회
 export const getExperienceApplicationListApi = async (
   id: number,
+  token: string,
   status?: "PENDING" | "APPROVED" | "REJECTED" | "CANCELLED"
 ): Promise<GetExperienceApplicationListResponse> => {
   try {
@@ -193,6 +222,9 @@ export const getExperienceApplicationListApi = async (
         params: {
           status,
         },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
     return response.data;
@@ -201,24 +233,19 @@ export const getExperienceApplicationListApi = async (
   }
 };
 
-// 캠페인 리뷰 목록 조회 todo
-export const getCampaignReviewListApi = async (id: number): Promise<GetCampaignReviewListResponse> => {
+// 캠페인 리뷰 목록 조회
+export const getCampaignReviewListApi = async (
+  id: number,
+  token: string
+): Promise<GetCampaignReviewListResponse> => {
   try {
-    const response = await api.get<GetCampaignReviewListResponse>(`/experience-manage/${id}/reviews`);
-    return response.data;
-  } catch (e) {
-    throw new Error(`${e}`);
-  }
-};
-
-// 체험단 리뷰 심사 todo
-export const moderateReviewApi = async (
-  applicationId: number,
-  decision: "approve" | "reject"
-): Promise<ModerateReviewResponse> => {
-  try {
-    const response = await api.post<ModerateReviewResponse>(
-      `/applications/${applicationId}/review/${decision}`
+    const response = await api.get<GetCampaignReviewListResponse>(
+      `/experience-manage/${id}/reviews`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     return response.data;
   } catch (e) {
@@ -226,15 +253,43 @@ export const moderateReviewApi = async (
   }
 };
 
-// 체험단 상태 변경 todo
+// 체험단 리뷰 심사
+export const moderateReviewApi = async (
+  applicationId: number,
+  decision: "approve" | "reject",
+  token: string
+): Promise<ModerateReviewResponse> => {
+  try {
+    const response = await api.post<ModerateReviewResponse>(
+      `/applications/${applicationId}/review/${decision}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (e) {
+    throw new Error(`${e}`);
+  }
+};
+
+// 체험단 상태 변경 ?
 export const updateExperienceStatusApi = async (
   id: number,
-  data: UpdateExperienceStatusRequest
+  data: UpdateExperienceStatusRequest,
+  token: string
 ): Promise<UpdateExperienceStatusResponse> => {
   try {
     const response = await api.post<UpdateExperienceStatusResponse>(
       `/experience-manage/${id}/status`,
-      data
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     return response.data;
   } catch (e) {

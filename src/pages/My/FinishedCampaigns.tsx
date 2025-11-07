@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import * as S from 'styles/my/finishedCampaigns';
-import { campaigns } from 'mocks/campaign';
+import { CampaignDetail } from 'mocks/campaign';
 import { getPastExperiencesApi } from 'apis/experience';
 import useUserStore from 'store/useUserStore';
 
@@ -43,7 +43,7 @@ const FinishedCampaigns = () => {
         {finishedCampaigns.length > 0 ? (
           finishedCampaigns.map((campaign) => (
             <S.CampaignCard key={campaign.exp_id}>
-              <S.CampaignImage src={campaigns[0].image_urls[0]} alt={campaign.title} /> {/* Placeholder */}
+              <S.CampaignImage src={CampaignDetail[0].image_urls[0]} alt={campaign.title} /> {/* Placeholder */}
               <S.CampaignInfo>
                 <S.CampaignTitle>{campaign.title}</S.CampaignTitle>
                 <S.CampaignDescription>일정: {campaign.schedule}</S.CampaignDescription>

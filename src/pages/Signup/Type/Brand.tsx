@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { FormState } from "types/input";
 import { signupAsBrandManager } from "apis/signup";
 import { useNavigate } from "react-router-dom";
+import { formatPhoneNumber } from "utils/formatters";
 
 interface Props {
   type: string,
@@ -41,18 +42,7 @@ export default function Brand({ type }: Props) {
     let formattedValue = value;
 
     if (name === 'phone') {
-      const digitsOnly = value.replace(/\D/g, '');
-
-      if (digitsOnly.length > 10) {
-        formattedValue = digitsOnly.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-      } else if (digitsOnly.length > 6) {
-        formattedValue = digitsOnly.replace(/(\d{3})(\d{4})(\d{1,4})/, '$1-$2-$3');
-      } else if (digitsOnly.length > 2) {
-        formattedValue = digitsOnly.replace(/(\d{3})(\d{1,4})/, '$1-$2');
-      }
-      if (formattedValue.length > 13) {
-        formattedValue = formattedValue.substring(0, 13);
-      }
+      formattedValue = formatPhoneNumber(value);
     }
 
     setPersonalInfoForm((prev) => ({
@@ -72,10 +62,10 @@ export default function Brand({ type }: Props) {
 
   const handleBusinessInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setBusinessInfoForm({
-      ...businessInfoForm,
+    setBusinessInfoForm((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
   };
 
   const handlePrevStep = () => {
@@ -112,7 +102,8 @@ export default function Brand({ type }: Props) {
   }
 
   const handleSignup = async () => {
-    if (!businessInfoForm.registrationNumber || !businessInfoForm.address || !businessInfoForm.detailedAddress) {
+    console.log(businessInfoForm);
+    if (!businessInfoForm.registrationNumber.trim() || !businessInfoForm.address.trim() || !businessInfoForm.detailedAddress.trim()) {
         alert("사업자 정보를 모두 입력해주세요.");
         return;
     }

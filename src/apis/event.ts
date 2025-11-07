@@ -46,7 +46,7 @@ interface DeleteEventResponse {
   };
 }
 
-// 이벤트 목록 조회 todo
+// 이벤트 목록 조회
 export const getEventListApi = async (): Promise<GetEventListResponse> => {
   try {
     const response = await api.get<GetEventListResponse>("/event/list");
@@ -56,7 +56,7 @@ export const getEventListApi = async (): Promise<GetEventListResponse> => {
   }
 };
 
-// 이벤트 상세 조회 todo
+// 이벤트 상세 조회
 export const getEventDetailApi = async (id: number): Promise<GetEventDetailResponse> => {
   try {
     const response = await api.get<GetEventDetailResponse>(`/event/${id}`);

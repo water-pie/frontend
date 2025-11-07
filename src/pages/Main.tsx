@@ -1,16 +1,16 @@
 import CampaignCard from "components/Campaign/CampaignCard";
 import * as S from "styles/main";
-import { campaigns as mockCampaings } from "mocks/campaign";
 import { getExperienceListApi } from "apis/experience";
 import { useEffect, useState } from "react";
+import type { Experience } from "types/apis/experience";
 
 export default function Main() {
-  const [campaigns, setCampaigns] = useState<any[]>([]);
+  const [campaigns, setCampaigns] = useState<Experience[]>([]);
 
   useEffect(() => {
     const fetchCampaigns = async () => {
       const response = await getExperienceListApi();
-      setCampaigns(response.data.length > 0 ? response.data : mockCampaings);
+      setCampaigns(response.data.length > 0 ? response.data : []);
     };
 
     fetchCampaigns();
@@ -31,8 +31,8 @@ export default function Main() {
             offer_content={campaign.offer_content}
             applicated_num={campaign.applicated_num}
             member_num={campaign.member_num}
-            chennels={campaign.chennals}
-            possible_time_application={campaign.possible_time_application}
+            channels={campaign.channels}
+            possible_time_application_left={campaign.possible_time_application_left}
             product_offer_type={campaign.product_offer_type}
           />
         ))}

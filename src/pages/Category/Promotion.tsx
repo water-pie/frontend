@@ -1,6 +1,6 @@
 import CampaignCard from "components/Campaign/CampaignCard";
 import * as S from "styles/main";
-import { campaigns } from "mocks/campaign";
+import { cardMocks } from "mocks/campaign";
 import Categories from "components/Category/Categories";
 
 export default function Promotion() {
@@ -11,7 +11,7 @@ export default function Promotion() {
       </S.TitleBox>
       <Categories onList={false}/>
       <S.CampaignGrid>
-        {campaigns.map((campaign, index) => (
+        {cardMocks.map((campaign, index) => (
           <CampaignCard
             key={index}
             id={campaign.id}
@@ -20,8 +20,8 @@ export default function Promotion() {
             offer_content={campaign.offer_content}
             applicated_num={campaign.applicated_num}
             member_num={campaign.member_num}
-            chennels={campaign.chennals}
-            possible_time_application={campaign.possible_time_application}
+            channels={campaign.channels}
+            possible_time_application_left={campaign.possible_time_application_left}
             product_offer_type={campaign.product_offer_type}
           />
         ))}

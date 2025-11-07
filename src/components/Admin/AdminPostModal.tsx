@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import * as S from '../../styles/adminModal';
+import * as S from 'styles/adminModal';
 import {
   createNoticeApi, getNoticeDetailApi, updateNoticeApi
-} from '../../apis/notice';
+} from 'apis/notice';
 import {
   createEventApi, getEventDetailApi, updateEventApi
-} from '../../apis/event';
-import useUserStore from '../../store/useUserStore';
+} from 'apis/event';
+import useUserStore from 'store/useUserStore';
 
 interface AdminPostModalProps {
   isOpen: boolean;

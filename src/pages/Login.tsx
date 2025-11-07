@@ -1,5 +1,6 @@
 import { loginApi } from "apis/login";
 import Input from "components/Input/Input";
+// import FindPasswordModal from "components/Modal/FindPasswordModal";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useUserStore from "store/useUserStore";
@@ -12,6 +13,7 @@ export default function Login() {
     autoLogin: false,
   });
   const [isFull, setIsFull] = useState(false);
+  // const [isFindPasswordModalOpen, setIsFindPasswordModalOpen] = useState(false);
   const navigate = useNavigate();
   const { login } = useUserStore();
 
@@ -35,7 +37,7 @@ export default function Login() {
           navigate('/');
         }
       } catch (error: any) {
-        alert(error.message);
+        console.log(error.message);
       }
     }
   };
@@ -77,7 +79,7 @@ export default function Login() {
             />
             <span>자동 로그인</span>
           </S.AutoLogin>
-          <S.Pw>비밀번호 찾기</S.Pw>
+          {/* <S.Pw onClick={() => setIsFindPasswordModalOpen(true)}>비밀번호 재설정</S.Pw> */}
         </S.Detail>
         <S.LoginButton isFull={isFull} onClick={handleSubmit}>
           로그인
@@ -92,6 +94,7 @@ export default function Login() {
           회원가입
         </S.SignupButton>
       </S.Signup>
+      {/* {isFindPasswordModalOpen && <FindPasswordModal onClose={() => setIsFindPasswordModalOpen(false)} />} */}
     </>
   )
 };

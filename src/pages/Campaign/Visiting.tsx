@@ -3,7 +3,7 @@ import * as S from 'styles/campaign/visiting';
 import * as S2 from 'styles/main';
 import { productTypeMapping } from 'apis/Mapping/typeMapping';
 import { useParams, useNavigate } from 'react-router-dom';
-import { campaigns } from 'mocks/campaign';
+import { CampaignDetail, cardMocks } from 'mocks/campaign';
 import CampaignCard from 'components/Campaign/CampaignCard';
 import { insta } from 'utils/importing';
 import { getExperienceDetailApi } from 'apis/experience';
@@ -23,13 +23,13 @@ export default function VisitingPage() {
           setCampaignData(response.data);
         } else {
           // Fallback to mock data if API returns no data or status is not success
-          const mockData = campaigns.find(campaign => campaign.id.toString() === id);
+          const mockData = CampaignDetail.find(campaign => campaign.id.toString() === id);
           setCampaignData(mockData as ExperienceDetail || null);
         }
       } catch (error) {
         console.error("Failed to fetch campaign detail:", error);
         // Fallback to mock data on API error
-        const mockData = campaigns.find(campaign => campaign.id.toString() === id);
+        const mockData = CampaignDetail.find(campaign => campaign.id.toString() === id);
         setCampaignData(mockData as ExperienceDetail || null);
       }
     };
@@ -180,7 +180,7 @@ export default function VisitingPage() {
         <h2>연관 체험단</h2>
       </S2.TitleBox>
       <S2.CampaignGrid>
-        {campaigns.slice(4).map((campaign, index) => (
+        {cardMocks.slice(4).map((campaign, index) => (
           <CampaignCard
             key={index}
             id={campaign.id}
@@ -189,8 +189,8 @@ export default function VisitingPage() {
             offer_content={campaign.offer_content}
             applicated_num={campaign.applicated_num}
             member_num={campaign.member_num}
-            chennels={campaign.chennals}
-            possible_time_application={campaign.possible_time_application}
+            channels={campaign.channels}
+            possible_time_application_left={campaign.possible_time_application_left}
             product_offer_type={campaign.product_offer_type}
           />
         ))}

@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import * as S from "styles/header";
 import useUserStore from "store/useUserStore";
 import Search from "assets/images/search.png"
+import LogoImage from "/Logo.svg";
 
 export const Header = () => {
   const { pathname } = useLocation();
@@ -29,7 +30,10 @@ export const Header = () => {
   return (
     <S.HeaderContainer>
       <S.LeftHeader>
-        <S.Logo to="/">WaterPie</S.Logo>
+        <S.Logo to="/">
+          <img src={LogoImage} alt="리뷰헬퍼 로고" style={{ height: '24px', marginRight: '8px' }} />
+          리뷰헬퍼
+        </S.Logo>
         <S.NavList>
           <S.Nav to="/product" selected={pathname === "/product"}>제품</S.Nav>
           <S.Nav to="/location" selected={pathname === "/location"}>지역</S.Nav>

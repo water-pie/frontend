@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { FormState } from "types/input";
 import { signupAsInfluencer } from "apis/signup";
 import { useNavigate } from "react-router-dom";
+import { formatPhoneNumber } from "utils/formatters";
 
 interface Props {
   type: string,
@@ -36,18 +37,7 @@ export default function Influence({ type }: Props) {
     let formattedValue = value;
 
     if (name === 'phone') {
-      const digitsOnly = value.replace(/\D/g, '');
-
-      if (digitsOnly.length > 10) {
-        formattedValue = digitsOnly.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-      } else if (digitsOnly.length > 6) {
-        formattedValue = digitsOnly.replace(/(\d{3})(\d{4})(\d{1,4})/, '$1-$2-$3');
-      } else if (digitsOnly.length > 2) {
-        formattedValue = digitsOnly.replace(/(\d{3})(\d{1,4})/, '$1-$2');
-      }
-      if (formattedValue.length > 13) {
-        formattedValue = formattedValue.substring(0, 13);
-      }
+      formattedValue = formatPhoneNumber(value);
     }
 
     setPersonalInfoForm((prev) => ({

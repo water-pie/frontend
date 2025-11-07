@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as S from 'styles/my/ongoingCampaigns';
-import { campaigns } from 'mocks/campaign';
+import { CampaignDetail } from 'mocks/campaign';
 import ReviewRegistrationModal from 'components/Modal/ReviewRegistrationModal';
 import type { CampaignItem } from 'types/campaign';
 import { getOngoingExperiencesApi } from 'apis/experience';
@@ -46,7 +46,7 @@ const OngoingCampaigns = () => {
     if (campaignToOpen) {
       setSelectedCampaign({
         id: campaignToOpen.exp_id,
-        image: campaigns[0].image_urls[0], // Placeholder, need actual image_url from API
+        image: CampaignDetail[0].image_urls[0], // Placeholder, need actual image_url from API
         title: campaignToOpen.title,
         offerContent: campaignToOpen.schedule, // Placeholder, need actual offerContent from API
         mission: "", // Placeholder, need actual mission from API
@@ -64,7 +64,7 @@ const OngoingCampaigns = () => {
         {ongoingCampaigns.length > 0 ? (
           ongoingCampaigns.map((campaign) => (
             <S.CampaignCard key={campaign.exp_id}>
-              <S.CampaignImage src={campaigns[0].image_urls[0]} alt={campaign.title} /> {/* Placeholder */}
+              <S.CampaignImage src={CampaignDetail[0].image_urls[0]} alt={campaign.title} /> {/* Placeholder */}
               <S.CampaignInfo>
                 <S.CampaignTitle>{campaign.title}</S.CampaignTitle>
                 <S.CampaignDescription>일정: {campaign.schedule}</S.CampaignDescription>

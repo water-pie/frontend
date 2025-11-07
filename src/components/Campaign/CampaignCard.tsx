@@ -10,18 +10,6 @@ const channelIconMap: { [key: number]: string } = {
   4: youtube,
 };
 
-// Helper function to calculate remaining days
-const calculateRemainingDays = (endDateStr: string): number => {
-  const endDate = new Date(endDateStr);
-  const today = new Date();
-  // Reset time part to compare dates only
-  endDate.setHours(0, 0, 0, 0);
-  today.setHours(0, 0, 0, 0);
-  const diffTime = endDate.getTime() - today.getTime();
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  return diffDays > 0 ? diffDays : 0;
-};
-
 interface Props {
   id: number,
   image_urls: string[],
@@ -29,13 +17,13 @@ interface Props {
   offer_content: string;
   applicated_num: number;
   member_num: number;
-  chennels: number[];
-  possible_time_application: [string, string];
+  channels: number[];
+  possible_time_application_left: number;
   product_offer_type: 1 | 2 | 3 | 4;
 };
 
 const CampaignCard = ({
-  id, image_urls, title, offer_content, applicated_num, member_num, chennels, possible_time_application, product_offer_type
+  id, image_urls, title, offer_content, applicated_num, member_num, channels, possible_time_application_left, product_offer_type
 }: Props) => {
   const navigate = useNavigate();
 
@@ -43,16 +31,14 @@ const CampaignCard = ({
     navigate(`/campaign/${id}`, { state: { product_offer_type } });
   };
 
-  const remainingDays = possible_time_application
-    ? calculateRemainingDays(possible_time_application[1])
-    : 0;
+  const remainingDays = possible_time_application_left;
 
   return (
     <S.Card onClick={handleClick}>
       <S.Image src={image_urls && image_urls.length > 0 ? image_urls[0] : ""} alt={title} />
       <S.Content>
         <S.Top>
-          {(chennels || []).map((channelId) => (
+          {(channels || []).map((channelId) => (
             <img key={channelId} src={channelIconMap[channelId]} alt={title} />
           ))}
           <S.Limit>{remainingDays}일 남음</S.Limit>

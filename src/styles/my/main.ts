@@ -14,7 +14,9 @@ export const ProfileImage = styled.div`
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background-color: #eee;
+  background-image: url('/account.png');
+  background-size: cover;
+  background-position: center;
   margin-right: 20px;
 `;
 

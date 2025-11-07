@@ -8,9 +8,9 @@ export interface CampaignData {
   product_offer_type: 1 | 2 | 3 | 4; // 1: 방문형, 2: 포장형, 3: 배송형, 4: 구매형
   address: string;
   detail_address: string;
-  cartegory: string;
+  category: string;
   product_url: string;
-  chennals: number[]; // 1: 블로그, 2: 인스타, 3: 틱톡, 4: 유튜브
+  channels: number[]; // 1: 블로그, 2: 인스타, 3: 틱톡, 4: 유튜브
   possible_time_application: [string, string];
   member_announcement_time: string;
   experience_time: [string, string];
@@ -32,6 +32,8 @@ export interface CampaignData {
   update_at: string;
 }
 
+import { type Experience } from 'types/apis/experience';
+
 const formatDate = (date: Date): string => {
   const yyyy = date.getFullYear();
   const mm = String(date.getMonth() + 1).padStart(2, '0');
@@ -48,7 +50,7 @@ const inTwoWeeks = new Date(today);
 inTwoWeeks.setDate(today.getDate() + 14);
 
 
-export const campaigns: CampaignData[] = [
+export const CampaignDetail: CampaignData[] = [
   {
     id: 1,
     image_urls: ["/card/card5.png"],
@@ -58,7 +60,7 @@ export const campaigns: CampaignData[] = [
     member_num: 3,
     each_member_point: 50000,
     experience_mission: "블로그 포스팅 3회 작성",
-    chennals: [1],
+    channels: [1],
     writer: "카페 사장님",
     data_type: 1,
     company_name: "동네 카페",
@@ -66,7 +68,7 @@ export const campaigns: CampaignData[] = [
     product_offer_type: 1,
     address: "충북 청주시 상당구",
     detail_address: "123-45",
-    cartegory: "음식점",
+    category: "음식점",
     product_url: "",
     possible_time_application: [formatDate(today), formatDate(inAWeek)],
     member_announcement_time: formatDate(inAWeek),
@@ -91,7 +93,7 @@ export const campaigns: CampaignData[] = [
     member_num: 3,
     each_member_point: 30000,
     experience_mission: "인스타그램 릴스 2회 생성",
-    chennals: [2],
+    channels: [2],
     writer: "매트리스 대표",
     data_type: 2,
     company_name: "푹신푹신",
@@ -99,7 +101,7 @@ export const campaigns: CampaignData[] = [
     product_offer_type: 3, // 배송형
     address: "대전 유성구",
     detail_address: "543-21",
-    cartegory: "생활용품",
+    category: "생활용품",
     product_url: "http://example.com/mattress",
     possible_time_application: [formatDate(today), formatDate(inAWeek)],
     member_announcement_time: formatDate(inAWeek),
@@ -118,7 +120,7 @@ export const campaigns: CampaignData[] = [
     member_num: 3,
     each_member_point: 70000,
     experience_mission: "틱톡 1분 영상 촬영",
-    chennals: [3],
+    channels: [3],
     writer: "텐동집 사장",
     data_type: 1,
     company_name: "텐동의 신",
@@ -126,7 +128,7 @@ export const campaigns: CampaignData[] = [
     product_offer_type: 1, // 방문형
     address: "경기도 수원시 팔달구",
     detail_address: "678-90",
-    cartegory: "음식점",
+    category: "음식점",
     product_url: "",
     possible_time_application: [formatDate(today), formatDate(tomorrow)],
     member_announcement_time: formatDate(tomorrow),
@@ -145,7 +147,7 @@ export const campaigns: CampaignData[] = [
     member_num: 3,
     each_member_point: 45000,
     experience_mission: "실사용 영상 2회 게시",
-    chennals: [4],
+    channels: [4],
     writer: "관광청",
     data_type: 1,
     company_name: "대천시",
@@ -153,7 +155,7 @@ export const campaigns: CampaignData[] = [
     product_offer_type: 1, // 방문형
     address: "충남 보령시",
     detail_address: "해수욕장",
-    cartegory: "여행",
+    category: "여행",
     product_url: "",
     possible_time_application: [formatDate(today), formatDate(inAWeek)],
     member_announcement_time: formatDate(inAWeek),
@@ -172,7 +174,7 @@ export const campaigns: CampaignData[] = [
     member_num: 3,
     each_member_point: 50000,
     experience_mission: "블로그 포스팅 3회 작성",
-    chennals: [1],
+    channels: [1],
     writer: "카페 사장님",
     data_type: 1,
     company_name: "동네 카페",
@@ -180,7 +182,7 @@ export const campaigns: CampaignData[] = [
     product_offer_type: 1,
     address: "충북 청주시 상당구",
     detail_address: "123-45",
-    cartegory: "음식점",
+    category: "음식점",
     product_url: "",
     possible_time_application: [formatDate(today), formatDate(inAWeek)],
     member_announcement_time: formatDate(inAWeek),
@@ -205,7 +207,7 @@ export const campaigns: CampaignData[] = [
     member_num: 3,
     each_member_point: 30000,
     experience_mission: "인스타그램 릴스 2회 생성",
-    chennals: [2],
+    channels: [2],
     writer: "매트리스 대표",
     data_type: 2,
     company_name: "푹신푹신",
@@ -213,7 +215,7 @@ export const campaigns: CampaignData[] = [
     product_offer_type: 3, // 배송형
     address: "대전 유성구",
     detail_address: "543-21",
-    cartegory: "생활용품",
+    category: "생활용품",
     product_url: "http://example.com/mattress",
     possible_time_application: [formatDate(today), formatDate(inAWeek)],
     member_announcement_time: formatDate(inAWeek),
@@ -232,7 +234,7 @@ export const campaigns: CampaignData[] = [
     member_num: 3,
     each_member_point: 70000,
     experience_mission: "틱톡 1분 영상 촬영",
-    chennals: [3],
+    channels: [3],
     writer: "텐동집 사장",
     data_type: 1,
     company_name: "텐동의 신",
@@ -240,7 +242,7 @@ export const campaigns: CampaignData[] = [
     product_offer_type: 1, // 방문형
     address: "경기도 수원시 팔달구",
     detail_address: "678-90",
-    cartegory: "음식점",
+    category: "음식점",
     product_url: "",
     possible_time_application: [formatDate(today), formatDate(tomorrow)],
     member_announcement_time: formatDate(tomorrow),
@@ -259,7 +261,7 @@ export const campaigns: CampaignData[] = [
     member_num: 3,
     each_member_point: 45000,
     experience_mission: "실사용 영상 2회 게시",
-    chennals: [4],
+    channels: [4],
     writer: "관광청",
     data_type: 1,
     company_name: "대천시",
@@ -267,7 +269,7 @@ export const campaigns: CampaignData[] = [
     product_offer_type: 1, // 방문형
     address: "충남 보령시",
     detail_address: "해수욕장",
-    cartegory: "여행",
+    category: "여행",
     product_url: "",
     possible_time_application: [formatDate(today), formatDate(inAWeek)],
     member_announcement_time: formatDate(inAWeek),
@@ -276,5 +278,39 @@ export const campaigns: CampaignData[] = [
     marketing_keywords: ["대천", "해수욕장", "노을"],
     create_at: formatDate(today),
     update_at: formatDate(today),
+  },
+];
+
+
+export const cardMocks: Experience[] = [
+  {
+    id: 9,
+    data_type: 1,
+    product_offer_type: 1,
+    category: "맛집/카페",
+    channels: [1, 2],
+    possible_time_application_left: 7,
+    title: "[서울] 강남역 신규 오픈 파스타 맛집",
+    offer_content: "파스타 1종, 음료 1잔",
+    member_num: 5,
+    applicated_num: 23,
+    each_member_point: 30000,
+    image_urls: ["/card/card1.png"],
+    is_point_experience: true,
+  },
+  {
+    id: 10,
+    data_type: 2,
+    product_offer_type: 3,
+    category: "뷰티",
+    channels: [2],
+    possible_time_application_left: 3,
+    title: "신제품 저자극 선크림 체험단 모집",
+    offer_content: "선크림 본품 1개",
+    member_num: 10,
+    applicated_num: 152,
+    each_member_point: 15000,
+    image_urls: ["/card/card2.png"],
+    is_point_experience: true,
   },
 ];

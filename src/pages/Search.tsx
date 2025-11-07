@@ -3,9 +3,10 @@ import { useLocation } from "react-router-dom";
 import CampaignCard from "components/Campaign/CampaignCard";
 import * as S from "styles/main";
 import { searchExperienceListApi } from "apis/experience";
+import { type Experience } from "types/apis/experience";
 
 export default function Search() {
-  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searchResults, setSearchResults] = useState<Experience[]>([]);
   const location = useLocation();
 
   useEffect(() => {
@@ -48,8 +49,8 @@ export default function Search() {
               offer_content={campaign.offer_content}
               applicated_num={campaign.applicated_num}
               member_num={campaign.member_num}
-              chennels={campaign.chennals}
-              possible_time_application={campaign.possible_time_application}
+              channels={campaign.channels}
+              possible_time_application_left={campaign.possible_time_application_left}
               product_offer_type={campaign.product_offer_type}
             />
           ))

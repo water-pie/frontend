@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import * as S from 'styles/my/businessLayout';
 
 const BusinessMyPageLayout = () => {
@@ -7,7 +7,7 @@ const BusinessMyPageLayout = () => {
   return (
     <S.BusinessMyPageLayoutContainer>
       <S.BusinessMyPageNav>
-        <h2>마이페이지</h2>
+        <Link to="/business"><h2>마이페이지</h2></Link>
         <S.BusinessNavBlock>
           <h3>내 정보</h3>
           <ul>
@@ -34,11 +34,6 @@ const BusinessMyPageLayout = () => {
             <li>
               <S.BusinessNavLink to="/business/registeredCampaigns" className={pathname === '/business/registeredCampaigns' ? 'active' : ''}>
                 등록한 캠페인
-              </S.BusinessNavLink>
-            </li>
-            <li>
-              <S.BusinessNavLink to="/business/pastCampaigns" className={pathname === '/business/pastCampaigns' ? 'active' : ''}>
-                지난 캠페인 현황
               </S.BusinessNavLink>
             </li>
           </ul>

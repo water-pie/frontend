@@ -5,7 +5,7 @@ export interface RegisterExperienceRequest {
   product_offer_type: 1 | 2 | 3 | 4; // 1=방문형, 2=포장형, 3=배송형, 4=구매형
   address: string;
   detail_address: string;
-  cartegory: string;
+  category: string;
   product_url: string;
   channels: number[]; // 1. 인스타그램 ....
   possible_time_application: string[]; // [0]이 시작 시간
@@ -14,10 +14,10 @@ export interface RegisterExperienceRequest {
   end_review_time: string;
 
   // 방문형 일 시에만 추가
-  possible_time?: string[];
-  possible_week_days?: number[]; // 0부터 일요일....
-  possible_visit_now?: boolean;
-  notices_to_visit?: string;
+  possible_time: string[];
+  possible_week_days: number[]; // 0부터 일요일....
+  possible_visit_now: boolean;
+  notices_to_visit: string;
   //------------//
 
   experience_mission: string;

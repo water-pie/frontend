@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import * as S from '../../styles/adminModal';
-import { getInquiryByIdForAdmin, addInquiryAnswer, deleteInquiryAnswer } from '../../apis/inquires';
-import useUserStore from '../../store/useUserStore';
+import * as S from 'styles/adminModal';
+import { getInquiryByIdForAdmin, addInquiryAnswer, deleteInquiryAnswer } from 'apis/inquires';
+import useUserStore from 'store/useUserStore';
 
 interface AdminInquiryModalProps {
   isOpen: boolean;

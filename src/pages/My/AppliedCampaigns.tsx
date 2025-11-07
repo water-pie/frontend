@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as S from 'styles/my/appliedCampaigns';
-import { campaigns } from 'mocks/campaign';
+import { CampaignDetail } from 'mocks/campaign';
 import { getOngoingExperiencesApi, cancelExperienceApi } from 'apis/experience';
 import useUserStore from 'store/useUserStore';
 
@@ -25,8 +25,7 @@ const AppliedCampaigns = () => {
         setAppliedCampaigns([]);
       }
     } catch (error) {
-      console.error("Failed to fetch applied campaigns:", error);
-      setAppliedCampaigns([]);
+      console.error(error);
     }
   };
 
@@ -49,8 +48,7 @@ const AppliedCampaigns = () => {
           alert(`신청 취소 실패: ${response.message}`);
         }
       } catch (error) {
-        console.error("신청 취소 중 오류 발생:", error);
-        alert("신청 취소 중 오류가 발생했습니다.");
+        console.error("에러")
       }
     }
   };
@@ -64,7 +62,7 @@ const AppliedCampaigns = () => {
             <S.CampaignCard key={campaign.exp_id}>
               {/* Assuming image and offerContent are not directly in AppliedCampaign, 
                   you might need to fetch full campaign details or adjust the type if needed */}
-              <S.CampaignImage src={campaigns[0].image_urls[0]} alt={campaign.title} /> {/* Placeholder */}
+              <S.CampaignImage src={CampaignDetail[0].image_urls[0]} alt={campaign.title} /> {/* Placeholder */}
               <S.CampaignInfo>
                 <S.CampaignTitle>{campaign.title}</S.CampaignTitle>
                 <S.CampaignDescription>진행 상태: {campaign.process_status}</S.CampaignDescription>

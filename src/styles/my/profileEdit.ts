@@ -36,7 +36,7 @@ export const Label = styled.label`
   font-size: 16px;
   font-weight: 500;
   color: ${textColor};
-  min-width: 80px;
+  min-width: 120px;
 `;
 
 export const PasswordInputWrapper = styled.div`

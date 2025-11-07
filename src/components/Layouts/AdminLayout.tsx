@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import * as S from "../../styles/admin";
+import * as S from "styles/admin";
 
 const AdminLayout = () => {
   return (

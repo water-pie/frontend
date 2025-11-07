@@ -32,7 +32,7 @@ export const BusinessWelcomeText = styled.div`
 
 export const BusinessInfoSection = styled.section`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 20px;
   margin-bottom: 40px;
 `;
@@ -79,4 +79,21 @@ export const BusinessNoActivity = styled.div`
     border-radius: 5px;
     cursor: pointer;
   }
+`;
+
+export const CampaignGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+`;
+
+export const DeleteButton = styled.button`
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 5px;
 `;

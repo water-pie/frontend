@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import * as S from "../../styles/campaign/creation";
-import { Input } from "../../components/Input/Input";
+import * as S from "styles/campaign/creation";
+import { Input } from "components/Input/Input";
+import { useCampaignCreationStore } from "store/useCampaignCreationStore";
 
 const channels = [
   { id: "blog", label: "블로그", description: "블로그 게시물 1건 업로드" },
@@ -13,11 +13,15 @@ const channels = [
   { id: "youtube-shorts", label: "유튜브 - 쇼츠", description: "30초 이상의 영상(유튜브 쇼츠) 1개 업로드" },
 ];
 
-
 const CampaignCreationStep2Page = () => {
   const navigate = useNavigate();
-  const [promotionType, setPromotionType] = useState("");
-  const [selectedChannels, setSelectedChannels] = useState<string[]>([]);
+  const promotionType = useCampaignCreationStore(state => state.promotionType);
+  const address = useCampaignCreationStore(state => state.address);
+  const detail_address = useCampaignCreationStore(state => state.detail_address);
+  const product_url = useCampaignCreationStore(state => state.product_url);
+  const category = useCampaignCreationStore(state => state.category);
+  const selectedChannels = useCampaignCreationStore(state => state.channels);
+  const set = useCampaignCreationStore(state => state.set);
 
   const steps = [
     { id: 1, label: "기본 정보" },
@@ -29,11 +33,27 @@ const CampaignCreationStep2Page = () => {
   const activeStep = 2;
 
   const handleChannelChange = (channelId: string) => {
-    setSelectedChannels(prev =>
-      prev.includes(channelId)
-        ? prev.filter(id => id !== channelId)
-        : [...prev, channelId].slice(0, 2) // Allow up to 2 selections
-    );
+    const newChannels = selectedChannels.includes(channelId)
+      ? selectedChannels.filter((id) => id !== channelId)
+      : [...selectedChannels, channelId].slice(0, 2);
+    set({ channels: newChannels });
+  };
+
+  const canProceed = (() => {
+    if (!promotionType) return false;
+    if ((promotionType === "visiting" || promotionType === "take-out") && (!address || !detail_address)) return false;
+    if ((promotionType === "shipping" || promotionType === "purchase") && !product_url) return false;
+    if (!category) return false;
+    if (selectedChannels.length === 0) return false;
+    return true;
+  })();
+
+  const handleNextStep = () => {
+    if (canProceed) {
+      navigate("/campaign/creation/step3");
+    } else {
+      alert("모든 필수 항목을 입력하거나 선택해주세요.");
+    }
   };
 
   return (
@@ -53,11 +73,11 @@ const CampaignCreationStep2Page = () => {
       </S.LeftPanel>
       <S.RightPanel>
         <S.FormSection>
-          <h3>홍보 유형</h3>
+          <h3>홍보 유형 *</h3>
           <S.PromotionTypeGroup>
             <S.PromotionTypeBox
               selected={promotionType === "visiting"}
-              onClick={() => setPromotionType("visiting")}
+              onClick={() => set({ promotionType: "visiting" })}
             >
               <div>🏠</div>
               <h4>방문형</h4>
@@ -65,7 +85,7 @@ const CampaignCreationStep2Page = () => {
             </S.PromotionTypeBox>
             <S.PromotionTypeBox
               selected={promotionType === "take-out"}
-              onClick={() => setPromotionType("take-out")}
+              onClick={() => set({ promotionType: "take-out" })}
             >
               <div>🛍️</div>
               <h4>포장형</h4>
@@ -73,7 +93,7 @@ const CampaignCreationStep2Page = () => {
             </S.PromotionTypeBox>
             <S.PromotionTypeBox
               selected={promotionType === "shipping"}
-              onClick={() => setPromotionType("shipping")}
+              onClick={() => set({ promotionType: "shipping" })}
             >
               <div>📦</div>
               <h4>배송형</h4>
@@ -81,7 +101,7 @@ const CampaignCreationStep2Page = () => {
             </S.PromotionTypeBox>
             <S.PromotionTypeBox
               selected={promotionType === "purchase"}
-              onClick={() => setPromotionType("purchase")}
+              onClick={() => set({ promotionType: "purchase" })}
             >
               <div>🛒</div>
               <h4>구매형</h4>
@@ -92,38 +112,38 @@ const CampaignCreationStep2Page = () => {
 
         {(promotionType === "visiting" || promotionType === "take-out") && (
           <S.FormSection>
-            <h3>주소</h3>
-            <Input placeholder="예) 판교역로 167, 분당 주공211, 분평동 123" />
+            <h3>주소 *</h3>
+            <Input placeholder="예) 판교역로 167, 분당 주공211, 분평동 123" value={address} onChange={(e) => set({ address: e.target.value })} />
             <h3></h3>
-            <Input placeholder="상세 주소를 입력해주세요." />
+            <Input placeholder="상세 주소를 입력해주세요." value={detail_address} onChange={(e) => set({ detail_address: e.target.value })} />
           </S.FormSection>
         )}
 
         {(promotionType === "shipping" || promotionType === "purchase") && (
           <S.FormSection>
-            <h3>제품 URL</h3>
-            <Input placeholder="제공 내역 상세페이지와 일치하는 URL을 입력해주세요." />
+            <h3>제품 URL *</h3>
+            <Input placeholder="제공 내역 상세페이지와 일치하는 URL을 입력해주세요." value={product_url} onChange={(e) => set({ product_url: e.target.value })} />
           </S.FormSection>
         )}
 
         <S.FormSection>
-          <h3>카테고리</h3>
-          <S.Select>
-            <option>선택</option>
-            <option>맛집/카페</option>
-            <option>뷰티</option>
-            <option>숙박</option>
-            <option>문화</option>
-            <option>기타</option>
+          <h3>카테고리 *</h3>
+          <S.Select value={category} onChange={(e) => set({ category: e.target.value }) }>
+            <option value="">선택</option>
+            <option value="맛집/카페">맛집/카페</option>
+            <option value="뷰티">뷰티</option>
+            <option value="숙박">숙박</option>
+            <option value="문화">문화</option>
+            <option value="기타">기타</option>
           </S.Select>
         </S.FormSection>
 
         <S.FormSection>
-          <h3>채널 (최대 2개 선택 가능)</h3>
+          <h3>채널 (최대 2개 선택 가능) *</h3>
           <S.ChannelGroup>
-            {channels.map(channel => (
+            {channels.map((channel) => (
               <S.ChannelBox key={channel.id}>
-                 <input
+                <input
                   type="checkbox"
                   id={channel.id}
                   checked={selectedChannels.includes(channel.id)}
@@ -140,7 +160,7 @@ const CampaignCreationStep2Page = () => {
 
         <S.ButtonGroup>
           <S.PrevButton onClick={() => navigate("/campaign/creation/step1")}>← 이전</S.PrevButton>
-          <S.SubmitButton onClick={() => navigate("/campaign/creation/step3")}>다음 단계 →</S.SubmitButton>
+          <S.SubmitButton onClick={handleNextStep}>다음 단계 →</S.SubmitButton>
         </S.ButtonGroup>
       </S.RightPanel>
     </S.Wrapper>

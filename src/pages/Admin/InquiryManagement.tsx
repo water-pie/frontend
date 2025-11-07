@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
-import { getAllInquiries } from '../../apis/inquires';
-import useUserStore from '../../store/useUserStore';
+import { getAllInquiries } from 'apis/inquires';
+import useUserStore from 'store/useUserStore';
 
 const Table = styled.table`
   width: 100%;

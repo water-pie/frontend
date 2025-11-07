@@ -60,7 +60,7 @@ export const StepLabel = styled.span<{ active?: boolean }>`
 `;
 
 export const FormSection = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 
   h3 {
     font-size: 18px;
@@ -75,10 +75,18 @@ export const FormSection = styled.div`
   }
 `;
 
+export const DateGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+`
+
 export const InputGroup = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-bottom: 10px;
 
   input {
     flex: 1;
@@ -86,6 +94,23 @@ export const InputGroup = styled.div`
 
   span {
     font-size: 16px;
+    min-width: 80px;
+  }
+
+  button {
+    background-color: ${buttonColor};
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+
+    &:hover {
+      background-color: ${buttonHoverColor};
+    }
   }
 `;
 
@@ -227,6 +252,7 @@ export const TimeInputGroup = styled.div`
 
   input {
     flex: 1;
+    height: 36px;
   }
 `;
 
@@ -276,11 +302,9 @@ export const PromotionTypeBox = styled.div<{ selected?: boolean }>`
   padding: 20px;
   cursor: pointer;
   text-align: center;
-  transition: all 0.2s ease-in-out;
 
   &:hover {
     border-color: ${buttonColor};
-    transform: translateY(-3px);
   }
 
   div { // Icon placeholder
@@ -344,4 +368,44 @@ export const Select = styled.select`
   background: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat;
   background-position: right 15px center;
   background-size: 20px;
+`;
+
+export const ImagePreviewContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+`;
+
+export const ImagePreviewItem = styled.div`
+  position: relative;
+  width: 150px;
+  height: 100px;
+  border: 1px solid ${borderColor1};
+  border-radius: 5px;
+  overflow: hidden;
+`;
+
+export const ImagePreview = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+export const RemoveImageButton = styled.button`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
 `;

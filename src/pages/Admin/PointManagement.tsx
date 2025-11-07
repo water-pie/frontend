@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
-import useUserStore from '../../store/useUserStore';
+import useUserStore from 'store/useUserStore';
 
 const Table = styled.table`
   width: 100%;

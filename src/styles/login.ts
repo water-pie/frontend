@@ -29,7 +29,7 @@ export const Detail = styled.div`
 export const Pw = styled.div`
   display: flex;
   width: 100%;
-  font-size: 12px;
+  font-size: 16px;
   justify-content: end;
 `
 
@@ -38,12 +38,12 @@ export const AutoLogin = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 12px;
+  font-size: 16px;
 `
 
 export const LoginButton = styled.button<{ isFull: boolean }>`
   width: 100%;
-  height: 50px;
+  height: 48px;
   font-size: 20px;
   font-weight: 700;
   border: none;
@@ -76,7 +76,7 @@ export const SignupButton = styled(Link)`
   display: flex;
   justify-content: center;
   width: 100%;
-  height: 50px;
+  height: 48px;
   align-items: center;
   background-color: ${buttonColor};
   font-size: 20px;

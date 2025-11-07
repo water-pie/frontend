@@ -59,6 +59,7 @@ export const SignupTerms = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
+  margin-bottom: 40px;
 `
 
 export const TermsBox = styled.div`

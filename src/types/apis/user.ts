@@ -19,6 +19,7 @@ export interface InfluencerInfo {
   blogUrl?: string;
   instagramUrl?: string;
   tiktokUrl?: string;
+  points: number;
 }
 
 export interface BrandManagerInfo {

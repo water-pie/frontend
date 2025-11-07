@@ -33,9 +33,9 @@ export default function Router() {
           <Route path="location" element={<P.Location />} />
           <Route path="promotion" element={<P.Promotion />} />
           <Route path="search" element={<Search />} />
-          <Route path="notices" element={<PostLayout />}>
+          <Route path="post" element={<PostLayout />}>
             <Route index element={<P.NoticesAndEvents />} />
-            <Route path=":id" element={<P.PostDetail />} />
+            <Route path=":type/:id" element={<P.PostDetail />} />
           </Route>
           <Route path="login" element={<P.Login />}/>
           <Route path="signup" element={<P.SelectSignup />} />
@@ -57,8 +57,8 @@ export default function Router() {
           <Route path="business" element={<BusinessMyPageLayout />}>
             <Route index element={<P.BusinessMyMain />} />
             <Route path="profileEdit" element={<P.ProfileEdit />} />
-            <Route path="pointManagement" element={<P.PointManagement />} />
-            <Route path="registeredCampaigns" element={<P.OngoingCampaigns />} />
+            <Route path="pointManagement" element={<P.BusinessPointManagement />} />
+            <Route path="registeredCampaigns" element={<P.RegisteredCampaigns />} />
             <Route path="pastCampaigns" element={<P.FinishedCampaigns />} />
             <Route path="inquiry" element={<P.Inquiry />} />
           </Route>

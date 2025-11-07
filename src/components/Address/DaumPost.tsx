@@ -16,6 +16,7 @@ const DaumPostContainer = styled.div`
   left : 50%;
   top: 50%;
   transform : translate(-50%, -50%);
+  z-index: 9999;
 `
 
 const CancelButton = styled.button`
@@ -28,14 +29,7 @@ const CancelButton = styled.button`
   cursor: pointer;
 `
 
-/* 다음 주소 검색 API에서 주소를 검색 후 주소를 클릭 시 창이 닫힙니다.
-이때, complete 함수로 클릭한 주소 정보(주소(fullAddress), 
-우편번호(zonecode))를 변수에 저장후 이 값을 상태값(form 값)으로 설정합니다. */
 export default function DaumPost(props : any){
-  /* 아래 함수로 들어오는 파라미터 (data)의 정체가 무엇일까를
-  생각해 보았는데 DaumPostcode props중에 onComplete가 있는데,
-  주소를 클릭하고 창이 닫힐때
-  선택한 주소에 대한 파라미터 정보가 이곳으로 전달되는 것 같습니당..... */
 
   const complete = (data : any) =>{
     let fullAddress = data.address;
@@ -56,7 +50,7 @@ export default function DaumPost(props : any){
 
     // 선택한 주소값을 상태값으로 설정
     props.setAddress({
-      ...props,
+      ...props.address,
       address:fullAddress,
     })
 

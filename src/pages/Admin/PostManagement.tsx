@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
-import { getNoticeListApi, deleteNoticeApi } from '../../apis/notice';
-import { getEventListApi, deleteEventApi } from '../../apis/event';
-import useUserStore from '../../store/useUserStore';
-import AdminPostModal from '../../components/Admin/AdminPostModal';
+import { getNoticeListApi, deleteNoticeApi } from 'apis/notice';
+import { getEventListApi, deleteEventApi } from 'apis/event';
+import useUserStore from 'store/useUserStore';
+import AdminPostModal from 'components/Admin/AdminPostModal';
 
 const Tabs = styled.div`
   margin-bottom: 20px;
