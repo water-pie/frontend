@@ -63,7 +63,7 @@ export const updatePlatformInfoApi = async (data: UpdatePlatformInfoPayload, tok
 // 인플루언서 목록 (관리자)
 export const getInfluencerListApi = async (token: string) => {
   try {
-    const response = await api.get<InfluencerListResponse>("/users/type/influencer", {
+    const response = await api.get<InfluencerListResponse>("/users/type/influencers", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -77,7 +77,7 @@ export const getInfluencerListApi = async (token: string) => {
 // 브랜드 매니저 목록 (관리자)
 export const getBrandManagerListApi = async (token: string) => {
   try {
-    const response = await api.get<BrandManagerListResponse>("/users/type/brand-manager", {
+    const response = await api.get<BrandManagerListResponse>("/users/type/brand-managers", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -91,7 +91,7 @@ export const getBrandManagerListApi = async (token: string) => {
 // 마케팅 대행사 목록 (관리자)
 export const getMarketingAgencyListApi = async (token: string) => {
   try {
-    const response = await api.get<MarketingAgencyListResponse>("/users/type/marketing-agency", {
+    const response = await api.get<MarketingAgencyListResponse>("/users/type/marketing-agencies", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -15,5 +15,6 @@ export { default as Inquiry } from './My/Inquiry';
 export { default as InquiryWrite } from './My/InquiryWrite';
 export { default as InquiryDetail } from './My/InquiryDetail';
 export { default as PenaltyStatus } from './My/PenaltyStatus';
-export { default as BusinessPointManagement } from './Business/PointManagement';
+export { default as BusinessPointManagement } from './My/Business/PointManagement';
+export * from './Payment';
 export * from './My/Business';

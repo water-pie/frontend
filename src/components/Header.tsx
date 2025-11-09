@@ -38,7 +38,7 @@ export const Header = () => {
           <S.Nav to="/product" selected={pathname === "/product"}>제품</S.Nav>
           <S.Nav to="/location" selected={pathname === "/location"}>지역</S.Nav>
           <S.Nav to="/promotion" selected={pathname === "/promotion"}>기자단</S.Nav>
-          <S.Nav to="/notices" selected={pathname === "/notices"}>공지/이벤트</S.Nav>
+          <S.Nav to="/post" selected={pathname === "/post"}>공지/이벤트</S.Nav>
         </S.NavList>
       </S.LeftHeader>
       <S.RightHeader>
@@ -54,7 +54,10 @@ export const Header = () => {
         </S.SearchBar>
         {isLoggedIn ? (
           <>
-            <S.UserProfile to={(userType === "BRAND_MANAGER" || userType === "MARKETING_AGENCY") ? "/business" : "/my"} />
+            {userType === "ADMIN"
+              ? <S.AdminButton to="/admin">관리자 이동</S.AdminButton>
+              : <S.UserProfile to={(userType === "BRAND_MANAGER" || userType === "MARKETING_AGENCY") ? "/business" : "/my"} />
+            }
             <S.LogoutButton onClick={handleLogout}>로그아웃</S.LogoutButton>
           </>
         ) : (

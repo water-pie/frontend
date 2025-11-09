@@ -2,14 +2,15 @@ import * as S from "styles/post/postCard"
 
 interface Props {
   id: number,
+  type: string,
   title: string,
   createdAt: string,
   watch: number
 }
 
-export const PostCard = ({ id, title, createdAt, watch }: Props) => {
+export const PostCard = ({ id, type, title, createdAt, watch }: Props) => {
   return (
-    <S.Container to={`/notices/${id}`}>
+    <S.Container to={`/post/${type}/${id}`}>
       <S.Title>{title}</S.Title>
       <S.Info>
         <S.Created>{createdAt}</S.Created>

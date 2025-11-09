@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { buttonColor, buttonHoverColor } from "styles/common";
 
 export const ModalOverlay = styled.div`
   position: fixed;
@@ -61,18 +62,20 @@ export const ModalContent = styled.div`
     border-radius: 5px;
     cursor: pointer;
   }
-
-  .submit-button {
-    background-color: #007bff;
-    color: white;
-    padding: 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: bold;
-    &:hover {
-      background-color: #0261c7ff;
-    }
-  }
 `;
+
+export const PayButton = styled.button`
+  border-radius: 5px;
+  color: white;
+  font-weight: 700;
+  background-color: ${buttonColor};
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+
+  :hover {
+    background-color: ${buttonHoverColor};
+  }
+`

@@ -13,6 +13,15 @@ interface OngoingCampaign {
   process_status: number;
 }
 
+const statusMapping: { [key: number]: string } = {
+  1: "선정중",
+  2: "리뷰등록하기",
+  3: "리뷰 거절",
+  4: "선정 거절",
+  5: "취소",
+  6: "과정 완료",
+};
+
 const OngoingCampaigns = () => {
   const { userInfo } = useUserStore();
   const [ongoingCampaigns, setOngoingCampaigns] = useState<OngoingCampaign[]>([]);
@@ -72,9 +81,13 @@ const OngoingCampaigns = () => {
               <S.CampaignStatusInfo>
                 <S.StatusItem>
                   <S.StatusLabel>상태</S.StatusLabel>
-                  <S.StatusButton onClick={() => handleRegisterReview(campaign.exp_id)}>
-                    {campaign.process_status}
-                  </S.StatusButton>
+                  {campaign.process_status === 2 ? (
+                    <S.StatusButton onClick={() => handleRegisterReview(campaign.exp_id)}>
+                      리뷰 작성
+                    </S.StatusButton>
+                  ) : (
+                    <S.StatusValue>{statusMapping[campaign.process_status]}</S.StatusValue>
+                  )}
                 </S.StatusItem>
               </S.CampaignStatusInfo>
             </S.CampaignCard>

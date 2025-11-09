@@ -117,7 +117,7 @@ export const getExperienceDetailApi = async (id: number): Promise<GetExperienceD
 export const applyExperienceApi = async (id: number, data: ApplyExperienceRequest, token: string): Promise<ApplyExperienceResponse> => {
   try {
     const response = await api.post<ApplyExperienceResponse>(
-      `/experience/${id}/apply`,
+      `/experience/${id}`,
       data,
       {
         headers: {

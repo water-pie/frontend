@@ -18,12 +18,18 @@ export default function PostDetail() {
     const fetchPostDetail = async () => {
       if (!type || !id) return;
 
+      const postId = Number(id);
+      if (isNaN(postId)) {
+        console.error("Invalid post ID:", id);
+        return;
+      }
+
       try {
         let response;
         if (type === "notice") {
-          response = await getNoticeDetailApi(Number(id));
+          response = await getNoticeDetailApi(postId);
         } else if (type === "event") {
-          response = await getEventDetailApi(Number(id));
+          response = await getEventDetailApi(postId);
         }
 
         if (response) {

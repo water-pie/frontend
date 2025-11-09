@@ -70,6 +70,22 @@ export const Nav = styled(Link)<{ selected: boolean }>`
   font-weight: ${({ selected }) => selected ? "700" : "500"};
 `
 
+export const AdminButton = styled(Link)`
+  border-radius: 5px;
+  color: white;
+  font-weight: 700;
+  background-color: ${buttonColor};
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+
+  :hover {
+    background-color: ${buttonHoverColor};
+  }
+`;
+
 export const AuthButton = styled(Link)`
   border-radius: 5px;
   color: white;

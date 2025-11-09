@@ -1,8 +1,40 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import * as S from 'styles/my/pointManagement';
+import { confirmPayment } from 'apis/points';
+import useUserStore from 'store/useUserStore';
 
 const PointManagement = () => {
   const [activeTab, setActiveTab] = useState('earning');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { userInfo } = useUserStore();
+
+  useEffect(() => {
+    const paymentKey = searchParams.get('paymentKey');
+    const orderId = searchParams.get('orderId');
+    const amount = searchParams.get('amount');
+
+    if (paymentKey && orderId && amount && userInfo?.token) {
+      confirmPayment(userInfo.token, {
+        paymentKey,
+        orderId,
+        amount: Number(amount),
+        status: 'DONE', // Assuming 'DONE' is the status for a successful payment
+      })
+        .then(() => {
+          alert('포인트 충전이 완료되었습니다.');
+          // TODO: Refresh point history
+          searchParams.delete('paymentKey');
+          searchParams.delete('orderId');
+          searchParams.delete('amount');
+          setSearchParams(searchParams);
+        })
+        .catch((error) => {
+          console.error('Payment confirmation failed', error);
+          alert('포인트 충전 확인에 실패했습니다.');
+        });
+    }
+  }, [searchParams, setSearchParams, userInfo?.token]);
 
   const handleWithdraw = () => {
     alert('포인트 출금 기능을 구현해야 합니다.');

@@ -5,9 +5,19 @@ import { productTypeMapping } from 'apis/Mapping/typeMapping';
 import { useParams, useNavigate } from 'react-router-dom';
 import { CampaignDetail, cardMocks } from 'mocks/campaign';
 import CampaignCard from 'components/Campaign/CampaignCard';
-import { insta } from 'utils/importing';
+import { insta, blog, tiktok, youtube } from 'utils/importing';
 import { getExperienceDetailApi } from 'apis/experience';
 import { type ExperienceDetail } from 'types/apis/experience';
+
+const channelInfo: { [key: number]: { name: string; icon: string } } = {
+  1: { name: '블로그', icon: blog },
+  2: { name: '인스타그램', icon: insta },
+  3: { name: '네이버 클립', icon: blog }, // Replace with actual icon if available
+  4: { name: '인스타그램 릴스', icon: insta },
+  5: { name: '유튜브', icon: youtube },
+  6: { name: '틱톡', icon: tiktok },
+  7: { name: '유튜브 쇼츠', icon: youtube },
+};
 
 export default function VisitingPage() {
   const { id } = useParams();
@@ -57,10 +67,12 @@ export default function VisitingPage() {
           <S.Section>
             <h1>{campaignData.title}</h1>
             <S.TagContainer>
-              <S.Tag>
-                <img src={insta} alt="인스타" />
-                인스타
-              </S.Tag>
+              {/* {campaignData.channels.map(channelId => (
+                <S.Tag key={channelId}>
+                  <img src={channelInfo[channelId]?.icon} alt={channelInfo[channelId]?.name} />
+                  {channelInfo[channelId]?.name}
+                </S.Tag>
+              ))} */}
               <S.Tag>{productTypeMapping[campaignData.product_offer_type as keyof typeof productTypeMapping]}</S.Tag>
               <S.PointTag>
                 {campaignData.each_member_point.toLocaleString()}P
@@ -72,7 +84,7 @@ export default function VisitingPage() {
           <S.Section>
             <S.SubSection>
               <h2>주최</h2>
-              <span>{campaignData.writer}</span>
+              <span>{campaignData.company_name}</span>
             </S.SubSection>
             <S.SubSection>
               <h2>제공 서비스/물품</h2>
@@ -93,6 +105,14 @@ export default function VisitingPage() {
               <h2>방문 위치</h2>
               <span>{campaignData.address}</span>
             </S.SubSection>
+            {/* <S.SubSection>
+              <h2>방문 시간</h2>
+              <S.InfoDiv>
+                {campaignData.possible_week_days.map(day => ['일', '월', '화', '수', '목', '금', '토'][day]).join(', ')}<br />
+                {campaignData.possible_time[0]} ~ {campaignData.possible_time[1]}<br />
+                {campaignData.possible_visit_now && "즉시 방문 가능"}
+              </S.InfoDiv>
+            </S.SubSection> */}
             <S.SubSection>
               <h2>방문 안내사항</h2>
               <S.InfoDiv>{campaignData.notices_to_visit}</S.InfoDiv>
@@ -111,20 +131,21 @@ export default function VisitingPage() {
                 ))}
               </S.KeywordContainer>
             </S.SubSection>
-            {/* Mission */}
             <S.SubSection>
               <h2>체험단 미션</h2>
-              <S.InfoDiv>
-                <h2>인스타그램</h2>
-                <S.TagContainer>
-                  {["해시태그", "지도 첨부", "30초 이상", "협찬", "목소리 필수"].map(str => {
-                    return (
-                      <S.NoticeTag key={str}>{str}</S.NoticeTag>
-                    )
-                  })}
-                </S.TagContainer>
-                {campaignData.experience_mission}
-              </S.InfoDiv>
+              {/* {campaignData.channels.map(channelId => (
+                <S.InfoDiv key={channelId}>
+                  <h2>{channelInfo[channelId]?.name}</h2>
+                  <S.TagContainer>
+                    {["해시태그", "지도 첨부", "30초 이상", "협찬", "목소리 필수"].map(str => {
+                      return (
+                        <S.NoticeTag key={str}>{str}</S.NoticeTag>
+                      )
+                    })}
+                  </S.TagContainer>
+                  {campaignData.experience_mission}
+                </S.InfoDiv>
+              ))} */}
             </S.SubSection>
           </S.Section>
 

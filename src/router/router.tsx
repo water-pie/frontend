@@ -62,6 +62,8 @@ export default function Router() {
             <Route path="pastCampaigns" element={<P.FinishedCampaigns />} />
             <Route path="inquiry" element={<P.Inquiry />} />
           </Route>
+          <Route path="payment/success" element={<P.PaymentSuccessPage/>}/>
+          <Route path="payment/fail" element={<P.PaymentFailPage/>}/>
           <Route path="*" element={<P.NotFound />} />
         </Route>
         <Route element={<ProtectedRoute />}>

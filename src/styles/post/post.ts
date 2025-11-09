@@ -34,3 +34,10 @@ export const RightContent = styled.div`
   padding-top: 20px;
   width: 900px;
 `
+
+export const NoPostsMessage = styled.div`
+  text-align: center;
+  padding: 50px;
+  font-size: 18px;
+  color: ${textColor};
+`;

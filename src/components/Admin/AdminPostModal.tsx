@@ -73,7 +73,8 @@ export default function AdminPostModal({
     setLoading(true);
     try {
       const formData = new FormData();
-      formData.append("data", JSON.stringify({ title, content }));
+      formData.append("title", title);
+      formData.append("content", content);
       images.forEach(image => formData.append("images", image));
 
       if (mode === 'create') {

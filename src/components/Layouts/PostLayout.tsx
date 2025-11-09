@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useSearchParams } from "react-router-dom";
 import * as S from "styles/post/post";
 
 export const PostLayout = () => {
-  const [isSelect, setIsSelect] = useState<"notice" | "event">("notice");
+  const [searchParams] = useSearchParams();
+  const type = searchParams.get("type") || "notice"; // Default to 'notice'
 
   return (
     <S.NoticeContainer>
@@ -11,16 +11,14 @@ export const PostLayout = () => {
         <h2>공지 / 이벤트</h2>
         <S.ClassificationBox>
           <S.Classification
-            to="/notices"
-            onClick={() => setIsSelect("notice")}
-            selected={isSelect == "notice"}
+            to="/post?type=notice"
+            selected={type === "notice"}
           >
             공지사항
           </S.Classification>
           <S.Classification
-            to="/notices"
-            onClick={() => setIsSelect("event")} 
-            selected={isSelect == "event"}
+            to="/post?type=event"
+            selected={type === "event"}
           >
             이벤트
           </S.Classification>

@@ -92,7 +92,7 @@ const CampaignCreationPage = () => {
       return;
     }
 
-    if (0 < totalPoints && totalPoints < 5000) {
+    if (0 < each_member_point && each_member_point < 5000) {
       alert("5000P 이상 입력해주세요.");
       return;
     }

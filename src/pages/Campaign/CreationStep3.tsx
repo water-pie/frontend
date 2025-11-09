@@ -17,7 +17,7 @@ const CampaignCreationStep3Page = () => {
   ];
   const activeStep = 3;
   const navigate = useNavigate();
-  const { 
+  const {
     available_days,
     available_time_start,
     available_time_end,

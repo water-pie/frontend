@@ -11,6 +11,15 @@ interface AppliedCampaign {
   process_status: number;
 }
 
+const statusMapping: { [key: number]: string } = {
+  1: "선정중",
+  2: "리뷰등록하기",
+  3: "리뷰 거절",
+  4: "선정 거절",
+  5: "취소",
+  6: "과정 완료",
+};
+
 const AppliedCampaigns = () => {
   const { userInfo } = useUserStore();
   const [appliedCampaigns, setAppliedCampaigns] = useState<AppliedCampaign[]>([]);
@@ -62,10 +71,10 @@ const AppliedCampaigns = () => {
             <S.CampaignCard key={campaign.exp_id}>
               {/* Assuming image and offerContent are not directly in AppliedCampaign, 
                   you might need to fetch full campaign details or adjust the type if needed */}
-              <S.CampaignImage src={CampaignDetail[0].image_urls[0]} alt={campaign.title} /> {/* Placeholder */}
+              <S.CampaignImage src={CampaignDetail[0].image_urls[0]} alt={campaign.title} /> {/* 이미지 추가 수정 */}
               <S.CampaignInfo>
                 <S.CampaignTitle>{campaign.title}</S.CampaignTitle>
-                <S.CampaignDescription>진행 상태: {campaign.process_status}</S.CampaignDescription>
+                <S.CampaignDescription>진행 상태: {statusMapping[campaign.process_status]}</S.CampaignDescription>
               </S.CampaignInfo>
               <S.CampaignStatusInfo>
                 <S.StatusItem>
@@ -74,7 +83,7 @@ const AppliedCampaigns = () => {
                 </S.StatusItem>
                 <S.StatusItem>
                   <S.StatusLabel>상태</S.StatusLabel>
-                  <S.StatusValue>{campaign.process_status}</S.StatusValue>
+                  <S.StatusValue>{statusMapping[campaign.process_status]}</S.StatusValue>
                 </S.StatusItem>
               </S.CampaignStatusInfo>
               <button onClick={() => handleCancelApplication(campaign.exp_id)}>신청 취소</button>

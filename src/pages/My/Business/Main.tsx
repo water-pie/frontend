@@ -37,7 +37,7 @@ const BusinessMainPage = () => {
         const response = await getManagedExperienceListApi(userInfo.token);
         setCampaigns(response.data);
       } catch (error) {
-        handleApiError(error);
+        console.error(error);
       }
     }
   };
@@ -54,7 +54,7 @@ const BusinessMainPage = () => {
           alert("캠페인이 삭제되었습니다.");
           fetchCampaigns(); // Re-fetch campaigns to update the list
         } catch (error) {
-          handleApiError(error);
+          console.error(error);
         }
       }
     }

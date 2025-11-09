@@ -7,6 +7,13 @@ interface Payment {
   "orderName": string,
 }
 
+interface ConfirmPayment {
+  paymentKey: string;
+  orderId: string;
+  amount: number;
+  status: string;
+}
+
 export const initialize = async (token: string, data: Payment) => {
   const response = await api.post("/payments/initiate", data, {
     headers: {
@@ -15,4 +22,14 @@ export const initialize = async (token: string, data: Payment) => {
     }
   });
   return response.data;
-}
+};
+
+export const confirmPayment = async (token: string, data: ConfirmPayment) => {
+  const response = await api.post("/payments/confirm", data, {
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+  return response.data;
+};
