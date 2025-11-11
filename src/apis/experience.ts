@@ -10,6 +10,12 @@ interface GetExperienceListResponse {
   data: Experience[];
 }
 
+interface GetExperienceListParams {
+  keyword?: string;
+  channels?: number[];
+  productOfferType?: number;
+}
+
 interface GetExperienceDetailResponse {
   status: string;
   message: string;
@@ -87,18 +93,9 @@ interface GetMyReviewsResponse {
   data: MyReviewSummary[];
 }
 
-export const getExperienceListApi = async (): Promise<GetExperienceListResponse> => {
+export const getExperienceListApi = async (params?: GetExperienceListParams): Promise<GetExperienceListResponse> => {
   try {
-    const response = await api.get<GetExperienceListResponse>("/experience/list");
-    return response.data;
-  } catch (e) {
-    throw new Error(`${e}`);
-  }
-};
-
-export const searchExperienceListApi = async (keyword: string): Promise<GetExperienceListResponse> => {
-  try {
-    const response = await api.get<GetExperienceListResponse>(`/experience/list?keyword=${keyword}`);
+    const response = await api.get<GetExperienceListResponse>("/experience/list", { params });
     return response.data;
   } catch (e) {
     throw new Error(`${e}`);

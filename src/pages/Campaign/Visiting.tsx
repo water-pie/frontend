@@ -67,12 +67,12 @@ export default function VisitingPage() {
           <S.Section>
             <h1>{campaignData.title}</h1>
             <S.TagContainer>
-              {/* {campaignData.channels.map(channelId => (
+              {campaignData.channels.map(channelId => (
                 <S.Tag key={channelId}>
                   <img src={channelInfo[channelId]?.icon} alt={channelInfo[channelId]?.name} />
                   {channelInfo[channelId]?.name}
                 </S.Tag>
-              ))} */}
+              ))}
               <S.Tag>{productTypeMapping[campaignData.product_offer_type as keyof typeof productTypeMapping]}</S.Tag>
               <S.PointTag>
                 {campaignData.each_member_point.toLocaleString()}P
@@ -105,14 +105,14 @@ export default function VisitingPage() {
               <h2>방문 위치</h2>
               <span>{campaignData.address}</span>
             </S.SubSection>
-            {/* <S.SubSection>
+            <S.SubSection>
               <h2>방문 시간</h2>
               <S.InfoDiv>
                 {campaignData.possible_week_days.map(day => ['일', '월', '화', '수', '목', '금', '토'][day]).join(', ')}<br />
                 {campaignData.possible_time[0]} ~ {campaignData.possible_time[1]}<br />
                 {campaignData.possible_visit_now && "즉시 방문 가능"}
               </S.InfoDiv>
-            </S.SubSection> */}
+            </S.SubSection>
             <S.SubSection>
               <h2>방문 안내사항</h2>
               <S.InfoDiv>{campaignData.notices_to_visit}</S.InfoDiv>
@@ -133,7 +133,7 @@ export default function VisitingPage() {
             </S.SubSection>
             <S.SubSection>
               <h2>체험단 미션</h2>
-              {/* {campaignData.channels.map(channelId => (
+              {campaignData.channels.map(channelId => (
                 <S.InfoDiv key={channelId}>
                   <h2>{channelInfo[channelId]?.name}</h2>
                   <S.TagContainer>
@@ -145,7 +145,7 @@ export default function VisitingPage() {
                   </S.TagContainer>
                   {campaignData.experience_mission}
                 </S.InfoDiv>
-              ))} */}
+              ))}
             </S.SubSection>
           </S.Section>
 

@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 
 const list = ["전체", "생활", "서비스", "유아", "식품", "디지털"];
 const filter = ["블로그", "유튜브", "틱톡", "인스타그램"];
 type Category = "전체" | "생활" | "서비스" | "유아" | "식품" | "디지털";
 
+const channelMapping: { [key: string]: number } = {
+  "블로그": 1,
+  "인스타그램": 2,
+  "틱톡": 3,
+  "유튜브": 4,
+};
+
 interface Props {
-  onList?: boolean
+  onList?: boolean;
+  onFilterChange: (filters: { category: string; channels: number[] }) => void;
 }
 
-export const Categories = ({ onList = true }: Props) => {
+export const Categories = ({ onList = true, onFilterChange }: Props) => {
   const [listSelected, setListSelected] = useState<Category>("전체");
   const [filterSelected, setFilterSelected] = useState<string[]>([]);
 
@@ -20,6 +28,11 @@ export const Categories = ({ onList = true }: Props) => {
       setFilterSelected([...filterSelected, ele]);
     }
   }
+
+  useEffect(() => {
+    const channelIds = filterSelected.map(channelName => channelMapping[channelName]);
+    onFilterChange({ category: listSelected, channels: channelIds });
+  }, [listSelected, filterSelected, onFilterChange]);
 
   return (
     <Container>

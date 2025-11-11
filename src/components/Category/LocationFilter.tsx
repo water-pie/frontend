@@ -3,9 +3,10 @@ import styled from '@emotion/styled';
 
 interface Props {
   onClose: () => void;
+  onApply: (location: string) => void;
 }
 
-export const LocationFilter = ({ onClose }: Props) => {
+export const LocationFilter = ({ onClose, onApply }: Props) => {
   const [selectedRegion, setSelectedRegion] = useState('대전');
   const [selectedDistrict, setSelectedDistrict] = useState('');
   const backgroundRef = useRef(null);
@@ -14,6 +15,15 @@ export const LocationFilter = ({ onClose }: Props) => {
     if (backgroundRef.current) {
       e.target === backgroundRef.current && onClose();
     }
+  };
+
+  const handleApply = () => {
+    let location = selectedRegion;
+    if (selectedDistrict) {
+      location += ` ${selectedDistrict}`;
+    }
+    onApply(location);
+    onClose();
   };
 
   const regions = [
@@ -70,6 +80,9 @@ export const LocationFilter = ({ onClose }: Props) => {
             ))}
           </ButtonGrid>
         )}
+        <Footer>
+          <ApplyButton onClick={handleApply}>적용하기</ApplyButton>
+        </Footer>
       </ModalContent>
     </ModalOverlay>
   );
@@ -148,5 +161,28 @@ const DistrictButton = styled(RegionButton)`
 
   &:hover {
     background-color: ${({ selected }) => (selected ? '#7abaff' : '#ddd')};
+  }
+`;
+
+const Footer = styled.div`
+  padding: 10px 20px;
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid #f0f0f0;
+`;
+
+const ApplyButton = styled.button`
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background-color: #96d3ff;
+  color: #fff;
+  font-weight: bold;
+  font-size: 15px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #7abaff;
   }
 `;

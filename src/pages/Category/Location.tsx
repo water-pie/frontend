@@ -1,13 +1,51 @@
 import CampaignCard from "components/Campaign/CampaignCard";
 import * as S from "styles/main";
-import { cardMocks } from "mocks/campaign";
 import Categories from "components/Category/Categories";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import LocationFilter from "components/Category/LocationFilter";
+import { getExperienceListApi } from "apis/experience";
+import { type Experience } from "types/apis/experience";
 
 export default function Location() {
   const [isOpen, setIsOpen] = useState(false);
+  const [campaigns, setCampaigns] = useState<Experience[]>([]);
+  const [locationFilter, setLocationFilter] = useState<string>('');
+  const [categoryFilters, setCategoryFilters] = useState<{ category: string; channels: number[] }>({ category: '전체', channels: [] });
+
+  useEffect(() => {
+    const fetchCampaigns = async () => {
+      try {
+        const params: {
+          productOfferType: number,
+          keyword?: string,
+          channels?: number[]
+        } = { productOfferType: 1 };
+
+        let keywordParts: string[] = [];
+        if (locationFilter) {
+          keywordParts.push(locationFilter);
+        }
+        if (categoryFilters.category !== '전체') {
+          keywordParts.push(categoryFilters.category);
+        }
+        if (keywordParts.length > 0) {
+          params.keyword = keywordParts.join(' ');
+        }
+
+        if (categoryFilters.channels.length > 0) {
+          params.channels = categoryFilters.channels;
+        }
+
+        const response = await getExperienceListApi(params);
+        setCampaigns(response.data);
+      } catch (error) {
+        console.error("Error fetching location campaigns:", error);
+      }
+    };
+
+    fetchCampaigns();
+  }, [locationFilter, categoryFilters]);
 
   return (
     <>
@@ -16,15 +54,15 @@ export default function Location() {
         <ModalText
           onClick={() => setIsOpen(true)}
         >
-          전체
+          {locationFilter || '전체'}
         </ModalText>
-        {isOpen && <LocationFilter onClose={() => setIsOpen(false)}/>}
+        {isOpen && <LocationFilter onClose={() => setIsOpen(false)} onApply={setLocationFilter} />}
       </S.TitleBox>
-      <Categories />
+      <Categories onFilterChange={setCategoryFilters} />
       <S.CampaignGrid>
-        {cardMocks.map((campaign, index) => (
+        {campaigns.map((campaign) => (
           <CampaignCard
-            key={index}
+            key={campaign.id}
             id={campaign.id}
             image_urls={campaign.image_urls}
             title={campaign.title}

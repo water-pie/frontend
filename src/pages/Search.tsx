@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import CampaignCard from "components/Campaign/CampaignCard";
 import * as S from "styles/main";
-import { searchExperienceListApi } from "apis/experience";
+import { getExperienceListApi } from "apis/experience";
 import { type Experience } from "types/apis/experience";
 
 export default function Search() {
@@ -16,7 +16,7 @@ export default function Search() {
     if (keyword) {
       const fetchSearchResults = async () => {
         try {
-          const response = await searchExperienceListApi(keyword);
+          const response = await getExperienceListApi({ keyword: keyword });
           if (response.status === "success" && response.data.length > 0) {
             setSearchResults(response.data);
           } else {
