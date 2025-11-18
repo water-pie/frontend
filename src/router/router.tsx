@@ -4,7 +4,6 @@ import UserManagement from "pages/Admin/UserManagement";
 import PostManagement from "pages/Admin/PostManagement";
 import InquiryManagement from "pages/Admin/InquiryManagement";
 import PointManagement from "pages/Admin/PointManagement";
-import PenaltyManagement from "pages/Admin/PenaltyManagement";
 import Layout from "components/Layouts/Layout";
 import PostLayout from "components/Layouts/PostLayout";
 import CampaignCreationLayout from "components/Layouts/CampaignCreationLayout";
@@ -58,7 +57,7 @@ export default function Router() {
             <Route index element={<P.BusinessMyMain />} />
             <Route path="profileEdit" element={<P.ProfileEdit />} />
             <Route path="pointManagement" element={<P.BusinessPointManagement />} />
-            <Route path="registeredCampaigns" element={<P.RegisteredCampaigns />} />
+            <Route path="managementCampaigns" element={<P.RegisteredCampaigns />} />
             <Route path="pastCampaigns" element={<P.FinishedCampaigns />} />
             <Route path="inquiry" element={<P.Inquiry />} />
           </Route>
@@ -73,7 +72,6 @@ export default function Router() {
             <Route path="posts" element={<PostManagement />} />
             <Route path="inquiries" element={<InquiryManagement />} />
             <Route path="points" element={<PointManagement />} />
-            <Route path="penalties" element={<PenaltyManagement />} />
           </Route>
         </Route>
       </Routes>

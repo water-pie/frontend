@@ -32,8 +32,13 @@ const BusinessMyPageLayout = () => {
               </S.BusinessNavLink>
             </li>
             <li>
-              <S.BusinessNavLink to="/business/registeredCampaigns" className={pathname === '/business/registeredCampaigns' ? 'active' : ''}>
-                등록한 캠페인
+              <S.BusinessNavLink to="/business/managementCampaigns" className={pathname === '/business/managementCampaigns' ? 'active' : ''}>
+                캠페인 관리
+              </S.BusinessNavLink>
+            </li>
+                        <li>
+              <S.BusinessNavLink to="/business/pastCampaigns" className={pathname === '/business/pastCampaigns' ? 'active' : ''}>
+                지난 캠페인 현황
               </S.BusinessNavLink>
             </li>
           </ul>

@@ -21,10 +21,10 @@ const SocialMediaModal = ({ isOpen, onClose, userInfoData, onUpdate }: SocialMed
 
   useEffect(() => {
     if (userInfoData) {
-      setBlogUrl(userInfoData.blogUrl || '');
-      setInstagramUrl(userInfoData.instagramUrl || '');
-      setTiktokUrl(userInfoData.tiktokUrl || '');
-      setYoutubeUrl(userInfoData.youtubeUrl || '');
+      setBlogUrl(userInfoData.influencer.blogUrl || '');
+      setInstagramUrl(userInfoData.influencer.instagramUrl || '');
+      setTiktokUrl(userInfoData.influencer.tiktokUrl || '');
+      setYoutubeUrl(userInfoData.influencer.youtubeUrl || '');
     }
   }, [userInfoData]);
 

@@ -55,7 +55,7 @@ export default function BuyingPage() {
   const formatDate = (dateStr: string) => new Date(dateStr).toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit', weekday: 'short' });
 
   const handleApplyClick = () => {
-    navigate(`/campaign/${id}/apply`); // Navigate to the application page
+    navigate(`/campaign/${id}/apply`, { state: { campaignData } });
   };
 
   return (

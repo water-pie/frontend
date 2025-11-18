@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import useUserStore from 'store/useUserStore';
+import { historyPayment } from 'apis/points';
 
 const Table = styled.table`
   width: 100%;
@@ -56,9 +57,8 @@ export default function PointManagement() {
       if (!userInfo?.token) return;
       setLoading(true);
       try {
-        // const response = await getAdminPointHistoryApi(userInfo.token);
-        // todo
-        setPointHistory([]);
+        const response = await historyPayment(userInfo.token);
+        setPointHistory(response || []);
       } catch (error) {
         console.error("포인트 내역을 불러오는데 실패했습니다:", error);
         setPointHistory([]);

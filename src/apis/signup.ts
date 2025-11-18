@@ -33,9 +33,15 @@ export const signupAsBrandManager = async (data: {
   businessRegistrationNumber: string;
   address: string;
   detailedAddress: string;
+  businessRegistrationCertificate: File;
 }) => {
   try {
-    const response = await api.post("/users/signup/brand-manager", data);
+    const { businessRegistrationCertificate, ...dtoData } = data;
+    const formData = new FormData();
+    formData.append('dto', JSON.stringify(dtoData));
+    formData.append('businessRegistrationCertificate', businessRegistrationCertificate);
+
+    const response = await api.post("/users/signup/brand-manager", formData);
     return response.data;
   } catch (e) {
     throw new Error(`${e}`);
@@ -51,9 +57,14 @@ export const signupAsMarketingAgency = async (data: {
   businessRegistrationNumber: string;
   address: string;
   detailedAddress: string;
+  businessRegistrationCertificate: File;
 }) => {
   try {
-    const response = await api.post("/users/signup/marketing-agency", data);
+    const { businessRegistrationCertificate, ...dtoData } = data;
+    const formData = new FormData();
+    formData.append('dto', JSON.stringify(dtoData));
+    formData.append('businessRegistrationCertificate', businessRegistrationCertificate);
+    const response = await api.post("/users/signup/marketing-agency", formData);
     return response.data;
   } catch (e) {
     throw new Error(`${e}`);

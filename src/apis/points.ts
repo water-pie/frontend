@@ -33,3 +33,12 @@ export const confirmPayment = async (token: string, data: ConfirmPayment) => {
   });
   return response.data;
 };
+
+export const historyPayment = async (token: string) => {
+  const response = await api.get("/payments/history", {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  return response.data.data;
+}

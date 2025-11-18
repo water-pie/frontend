@@ -4,7 +4,7 @@ import { useState } from "react";
 import type { FormState } from "types/input";
 import { signupAsBrandManager } from "apis/signup";
 import { useNavigate } from "react-router-dom";
-import { formatPhoneNumber } from "utils/formatters";
+import { formatBusinessNumber, formatPhoneNumber } from "utils/formatters";
 
 interface Props {
   type: string,
@@ -35,13 +35,14 @@ export default function Brand({ type }: Props) {
     address: "",
     detailedAddress: "",
   });
+  const [certificateFile, setCertificateFile] = useState<File | null>(null);
   const navigate = useNavigate();
 
   const handlePersonalInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     let formattedValue = value;
 
-    if (name === 'phone') {
+    if (name === 'phone' || name === 'subPhone') {
       formattedValue = formatPhoneNumber(value);
     }
 
@@ -62,10 +63,22 @@ export default function Brand({ type }: Props) {
 
   const handleBusinessInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    let formattedValue = value;
+
+    if (name === "registrationNumber") {
+      formattedValue = formatBusinessNumber(value);
+    }
+
     setBusinessInfoForm((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: formattedValue,
     }));
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setCertificateFile(e.target.files[0]);
+    }
   };
 
   const handlePrevStep = () => {
@@ -91,21 +104,17 @@ export default function Brand({ type }: Props) {
         return;
       }
     }
-    if (step === 2) {
-      const hasPlatformUrl = Object.values(platformForm).some(url => url.trim() !== '');
-      if (!hasPlatformUrl) {
-        alert("하나 이상의 플랫폼 URL을 입력해주세요.");
-        return;
-      }
-    }
     setStep(step+1);
   }
 
   const handleSignup = async () => {
-    console.log(businessInfoForm);
     if (!businessInfoForm.registrationNumber.trim() || !businessInfoForm.address.trim() || !businessInfoForm.detailedAddress.trim()) {
         alert("사업자 정보를 모두 입력해주세요.");
         return;
+    }
+    if (!certificateFile) {
+      alert("사업자 등록증을 업로드해주세요.");
+      return;
     }
 
     try {
@@ -121,6 +130,7 @@ export default function Brand({ type }: Props) {
             businessRegistrationNumber: businessInfoForm.registrationNumber,
             address: businessInfoForm.address,
             detailedAddress: businessInfoForm.detailedAddress,
+            businessRegistrationCertificate: certificateFile
         });
         alert("회원가입이 완료되었습니다.");
         navigate("/login");
@@ -139,7 +149,7 @@ export default function Brand({ type }: Props) {
 
         <S.StepItem active={step === 2} completed={step > 2}>
           <S.StepCircle active={step === 2} completed={step > 2}/>
-          <S.StepLabel active={step === 2}>플랫폼 등록</S.StepLabel>
+          <S.StepLabel active={step === 2}>플랫폼 등록 (선택)</S.StepLabel>
         </S.StepItem>
 
          <S.StepItem active={step === 3}>
@@ -175,7 +185,7 @@ export default function Brand({ type }: Props) {
       {step === 2 && (
         <>
           <S.SignupField>
-            <Platform form={platformForm} handleChange={handlePlatformChange} />
+            <Platform form={platformForm} handleChange={handlePlatformChange} isOptional={true} />
           </S.SignupField>
           <S.SignupTerms>
             <S.ButtonBox>
@@ -193,6 +203,10 @@ export default function Brand({ type }: Props) {
               handleChange={handleBusinessInfoChange}
               setForm={setBusinessInfoForm}
             />
+            <div>
+              <label htmlFor="certificate">사업자 등록증</label>
+              <input type="file" id="certificate" name="certificate" accept="image/*,.pdf" onChange={handleFileChange} />
+            </div>
           </S.SignupField>
           <S.SignupTerms>
             <S.ButtonBox>

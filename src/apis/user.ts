@@ -101,3 +101,43 @@ export const getMarketingAgencyListApi = async (token: string) => {
     throw new Error(`${e}`);
   }
 };
+
+// 신청 목록 불러오기 (관리자)
+export const getApplicationUserListApi = async (token: string) => {
+  try {
+    const response = await api.get("/admin/users/pending", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    return response.data.data;
+  } catch (e) {
+    throw new Error(`${e}`);
+  }
+};
+
+export const approveUserApi = async (token: string, userId: number) => {
+  try {
+    const response = await api.patch(`/admin/users/${userId}/approve`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    console.log(response);
+  } catch (e) {
+    throw new Error(`${e}`);
+  }
+};
+
+export const rejectUserApi = async (token: string, userId: number) => {
+  try {
+    const response = await api.patch(`/admin/users/${userId}/reject`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    console.log(response);
+  } catch (e) {
+    throw new Error(`${e}`);
+  }
+};

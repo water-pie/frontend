@@ -93,7 +93,7 @@ const InquiryWrite = () => {
           <S.ToolbarButton onClick={() => setContent(content + '![alt text](image.jpg)')}>🖼️</S.ToolbarButton>
         </S.Toolbar>
         <S.Textarea
-          placeholder="워터파이에 문의하고 싶은 내용을 작성해주세요."
+          placeholder="리뷰헬퍼에 문의하고 싶은 내용을 작성해주세요."
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />

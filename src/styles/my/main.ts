@@ -8,6 +8,11 @@ export const WelcomeSection = styled.section`
   display: flex;
   align-items: center;
   margin-bottom: 40px;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 export const ProfileImage = styled.div`
@@ -37,6 +42,32 @@ export const InfoSection = styled.section`
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 20px;
   margin-bottom: 40px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+export const Title = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+
+  h3 {
+    margin: 0;
+  }
+
+  span {
+    cursor: pointer;
+    :hover {
+      font-weight: 600;
+    }
+  }
 `;
 
 export const InfoBox = styled.div`
@@ -69,6 +100,10 @@ export const SocialSection = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
 `
 
 export const SocialLink = styled.a`
@@ -80,6 +115,7 @@ export const SocialLink = styled.a`
   text-decoration: none;
   color: #333;
   cursor: pointer;
+  transition: all 0.3s ease-in-out;
 
   img {
     width: 24px;
@@ -90,15 +126,11 @@ export const SocialLink = styled.a`
   span {
     flex-grow: 1;
   }
-`;
 
-export const Arrow = styled.span`
-  &::after {
-    content: '>';
-    font-size: 18px;
-    color: #888;
+  :hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
   }
-  text-align: right;
 `;
 
 export const CampaignActivitySection = styled.section`

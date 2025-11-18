@@ -1,27 +1,23 @@
-export const formatPhoneNumber = (value: string) => {
+export const formatPhoneNumber = (value: string): string => {
   if (!value) return "";
-  value = value.replace(/[^0-9]/g, "");
 
-  let result = "";
-  if (value.length < 4) {
-    return value;
-  } else if (value.length < 7) {
-    result += value.slice(0, 3);
-    result += "-";
-    result += value.slice(3);
-  } else if (value.length < 11) {
-    result += value.slice(0, 3);
-    result += "-";
-    result += value.slice(3, 7);
-    result += "-";
-    result += value.slice(7);
-  } else {
-    result += value.slice(0, 3);
-    result += "-";
-    result += value.slice(3, 7);
-    result += "-";
-    result += value.slice(7, 11);
-  }
+  const numbers = value.replace(/\D/g, "");
 
-  return result;
+  if (numbers.length <= 3) return numbers;
+  if (numbers.length <= 7) return `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
+  if (numbers.length <= 11) return `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7)}`;
+
+  return `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7, 11)}${numbers.slice(11)}`;
+};
+
+export const formatBusinessNumber = (value: string): string => {
+  if (!value) return "";
+
+  const numbers = value.replace(/\D/g, "");
+
+  if (numbers.length <= 3) return numbers;
+  if (numbers.length <= 5) return `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
+  if (numbers.length <= 10) return `${numbers.slice(0, 3)}-${numbers.slice(3, 5)}-${numbers.slice(5)}`;
+
+  return `${numbers.slice(0, 3)}-${numbers.slice(3, 5)}-${numbers.slice(5, 13)}${numbers.slice(13)}`;
 };

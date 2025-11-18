@@ -1,4 +1,5 @@
 import { api } from "./instance";
+import qs from "qs";
 import {
   type Experience,
   type ExperienceDetail
@@ -95,7 +96,15 @@ interface GetMyReviewsResponse {
 
 export const getExperienceListApi = async (params?: GetExperienceListParams): Promise<GetExperienceListResponse> => {
   try {
-    const response = await api.get<GetExperienceListResponse>("/experience/list", { params });
+    const response = await api.get<GetExperienceListResponse>(
+      "/experience/list",
+      {
+        params,
+        paramsSerializer: {
+          serialize: (params) => qs.stringify(params, { arrayFormat: 'repeat' })
+        }
+      }
+    );
     return response.data;
   } catch (e) {
     throw new Error(`${e}`);

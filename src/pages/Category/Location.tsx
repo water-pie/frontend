@@ -56,7 +56,7 @@ export default function Location() {
         >
           {locationFilter || '전체'}
         </ModalText>
-        {isOpen && <LocationFilter onClose={() => setIsOpen(false)} onApply={setLocationFilter} />}
+        {isOpen && <LocationFilter currentLocation={locationFilter} onClose={() => setIsOpen(false)} onApply={setLocationFilter} />}
       </S.TitleBox>
       <Categories onFilterChange={setCategoryFilters} />
       <S.CampaignGrid>

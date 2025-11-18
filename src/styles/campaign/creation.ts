@@ -234,8 +234,32 @@ export const RadioButton = styled.label`
 
 export const CheckboxGroup = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 20px;
+`;
+
+export const DaySelectionGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+`;
+
+export const DayButtonGroup = styled.div`
+  display: flex;
   gap: 10px;
+`;
+
+export const DayButton = styled.button`
+  background-color: ${buttonColor};
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${buttonHoverColor};
+  }
 `;
 
 export const Checkbox = styled.label`
@@ -331,29 +355,82 @@ export const ChannelGroup = styled.div`
   gap: 15px;
 `;
 
-export const ChannelBox = styled.div`
+export const ChannelBox = styled.div<{ selected: boolean }>`
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  border: 1px solid ${borderColor1};
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 4px;
+  border: 1px solid ${({ selected }) => (selected ? buttonColor : borderColor1)};
   padding: 15px;
   border-radius: 8px;
+  background-color: ${({ selected }) => (selected ? '#f0f8ff' : 'white')};
+  cursor: pointer;
+  height: 100%;
+
+  :hover {
+    border-color: ${buttonHoverColor};
+  }
+
+  & > span {
+    font-size: 14px;
+    color: #666;
+    margin-left: 22px;
+  }
+`;
+
+export const TitleRow = styled.div`
+  display: flex;
+  align-items: center;
 
   input[type="checkbox"] {
-    margin-top: 3px;
+    margin-right: 8px;
   }
 
   label {
-    cursor: pointer;
+    display: flex;
+    align-items: center;
     font-weight: bold;
     font-size: 15px;
-    p {
-      font-size: 13px;
-      font-weight: normal;
-      color: #666;
-      margin-top: 5px;
-    }
+    cursor: pointer;
+    gap: 10px;
   }
+`;
+
+export const Premium = styled.div`
+  background-color: ${buttonColor};
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 4px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const PremiumSection = styled.div`
+  border: 1px solid ${borderColor1};
+  border-radius: 8px;
+  padding: 25px;
+  margin-top: 30px;
+
+  h3 {
+    font-weight: bold;
+  }
+
+  p {
+    font-size: 15px;
+    color: #333;
+    line-height: 1.6;
+  }
+`;
+
+export const PremiumTitle = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 15px;
 `;
 
 export const Select = styled.select`

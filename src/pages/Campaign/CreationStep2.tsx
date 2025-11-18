@@ -4,13 +4,13 @@ import { Input } from "components/Input/Input";
 import { useCampaignCreationStore } from "store/useCampaignCreationStore";
 
 const channels = [
-  { id: "blog", label: "블로그", description: "블로그 게시물 1건 업로드" },
-  { id: "instagram-feed", label: "인스타그램 - 피드", description: "사진 3장 이상의 피드 게시물 1개 업로드" },
-  { id: "naver-clip", label: "네이버 클립", description: "30초 이상의 영상(클립) 1개 업로드" },
-  { id: "instagram-reels", label: "인스타그램 - 릴스", description: "30초 이상의 영상(릴스) 1개 업로드" },
-  { id: "youtube", label: "유튜브", description: "3분 이상의 영상(유튜브) 1개 업로드" },
-  { id: "tiktok", label: "틱톡", description: "30초 이상의 영상(틱톡) 1개 업로드" },
-  { id: "youtube-shorts", label: "유튜브 - 쇼츠", description: "30초 이상의 영상(유튜브 쇼츠) 1개 업로드" },
+  { id: "블로그", description: "블로그 게시물 1건 업로드", necessaryPoint: false },
+  { id: "인스타그램 - 피드", description: "사진 3장 이상의 피드 게시물 1개 업로드", necessaryPoint: false },
+  { id: "네이버 클립", description: "30초 이상의 영상(클립) 1개 업로드", necessaryPoint: true },
+  { id: "인스타그램 - 릴스", description: "30초 이상의 영상(릴스) 1개 업로드", necessaryPoint: true },
+  { id: "유튜브", description: "3분 이상의 영상(유튜브) 1개 업로드", necessaryPoint: true },
+  { id: "틱톡", description: "30초 이상의 영상(틱톡) 1개 업로드", necessaryPoint: true },
+  { id: "유튜브 - 쇼츠", description: "30초 이상의 영상(유튜브 쇼츠) 1개 업로드", necessaryPoint: true },
 ];
 
 const CampaignCreationStep2Page = () => {
@@ -36,13 +36,19 @@ const CampaignCreationStep2Page = () => {
     const newChannels = selectedChannels.includes(channelId)
       ? selectedChannels.filter((id) => id !== channelId)
       : [...selectedChannels, channelId].slice(0, 2);
-    set({ channels: newChannels });
+    
+    const requiresPremium = newChannels.some(channelId => {
+      const channel = channels.find(c => c.id === channelId);
+      return channel?.necessaryPoint;
+    });
+
+    set({ channels: newChannels, requiresPremiumPoint: requiresPremium });
   };
 
   const canProceed = (() => {
     if (!promotionType) return false;
-    if ((promotionType === "visiting" || promotionType === "take-out") && (!address || !detail_address)) return false;
-    if ((promotionType === "shipping" || promotionType === "purchase") && !product_url) return false;
+    if ((promotionType === "방문형" || promotionType === "포장형") && (!address || !detail_address)) return false;
+    if ((promotionType === "배송형" || promotionType === "구매형") && !product_url) return false;
     if (!category) return false;
     if (selectedChannels.length === 0) return false;
     return true;
@@ -76,32 +82,32 @@ const CampaignCreationStep2Page = () => {
           <h3>홍보 유형 *</h3>
           <S.PromotionTypeGroup>
             <S.PromotionTypeBox
-              selected={promotionType === "visiting"}
-              onClick={() => set({ promotionType: "visiting" })}
+              selected={promotionType === "방문형"}
+              onClick={() => set({ promotionType: "방문형" })}
             >
               <div>🏠</div>
               <h4>방문형</h4>
               <p>매장을 방문하고 체험 후 리뷰 작성</p>
             </S.PromotionTypeBox>
             <S.PromotionTypeBox
-              selected={promotionType === "take-out"}
-              onClick={() => set({ promotionType: "take-out" })}
+              selected={promotionType === "포장형"}
+              onClick={() => set({ promotionType: "포장형" })}
             >
               <div>🛍️</div>
               <h4>포장형</h4>
               <p>방문 후 포장하여 리뷰 작성</p>
             </S.PromotionTypeBox>
             <S.PromotionTypeBox
-              selected={promotionType === "shipping"}
-              onClick={() => set({ promotionType: "shipping" })}
+              selected={promotionType === "배송형"}
+              onClick={() => set({ promotionType: "배송형" })}
             >
               <div>📦</div>
               <h4>배송형</h4>
               <p>배송받은 제품 사용 후 리뷰 작성</p>
             </S.PromotionTypeBox>
             <S.PromotionTypeBox
-              selected={promotionType === "purchase"}
-              onClick={() => set({ promotionType: "purchase" })}
+              selected={promotionType === "구매형"}
+              onClick={() => set({ promotionType: "구매형" })}
             >
               <div>🛒</div>
               <h4>구매형</h4>
@@ -110,7 +116,7 @@ const CampaignCreationStep2Page = () => {
           </S.PromotionTypeGroup>
         </S.FormSection>
 
-        {(promotionType === "visiting" || promotionType === "take-out") && (
+        {(promotionType === "방문형" || promotionType === "포장형") && (
           <S.FormSection>
             <h3>주소 *</h3>
             <Input placeholder="예) 판교역로 167, 분당 주공211, 분평동 123" value={address} onChange={(e) => set({ address: e.target.value })} />
@@ -119,7 +125,7 @@ const CampaignCreationStep2Page = () => {
           </S.FormSection>
         )}
 
-        {(promotionType === "shipping" || promotionType === "purchase") && (
+        {(promotionType === "배송형" || promotionType === "구매형") && (
           <S.FormSection>
             <h3>제품 URL *</h3>
             <Input placeholder="제공 내역 상세페이지와 일치하는 URL을 입력해주세요." value={product_url} onChange={(e) => set({ product_url: e.target.value })} />
@@ -142,21 +148,41 @@ const CampaignCreationStep2Page = () => {
           <h3>채널 (최대 2개 선택 가능) *</h3>
           <S.ChannelGroup>
             {channels.map((channel) => (
-              <S.ChannelBox key={channel.id}>
-                <input
-                  type="checkbox"
-                  id={channel.id}
-                  checked={selectedChannels.includes(channel.id)}
-                  onChange={() => handleChannelChange(channel.id)}
-                />
-                <label htmlFor={channel.id}>
-                  {channel.label}
-                  <p>{channel.description}</p>
-                </label>
+              <S.ChannelBox
+                key={channel.id}
+                onClick={() => handleChannelChange(channel.id)}
+                selected={selectedChannels.includes(channel.id)}
+              >
+                <S.TitleRow>
+                  <input
+                    type="checkbox"
+                    id={channel.id}
+                    checked={selectedChannels.includes(channel.id)}
+                  />
+                  <label htmlFor={channel.id}>
+                      <span>{channel.id}</span>
+                      {channel.necessaryPoint && <S.Premium>P</S.Premium>}
+                  </label>
+                </S.TitleRow>
+                <span>{channel.description}</span>
               </S.ChannelBox>
             ))}
           </S.ChannelGroup>
         </S.FormSection>
+
+        <S.PremiumSection>
+          <S.PremiumTitle>
+            <S.Premium>P</S.Premium>
+            <h3>프리미엄 체험단</h3>
+          </S.PremiumTitle>
+          <p>
+            프리미엄 체험단은 더 많은 인플루언서에게 노출되어 캠페인 참여율을 높일 수 있습니다.
+          </p>
+          <p>
+            블로그, 인스타그램 피드 외에 릴스, 쇼츠, 유튜브, 틱톡 등 다양한 채널을 활용하여
+            캠페인을 홍보하고 싶은 경우에 선택해주세요.
+          </p>
+        </S.PremiumSection>
 
         <S.ButtonGroup>
           <S.PrevButton onClick={() => navigate("/campaign/creation/step1")}>← 이전</S.PrevButton>

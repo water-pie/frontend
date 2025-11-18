@@ -36,7 +36,7 @@ export default function Influence({ type }: Props) {
     const { name, value } = e.target;
     let formattedValue = value;
 
-    if (name === 'phone') {
+    if (name === 'phone' || name === 'subPhone') {
       formattedValue = formatPhoneNumber(value);
     }
 

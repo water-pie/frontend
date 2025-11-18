@@ -77,17 +77,23 @@ export const Categories = ({ onList = true, onFilterChange }: Props) => {
 export default Categories;
 
 const Container = styled.div`
-  width: 1180px;
+  width: 100%; /* Changed from 1180px */
+  max-width: 1180px; /* Added max-width */
   display: flex;
   flex-direction: column;
   gap: 20px;
   margin-bottom: 50px;
+  padding: 10px 0px; /* Add horizontal padding */
+    @media (max-width: 1180px) {
+    padding: 10px 20px;
+  }
 `;
 
 const CategoryBox = styled.div`
   display: flex;
   gap: 10px;
   border-bottom: 1px solid #ddd;
+  flex-wrap: wrap; /* Allow items to wrap */
 `;
 
 const TextBox = styled.div<{ selected: boolean }>`
@@ -129,6 +135,7 @@ const SelectBox = styled.select`
 const FilterBox = styled.div`
   display: flex;
   gap: 10px;
+  flex-wrap: wrap; /* Allow items to wrap */
 `
 
 const FilterTextBox = styled.div<{ selected: boolean }>`

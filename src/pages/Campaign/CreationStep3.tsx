@@ -30,6 +30,8 @@ const CampaignCreationStep3Page = () => {
     possible_visit_now,
     notices_to_visit,
     promotionType,
+    available_holiday,
+    possible_same_day_reservation,
     set 
   } = useCampaignCreationStore();
 
@@ -40,6 +42,14 @@ const CampaignCreationStep3Page = () => {
     set({ available_days: newDays });
   };
 
+  const handleWeekdayWeekendChange = (type: "평일" | "주말") => {
+    if (type === "평일") {
+      set({ available_days: ["월", "화", "수", "목", "금"], available_weekdays_weekends: "평일" });
+    } else {
+      set({ available_days: ["토", "일"], available_weekdays_weekends: "주말" });
+    }
+  };
+
   const canProceed = (
     application_start_date &&
     application_end_date &&
@@ -47,12 +57,14 @@ const CampaignCreationStep3Page = () => {
     experience_start_date &&
     experience_end_date &&
     end_review_time &&
-    ((promotionType === "visiting" || promotionType === "take-out") ? (
+    ((promotionType === "방문형" || promotionType === "포장형") ? (
       available_days.length > 0 &&
       available_time_start &&
       available_time_end &&
       notices_to_visit !== undefined && // Check if it's been touched, not necessarily filled
-      possible_visit_now !== undefined // Check if it's been touched
+      possible_visit_now !== undefined && // Check if it's been touched
+      available_holiday !== "" &&
+      possible_same_day_reservation !== ""
     ) : true)
   );
 
@@ -75,13 +87,16 @@ const CampaignCreationStep3Page = () => {
   const minutes = ['00', '30'];
 
   useEffect(() => {
-    if (promotionType === "shipping" || promotionType === "purchase") {
+    if (promotionType === "배송형" || promotionType === "구매형") {
       set({
         available_days: [],
         available_time_start: "",
         available_time_end: "",
         possible_visit_now: false,
         notices_to_visit: "",
+        available_weekdays_weekends: "",
+        available_holiday: "",
+        possible_same_day_reservation: "",
       });
     }
   }, [promotionType, set]);
@@ -166,18 +181,50 @@ const CampaignCreationStep3Page = () => {
           />
         </S.FormSection>
 
-        {(promotionType === "visiting" || promotionType === "take-out") && (
+        {(promotionType === "방문형" || promotionType === "포장형") && (
           <>
             <S.FormSection>
               <h3>체험 가능 요일 *</h3>
-              <S.CheckboxGroup>
-                {days.map((day) => (
-                  <S.Checkbox key={day}>
-                    <input type="checkbox" checked={available_days.includes(day)} onChange={() => handleDayChange(day)} />
-                    <span>{day}</span>
-                  </S.Checkbox>
-                ))}
-              </S.CheckboxGroup>
+              <S.DaySelectionGroup>
+                <S.CheckboxGroup>
+                  {days.map((day) => (
+                    <S.Checkbox key={day}>
+                      <input type="checkbox" checked={available_days.includes(day)} onChange={() => handleDayChange(day)} />
+                      <span>{day}</span>
+                    </S.Checkbox>
+                  ))}
+                </S.CheckboxGroup>
+                <S.DayButtonGroup>
+                  <S.DayButton onClick={() => handleWeekdayWeekendChange("평일")}>평일</S.DayButton>
+                  <S.DayButton onClick={() => handleWeekdayWeekendChange("주말")}>주말</S.DayButton>
+                </S.DayButtonGroup>
+              </S.DaySelectionGroup>
+            </S.FormSection>
+
+            <S.FormSection>
+              <h3>주중 공휴일 가능여부 *</h3>
+              <S.RadioGroup>
+                <S.RadioButton>
+                  <input
+                    type="radio"
+                    name="available_holiday"
+                    value="가능"
+                    checked={available_holiday === "가능"}
+                    onChange={(e) => set({ available_holiday: e.target.value as "가능" | "불가능" })}
+                  />
+                  <span>가능</span>
+                </S.RadioButton>
+                <S.RadioButton>
+                  <input
+                    type="radio"
+                    name="available_holiday"
+                    value="불가능"
+                    checked={available_holiday === "불가능"}
+                    onChange={(e) => set({ available_holiday: e.target.value as "가능" | "불가능" })}
+                  />
+                  <span>불가능</span>
+                </S.RadioButton>
+              </S.RadioGroup>
             </S.FormSection>
 
             <S.FormSection>
@@ -202,15 +249,29 @@ const CampaignCreationStep3Page = () => {
             </S.FormSection>
 
             <S.FormSection>
-              <h3>즉시 방문 가능 여부</h3>
-              <S.Checkbox>
-                <input
-                  type="checkbox"
-                  checked={possible_visit_now}
-                  onChange={(e) => set({ possible_visit_now: e.target.checked })}
-                />
-                <span>즉시 방문 가능</span>
-              </S.Checkbox>
+              <h3>당일 예약 및 방문 여부 *</h3>
+              <S.RadioGroup>
+                <S.RadioButton>
+                  <input
+                    type="radio"
+                    name="possible_same_day_reservation"
+                    value="가능"
+                    checked={possible_same_day_reservation === "가능"}
+                    onChange={(e) => set({ possible_same_day_reservation: e.target.value as "가능" | "불가능" })}
+                  />
+                  <span>가능</span>
+                </S.RadioButton>
+                <S.RadioButton>
+                  <input
+                    type="radio"
+                    name="possible_same_day_reservation"
+                    value="불가능"
+                    checked={possible_same_day_reservation === "불가능"}
+                    onChange={(e) => set({ possible_same_day_reservation: e.target.value as "가능" | "불가능" })}
+                  />
+                  <span>불가능</span>
+                </S.RadioButton>
+              </S.RadioGroup>
             </S.FormSection>
 
             <S.FormSection>

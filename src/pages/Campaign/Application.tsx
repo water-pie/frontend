@@ -1,20 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as S from "styles/campaign/application";
-import { insta } from "utils/importing";
+import { insta, blog, tiktok, youtube } from "utils/importing";
 import WidgetNoticeImage from "assets/guideBlog.png";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import DaumPost from "components/Address/DaumPost";
-import { applyExperienceApi } from "apis/experience";
+import { applyExperienceApi, getExperienceDetailApi } from "apis/experience";
 import useUserStore from "store/useUserStore";
+import { type ExperienceDetail } from "types/apis/experience";
+import { productTypeMapping } from "apis/Mapping/typeMapping";
 
 interface postCode {
-  address : string,
+  address: string;
 }
+
+const channelInfo: { [key: number]: { name: string; icon: string } } = {
+  1: { name: '블로그', icon: blog },
+  2: { name: '인스타그램', icon: insta },
+  3: { name: '네이버 클립', icon: blog },
+  4: { name: '인스타그램 릴스', icon: insta },
+  5: { name: '유튜브', icon: youtube },
+  6: { name: '틱톡', icon: tiktok },
+  7: { name: '유튜브 쇼츠', icon: youtube },
+};
 
 export default function Application() {
   const { id } = useParams<{ id: string }>();
   const { userInfo } = useUserStore();
   const navigator = useNavigate();
+  const location = useLocation();
+  const [campaignData, setCampaignData] = useState<ExperienceDetail | null>(location.state?.campaignData || null);
   const [applicationText, setApplicationText] = useState("");
   const [detailAddress, setDetailAddress] = useState("");
   const [term1, setTerm1] = useState(false);
@@ -22,8 +36,29 @@ export default function Application() {
   const [popup, setPopup] = useState(false);
 
   const [form, setForm] = useState<postCode>({
-    address : '',
+    address: '',
   });
+
+  useEffect(() => {
+    if (!campaignData && id) {
+      const fetchCampaignDetail = async () => {
+        try {
+          const response = await getExperienceDetailApi(Number(id));
+          if (response.status === "success" && response.data) {
+            setCampaignData(response.data);
+          } else {
+            alert("캠페인 정보를 불러오는데 실패했습니다.");
+            navigator(-1);
+          }
+        } catch (error) {
+          console.error("체험 신청 페이지에서 캠페인 정보 로딩 중 오류 발생:", error);
+          alert("캠페인 정보를 불러오는데 실패했습니다.");
+          navigator(-1);
+        }
+      };
+      fetchCampaignDetail();
+    }
+  }, [campaignData, id, navigator]);
 
   const handleComplete = () => {
     setPopup(!popup);
@@ -36,15 +71,15 @@ export default function Application() {
     }
     if (!form.address) {
       alert("주소를 입력해주세요.");
-      return ;
+      return;
     }
     if (!detailAddress) {
       alert("상세 주소를 입력해주세요.");
-      return ;
+      return;
     }
     if (!term1 || !term2) {
       alert("필수 동의 사항에 체크해주세요.");
-      return ;
+      return;
     }
 
     try {
@@ -64,7 +99,12 @@ export default function Application() {
     }
   };
 
-  return (    <S.Wrapper>
+  if (!campaignData) {
+    return <div>캠페인 정보를 불러오는 중...</div>;
+  }
+
+  return (
+    <S.Wrapper>
       <S.LeftContent>
         <S.Title>체험단 신청</S.Title>
 
@@ -118,14 +158,14 @@ export default function Application() {
 
       <S.RightContent>
         <S.StickyCard>
-          <S.CafeImage src="/card/card1.png" alt="캠페인 이미지" />
+          <S.CafeImage src={campaignData.image_urls[0]} alt="캠페인 이미지" />
           <S.DetailRow>
-            <img src={insta} alt="인스타그램" />
-            <span>방문형</span>
+            <img src={channelInfo[campaignData.channels[0]]?.icon} alt={channelInfo[campaignData.channels[0]]?.name} />
+            <span>{productTypeMapping[campaignData.product_offer_type as keyof typeof productTypeMapping]}</span>
           </S.DetailRow>
-          <S.CampaignTitle>[충북] 컵빙수가 맛있는 동네 카페</S.CampaignTitle>
-          <S.CampaignDescription>컵빙수 무료 제공</S.CampaignDescription>
-          <S.Point>12,000P</S.Point>
+          <S.CampaignTitle>{campaignData.title}</S.CampaignTitle>
+          <S.CampaignDescription>{campaignData.offer_content}</S.CampaignDescription>
+          <S.Point>{campaignData.each_member_point.toLocaleString()}P</S.Point>
           <S.CheckboxSection>
             <S.RightCheckboxWrapper>
               <input
@@ -150,7 +190,7 @@ export default function Application() {
         </S.StickyCard>
       </S.RightContent>
 
-      {popup && <DaumPost address={form} setAddress = {setForm} handleComplete={handleComplete}/>}
+      {popup && <DaumPost address={form} setAddress={setForm} handleComplete={handleComplete} />}
     </S.Wrapper>
   );
-};
+}

@@ -9,6 +9,10 @@ import { useEffect, useState } from "react";
 import { getUserInfoApi } from "apis/user";
 import PointChargeModal from "components/Modal/PointChargeModal";
 
+interface UserInfoData {
+  points: number;
+}
+
 const CampaignCreationPage = () => {
   const steps = [
     { id: 1, label: "기본 정보" },
@@ -21,21 +25,20 @@ const CampaignCreationPage = () => {
   const navigate = useNavigate();
   const campaignData = useCampaignCreationStore(state => state);
   const { userInfo } = useUserStore();
-  const [userInfoData, setUserInfoData] = useState<any>({});
+  const [userInfoData, setUserInfoData] = useState<UserInfoData>({ points: 0 });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const fetchUserInfo = async () => {
-    if (userInfo?.token) {
-      try {
-        const response = await getUserInfoApi(userInfo.token);
-        setUserInfoData(response.data);
-      } catch (error) {
-        console.error("Failed to fetch user info:", error);
-      }
-    }
-  };
-
   useEffect(() => {
+    const fetchUserInfo = async () => {
+      if (userInfo?.token) {
+        try {
+          const response = await getUserInfoApi(userInfo.token);
+          setUserInfoData(response.data);
+        } catch (error) {
+          console.error("Failed to fetch user info:", error);
+        }
+      }
+    };
     fetchUserInfo();
   }, [userInfo?.token]);
   
@@ -48,7 +51,6 @@ const CampaignCreationPage = () => {
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    fetchUserInfo();
   };
 
   const handleSubmit = async () => {
@@ -92,6 +94,11 @@ const CampaignCreationPage = () => {
       return;
     }
 
+    if (campaignData.requiresPremiumPoint && each_member_point < 5000) {
+      alert("프리미엄 채널을 선택한 경우, 1인당 지급할 포인트는 5000P 이상이어야 합니다.");
+      return;
+    }
+
     if (0 < each_member_point && each_member_point < 5000) {
       alert("5000P 이상 입력해주세요.");
       return;
@@ -99,13 +106,13 @@ const CampaignCreationPage = () => {
 
     // This is an assumed mapping.
     const channelMapping: { [key: string]: number } = {
-      blog: 1,
-      "instagram-feed": 2,
-      "naver-clip": 3,
-      "instagram-reels": 4,
-      youtube: 5,
-      tiktok: 6,
-      "youtube-shorts": 7,
+      "블로그": 1,
+      "인스타그램 - 피드": 2,
+      "네이버 클립": 3,
+      "인스타그램 - 릴스": 4,
+      "유튜브": 5,
+      "틱톡": 6,
+      "유튜브 - 쇼츠": 7,
     };
 
     const dayMapping: { [key: string]: number } = {
@@ -119,19 +126,19 @@ const CampaignCreationPage = () => {
     };
 
     const promotionTypeMapping: {
-      visiting: 1;
-      "take-out": 2;
-      shipping: 3;
-      purchase: 4;
+      방문형: 1;
+      포장형: 2;
+      배송형: 3;
+      구매형: 4;
     } = {
-      visiting: 1,
-      "take-out": 2,
-      shipping: 3,
-      purchase: 4,
+      방문형: 1,
+      포장형: 2,
+      배송형: 3,
+      구매형: 4,
     };
 
     const requestData: RegisterExperienceRequest = {
-      data_type: campaignData.promotionType === "shipping" || campaignData.promotionType === "purchase" ? 2 : 1,
+      data_type: campaignData.promotionType === "배송형" || campaignData.promotionType === "구매형" ? 2 : 1,
       company_name: campaignData.company_name,
       manager_call_num: campaignData.manager_call_num,
       product_offer_type: promotionTypeMapping[campaignData.promotionType as keyof typeof promotionTypeMapping],

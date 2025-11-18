@@ -8,8 +8,8 @@ import useUserStore from 'store/useUserStore';
 interface ApiInquiryItem {
   id: number;
   title: string;
-  created_at: string;
-  status: number; // Assuming 0 for '답변 중', 1 for '답변 완료'
+  createdAt: string;
+  status: string; // "PENDING" or "ANSWER"
 }
 
 const Inquiry = () => {
@@ -40,8 +40,8 @@ const Inquiry = () => {
     navigate('/my/inquiry/write');
   };
 
-  const getStatusText = (status: number) => {
-    return status === 0 ? '답변 중' : '답변 완료';
+  const getStatusText = (status: string) => {
+    return status === "PENDING" ? '답변 중' : '답변 완료';
   };
 
   return (
@@ -60,7 +60,7 @@ const Inquiry = () => {
               key={inquiry.id}
               id={inquiry.id}
               title={inquiry.title}
-              date={new Date(inquiry.created_at).toLocaleDateString('ko-KR')}
+              date={new Date(inquiry.createdAt).toLocaleDateString('ko-KR')}
               status={getStatusText(inquiry.status)}
             />
           ))}

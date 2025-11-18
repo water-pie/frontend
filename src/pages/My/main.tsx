@@ -75,31 +75,52 @@ const MyPageMain = () => {
       </S.InfoSection>
 
       <S.SocialContainer>
-        <h3>소셜 미디어 연동</h3>
-        <div onClick={() => setIsModalOpen(true)}>
+        <S.Title>
+          <h3>소셜 미디어 연동</h3>
+          <span onClick={() => setIsModalOpen(true)}>경로 수정하기</span>
+        </S.Title>
           <S.SocialSection>
             <S.SocialLink>
               <img src={blog} alt="blog" />
-              <span>{userInfoData?.blogUrl ? userInfoData.blogUrl : "블로그를 등록해주세요."}</span>
-              <S.Arrow />
+              {userInfoData?.influencer.blogUrl ? (
+                <a href={userInfoData.influencer.blogUrl} target="_blank" rel="noopener noreferrer" style={{ flexGrow: 1 }}>
+                  <span>내 블로그로 이동</span>
+                </a>
+              ) : (
+                <span onClick={() => setIsModalOpen(true)} style={{ flexGrow: 1 }}>블로그를 등록해주세요.</span>
+              )}
             </S.SocialLink>
             <S.SocialLink>
               <img src={tiktok} alt="tiktok" />
-              <span>{userInfoData?.tiktokUrl ? userInfoData.tiktokUrl : "틱톡을 등록해주세요."}</span>
-              <S.Arrow />
+              {userInfoData?.influencer.tiktokUrl ? (
+                <a href={userInfoData.influencer.tiktokUrl} target="_blank" rel="noopener noreferrer" style={{ flexGrow: 1 }}>
+                  <span>내 틱톡으로 이동</span>
+                </a>
+              ) : (
+                <span onClick={() => setIsModalOpen(true)} style={{ flexGrow: 1 }}>틱톡을 등록해주세요.</span>
+              )}
             </S.SocialLink>
             <S.SocialLink>
               <img src={youtube} alt="youtube" />
-              <span>{userInfoData?.youtubeUrl ? userInfoData.youtubeUrl : "유튜브를 등록해주세요."}</span>
-              <S.Arrow />
+              {userInfoData?.influencer.youtubeUrl ? (
+                <a href={userInfoData.influencer.youtubeUrl} target="_blank" rel="noopener noreferrer" style={{ flexGrow: 1 }}>
+                  <span>내 유튜브로 이동</span>
+                </a>
+              ) : (
+                <span onClick={() => setIsModalOpen(true)} style={{ flexGrow: 1 }}>유튜브를 등록해주세요.</span>
+              )}
             </S.SocialLink>
             <S.SocialLink>
               <img src={insta} alt="instagram" />
-              <span>{userInfoData?.instagramUrl ? userInfoData.instagramUrl : "인스타그램을 등록해주세요."}</span>
-              <S.Arrow />
+              {userInfoData?.influencer.instagramUrl ? (
+                <a href={userInfoData.influencer.instagramUrl} target="_blank" rel="noopener noreferrer" style={{ flexGrow: 1 }}>
+                  <span>내 인스타그램으로 이동</span>
+                </a>
+              ) : (
+                <span onClick={() => setIsModalOpen(true)} style={{ flexGrow: 1 }}>인스타그램을 등록해주세요.</span>
+              )}
             </S.SocialLink>
           </S.SocialSection>
-        </div>
       </S.SocialContainer>
 
       <S.CampaignActivitySection>

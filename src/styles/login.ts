@@ -9,6 +9,10 @@ export const LoginForm = styled.div`
   width: 400px;
   border-bottom: 1px solid ${textColor};
   gap: 10px;
+
+  h2 {
+    padding-bottom: 30px;
+  }
 `
 
 export const FieldContainer = styled.div`
@@ -23,7 +27,7 @@ export const Detail = styled.div`
   display: flex;
   justify-content: space-between;
   font-size: 1px;
-  margin-top: 20px;
+  margin: 10px 0;
 `
 
 export const Pw = styled.div`
@@ -39,6 +43,7 @@ export const AutoLogin = styled.div`
   align-items: center;
   gap: 5px;
   font-size: 16px;
+  margin-top: 20px;
 `
 
 export const LoginButton = styled.button<{ isFull: boolean }>`
@@ -96,9 +101,11 @@ export const Description = styled.div`
   width: 100%;
   justify-content: start;
   gap: 2px;
+  margin-bottom: 10px;
+
   h3 {
     font-size: 20px;
-    margin-bottom: 0;
+    margin-top: 40px;
   }
   p {
     font-size: 14px;

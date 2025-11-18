@@ -15,10 +15,12 @@ export interface InfluencerInfo {
   email: string;
   name: string;
   phoneNumber: string;
-  youtubeUrl?: string;
-  blogUrl?: string;
-  instagramUrl?: string;
-  tiktokUrl?: string;
+  influencer: {
+    youtubeUrl?: string;
+    blogUrl?: string;
+    instagramUrl?: string;
+    tiktokUrl?: string;
+  };
   points: number;
 }
 

@@ -38,9 +38,9 @@ export default function Search() {
       <S.TitleBox>
         <h2>'{new URLSearchParams(location.search).get("keyword")}' 검색 결과</h2>
       </S.TitleBox>
-      <S.CampaignGrid>
-        {searchResults.length > 0 ? (
-          searchResults.map((campaign, index) => (
+      {searchResults.length > 0 ? (
+        <S.CampaignGrid>
+          {searchResults.map((campaign, index) => (
             <CampaignCard
               key={index}
               id={campaign.id}
@@ -53,11 +53,11 @@ export default function Search() {
               possible_time_application_left={campaign.possible_time_application_left}
               product_offer_type={campaign.product_offer_type}
             />
-          ))
-        ) : (
-          <p>검색 결과가 없습니다.</p>
-        )}
-      </S.CampaignGrid>
+          ))}
+        </S.CampaignGrid>
+      ) : (
+        <S.NoResultsMessage>검색 결과가 없습니다.</S.NoResultsMessage>
+      )}
     </>
   );
 }

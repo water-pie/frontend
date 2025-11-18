@@ -26,6 +26,7 @@ export const Business = ({ form, handleChange, setForm }: Props) => {
         type="text"
         name="registrationNumber"
         placeholder="사업자 등록증 번호를 입력해주세요."
+        maxLength={12}
         value={form.registrationNumber}
         onChange={handleChange}
       />

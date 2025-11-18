@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import Input, { SendInput } from "components/Input/Input";
 import { generateLicenseCodeApi, verifyLicenseCodeApi } from "apis/license";
 import type { FormState } from "types/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   extra?: boolean;
@@ -18,8 +18,16 @@ const otherInputFields = [
   { name: 'pw', type: 'password', placeholder: '비밀번호를 입력해주세요.' },
   { name: 'checkPw', type: 'password', placeholder: '비밀번호를 재입력해주세요.' },
   { name: 'name', type: 'text', placeholder: '성명을 입력해주세요.' },
-  { name: 'phone', type: 'tel', placeholder: '연락처를 입력해주세요.' },
+  { name: 'phone', type: 'text', placeholder: '연락처를 입력해주세요.' },
 ];
+
+const ErrorMessage = styled.p`
+  color: red;
+  font-size: 12px;
+  margin: 4px 0 0 4px;
+  width: 100%;
+  text-align: left;
+`;
 
 export const PersonalInfo = ({
   extra,
@@ -32,6 +40,29 @@ export const PersonalInfo = ({
 }: Props) => {
   const [sendLoading, setSendLoading] = useState(false);
   const [verifyLoading, setVerifyLoading] = useState(false);
+  const [errors, setErrors] = useState({ phone: '', subPhone: '', pw: '' });
+  
+  useEffect(() => {
+    const phoneRegex = /^010-?\d{4}-?\d{4}$/;
+    if (form.phone && !phoneRegex.test(form.phone)) {
+      setErrors(prev => ({ ...prev, phone: '올바른 전화번호 형식이 아닙니다.' }));
+    } else {
+      setErrors(prev => ({ ...prev, phone: '' }));
+    }
+
+    if (form.subPhone && !phoneRegex.test(form.subPhone)) {
+      setErrors(prev => ({ ...prev, subPhone: '올바른 전화번호 형식이 아닙니다.' }));
+    } else {
+      setErrors(prev => ({ ...prev, subPhone: '' }));
+    }
+
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{8,20}$/;
+    if (form.pw && !passwordRegex.test(form.pw)) {
+      setErrors(prev => ({ ...prev, pw: '비밀번호는 8~20자 영문, 숫자를 포함해야 합니다.'}));
+    } else {
+      setErrors(prev => ({ ...prev, pw: '' }));
+    }
+  }, [form.phone, form.subPhone, form.pw]);
 
   const handleSendCode = async () => {
     setSendLoading(true);
@@ -53,7 +84,7 @@ export const PersonalInfo = ({
   };
 
   const handleVerifyCode = async () => {
-    setVerifyLoading(true);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+    setVerifyLoading(true);
     try {
       const response = await verifyLicenseCodeApi(form.email, form.code);
       if (response.data.valid) {
@@ -103,23 +134,31 @@ export const PersonalInfo = ({
       )}
 
       {otherInputFields.map((field) => (
-        <Input
-          key={field.name}
-          type={field.type}
-          name={field.name}
-          placeholder={field.placeholder}
-          value={form[field.name]}
-          onChange={handleChange}
-        />
+        <div key={field.name} style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+          <Input
+            type={field.type}
+            name={field.name}
+            maxLength={13}
+            placeholder={field.placeholder}
+            value={form[field.name]}
+            onChange={handleChange}
+          />
+          {field.name === 'phone' && errors.phone && <ErrorMessage>{errors.phone}</ErrorMessage>}
+          {field.name === 'pw' && errors.pw && <ErrorMessage>{errors.pw}</ErrorMessage>}
+        </div>
       ))}
       {extra && (
-        <Input
-          type="tel"
-          name="subPhone"
-          placeholder="연락처(부)를 입력해주세요."
-          value={form.subPhone}
-          onChange={handleChange}
-        />
+        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+          <Input
+            type="text"
+            name="subPhone"
+            maxLength={13}
+            placeholder="연락처(부)를 입력해주세요."
+            value={form.subPhone}
+            onChange={handleChange}
+          />
+          {errors.subPhone && <ErrorMessage>{errors.subPhone}</ErrorMessage>}
+        </div>
       )}
     </>
   );

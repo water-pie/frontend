@@ -12,7 +12,6 @@ const AdminLayout = () => {
           <S.NavLink to="/admin/posts">콘텐츠 관리</S.NavLink>
           <S.NavLink to="/admin/inquiries">문의 관리</S.NavLink>
           <S.NavLink to="/admin/points">포인트 관리</S.NavLink>
-          <S.NavLink to="/admin/penalties">패널티 관리</S.NavLink>
         </nav>
       </S.Sidebar>
       <S.Content>

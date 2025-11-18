@@ -56,11 +56,11 @@ const CampaignCreationStep4Page = () => {
           <h3>체험단 미션 *</h3>
           <p>홍보하고 싶은 키워드 위주로 명확하게 작성해 주세요!</p>
           <S.FullWidthTextarea
-            placeholder="예시) 1. 20년 운영한 카페 2. 어디에서 맛볼 수 없는 컵빙수 3. 감성적인 인테리어"
+            placeholder="예시) 1. 30초 이상의 영상 2. 20년 맛집 키워드 5번 포함"
             value={mission}
             onChange={(e) => set({ mission: e.target.value })}
           />
-          <S.Warning>영수증 리뷰/네이버 예약 불가 가이드는 워터파이 가이드로 진행</S.Warning>
+          <S.Warning>영수증 리뷰/네이버 예약 불가 가이드는 리뷰헬퍼 가이드로 진행</S.Warning>
         </S.FormSection>
 
         <S.FormSection>

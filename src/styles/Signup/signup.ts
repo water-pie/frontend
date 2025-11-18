@@ -17,6 +17,12 @@ export const SignupBox = styled.div`
   display: flex;
   justify-content: center;
   gap: 60px;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
 `
 
 export const SignupTypeBox = styled(Link)`
@@ -54,12 +60,14 @@ export const ImgBox = styled.div<{color: string}>`
 
 export const SignupTerms = styled.div`
   margin-top: 40px;
-  padding: 20px 0px;
-  width: 400px;
+  padding: 20px 20px;
+  width: 100%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   gap: 30px;
   margin-bottom: 40px;
+  box-sizing: border-box;
 `
 
 export const TermsBox = styled.div`
@@ -74,9 +82,11 @@ export const TermsBox = styled.div`
 
 export const SignupTextBox = styled.div`
   width: 400px;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
-  padding-bottom: 20px;
+  padding: 0 20px 20px 20px;
+  box-sizing: border-box;
   border-bottom: 1px solid ${borderColor2};
 
   h2, p {
@@ -86,10 +96,13 @@ export const SignupTextBox = styled.div`
 
 export const SignupField = styled.div`
   margin-top: 50px;
-  width: 400px;
+  width: 100%; /* Changed from 400px */
+  max-width: 400px; /* Added max-width */
   display: flex;
   flex-direction: column;
   gap: 12px;
+  padding: 0 20px; /* Add horizontal padding */
+  box-sizing: border-box; /* Ensure padding is included in width */
 
   h3 {
     margin-bottom: 0;
@@ -99,7 +112,7 @@ export const SignupField = styled.div`
 export const ButtonBox = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: 200px;
+  gap: 20px;
 `
 
 export const SignupButton = styled.button`

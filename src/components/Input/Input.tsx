@@ -7,16 +7,18 @@ interface Props {
   value?: any;
   disable?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  maxLength?: number;
 };
 
 export const Input = ({
-  type, name, placeholder, value, onChange, disable
+  type, name, placeholder, value, onChange, disable, maxLength
 }: Props) => {
   return (
     <InputField
       type={type}
       name={name}
       placeholder={placeholder}
+      maxLength={maxLength}
       value={value}
       onChange={onChange}
       disabled={disable}
@@ -30,12 +32,17 @@ export const InputField = styled.input`
   border-radius: 5px;
   border: 1px solid #888;
   font-size: 16px;
-  padding-left: 10px;
+  padding: 0 10px;
   box-sizing: border-box;
   color: black;
   
   :focus {
     outline: none;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    height: 44px;
   }
 `
 
@@ -49,6 +56,11 @@ export const SendInput = styled.input`
   
   :focus {
     outline: none;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    height: 40px;
   }
 `
 
