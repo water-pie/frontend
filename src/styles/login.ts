@@ -46,6 +46,19 @@ export const AutoLogin = styled.div`
   margin-top: 20px;
 `
 
+export const SubTab = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+export const FindPw = styled.span`
+  cursor: pointer;
+  :hover {
+    font-weight: 600;
+  }
+`
+
 export const LoginButton = styled.button<{ isFull: boolean }>`
   width: 100%;
   height: 48px;

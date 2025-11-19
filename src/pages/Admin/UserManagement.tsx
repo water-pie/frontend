@@ -261,7 +261,15 @@ const UserTable = ({ users, onShowDetails, onShowPenalties }: { users: any[], on
     );
 };
 
-const ApplicationTable = ({ applications, onApprove, onReject }: { applications: any[], onApprove: (userId: number) => void, onReject: (userId: number) => void }) => {
+const ApplicationTable = (
+  { applications, onApprove, onReject }:
+  { applications: any[], onApprove: (userId: number, userName: string) => void, onReject: (userId: number, userName: string) => void }
+) => {
+  const mapping = {
+    "MARKETING_AGENCY": "marketingAgency",
+    "BRAND_MANAGER": "brandManager"
+  }
+  
   if (!applications || applications.length === 0) {
       return <p>표시할 신청이 없습니다.</p>;
   }
@@ -277,18 +285,21 @@ const ApplicationTable = ({ applications, onApprove, onReject }: { applications:
               </tr>
           </thead>
           <tbody>
-              {applications.map(app => (
-                  <tr key={app.id}>
-                      <td>{app.name}</td>
-                      <td>{app.role}</td>
-                      <td>{app.businessNumber}</td>
-                      <td><a href={app.businessLicenseImage} target="_blank" rel="noopener noreferrer">이미지 보기</a></td>
-                      <td>
-                          <button onClick={() => onApprove(app.id)}>승인</button>
-                          <button onClick={() => onReject(app.id)}>거절</button>
-                      </td>
-                  </tr>
-              ))}
+              {applications.map(app => {
+                  const applicationDetails = app[mapping[app.userType as keyof typeof mapping]];
+                  return (
+                    <tr key={app.id}>
+                        <td>{app.name}</td>
+                        <td>{app.userType}</td>
+                        <td>{applicationDetails?.businessRegistrationNumber}</td>
+                        <td><a href={applicationDetails?.businessRegistrationCertificateUrl} target="_blank" rel="noopener noreferrer">이미지 보기</a></td>
+                        <td>
+                            <button onClick={() => onApprove(app.id, app.name)}>승인</button>
+                            <button onClick={() => onReject(app.id, app.name)}>거절</button>
+                        </td>
+                    </tr>
+                  )
+              })}
           </tbody>
       </Table>
   );
@@ -357,9 +368,9 @@ export default function UserManagement() {
     setSelectedUserForPenalty(null);
   };
 
-  const handleApproveUser = async (userId: number) => {
+  const handleApproveUser = async (userId: number, userName: string) => {
     if (!userInfo?.token) return;
-    if (window.confirm(`사용자 ID ${userId}를 승인하시겠습니까?`)) {
+    if (window.confirm(`사용자 ${userName}님을 승인하시겠습니까?`)) {
       try {
         await approveUserApi(userInfo.token, userId);
         alert('성공적으로 승인되었습니다.');
@@ -371,9 +382,9 @@ export default function UserManagement() {
     }
   };
 
-  const handleRejectUser = async (userId: number) => {
+  const handleRejectUser = async (userId: number, userName: string) => {
     if (!userInfo?.token) return;
-    if (window.confirm(`사용자 ID ${userId}를 거절하시겠습니까?`)) {
+    if (window.confirm(`사용자 ${userName}님을 거절하시겠습니까?`)) {
       try {
         await rejectUserApi(userInfo.token, userId);
         alert('성공적으로 거절되었습니다.');

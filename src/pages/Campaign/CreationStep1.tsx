@@ -116,7 +116,12 @@ const CampaignCreationStep1Page = () => {
 
         <S.FormSection>
           <h3>담당자 연락처 *</h3>
-          <Input placeholder="예) 010-1234-5678" value={manager_call_num} onChange={(e) => set({ manager_call_num: formatPhoneNumber(e.target.value) })} />
+          <Input
+            placeholder="예) 010-1234-5678"
+            value={manager_call_num}
+            onChange={(e) => set({ manager_call_num: formatPhoneNumber(e.target.value) })}
+            maxLength={13}
+          />
         </S.FormSection>
 
         <S.ButtonGroup>

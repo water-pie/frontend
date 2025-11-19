@@ -1,43 +1,55 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import * as S from 'styles/my/pointManagement';
-import { confirmPayment } from 'apis/points';
 import useUserStore from 'store/useUserStore';
+import { requestWithdrawal, getPoint, historyPayment } from 'apis/points';
+import WithdrawModal from 'components/Modal/WithdrawModal';
 
+// 인플루언서 point
 const PointManagement = () => {
   const [activeTab, setActiveTab] = useState('earning');
-  const [searchParams, setSearchParams] = useSearchParams();
   const { userInfo } = useUserStore();
 
-  useEffect(() => {
-    const paymentKey = searchParams.get('paymentKey');
-    const orderId = searchParams.get('orderId');
-    const amount = searchParams.get('amount');
+  const [isWithdrawModalOpen, setWithdrawModalOpen] = useState(false);
+  const [currentPoint, setCurrentPoint] = useState<number | null>(null);
+  const [chargeHistory, setChargeHistory] = useState<any[]>([]);
+  const [accumulatedCharge, setAccumulatedCharge] = useState<number | null>(null);
 
-    if (paymentKey && orderId && amount && userInfo?.token) {
-      confirmPayment(userInfo.token, {
-        paymentKey,
-        orderId,
-        amount: Number(amount),
-        status: 'DONE', // Assuming 'DONE' is the status for a successful payment
-      })
-        .then(() => {
-          alert('포인트 충전이 완료되었습니다.');
-          // TODO: Refresh point history
-          searchParams.delete('paymentKey');
-          searchParams.delete('orderId');
-          searchParams.delete('amount');
-          setSearchParams(searchParams);
-        })
-        .catch((error) => {
-          console.error('Payment confirmation failed', error);
-          alert('포인트 충전 확인에 실패했습니다.');
-        });
+  const submitWithdrawal = async (payload: any) => {
+    try {
+      await requestWithdrawal(userInfo!.token, payload);
+      alert("출금 신청이 완료되었습니다.");
+      setWithdrawModalOpen(false);
+      fetchPointData(); // 출금 후 포인트 데이터 갱신
+    } catch (err) {
+      console.error(err);
+      alert("출금 신청에 실패했습니다.");
     }
-  }, [searchParams, setSearchParams, userInfo?.token]);
+  };
+
+  const fetchPointData = async () => {
+    if (userInfo?.token) {
+      try {
+        const pointData = await getPoint(userInfo.token);
+        setCurrentPoint(pointData.points);
+
+        const historyData = await historyPayment(userInfo.token);
+        setChargeHistory(historyData);
+        setAccumulatedCharge(historyData.reduce((sum: number, item: any) => sum + item.chargedPoints, 0));
+      } catch (error) {
+        console.error("포인트 데이터 조회 실패", error);
+        setCurrentPoint(0);
+        setChargeHistory([]);
+        setAccumulatedCharge(0);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchPointData();
+  }, [userInfo?.token]);
 
   const handleWithdraw = () => {
-    alert('포인트 출금 기능을 구현해야 합니다.');
+    setWithdrawModalOpen(true);
   };
 
   return (
@@ -47,15 +59,23 @@ const PointManagement = () => {
         <S.WithdrawButton onClick={handleWithdraw}>포인트 출금하기</S.WithdrawButton>
       </S.Header>
 
+      {isWithdrawModalOpen && (
+        <WithdrawModal
+          currentPoint={currentPoint}
+          onClose={() => setWithdrawModalOpen(false)}
+          onSubmit={submitWithdrawal}
+        />
+      )}
+
       <S.PointSummary>
         <S.PointBox>
           <span>보유 포인트</span>
-          <S.PointValue>0 P</S.PointValue>
+          <S.PointValue>{currentPoint !== null ? `${currentPoint} P` : '로딩 중...'}</S.PointValue>
         </S.PointBox>
         <S.Divider />
         <S.PointBox>
           <span>누적 포인트</span>
-          <S.PointValue>0 P</S.PointValue>
+          <S.PointValue>{accumulatedCharge !== null ? `${accumulatedCharge} P` : '로딩 중...'}</S.PointValue>
         </S.PointBox>
       </S.PointSummary>
 
@@ -76,7 +96,21 @@ const PointManagement = () => {
 
       <S.Content>
         {activeTab === 'earning' && (
-          <S.NoContent>적립 내용이 없습니다.</S.NoContent>
+          chargeHistory.length > 0 ? (
+            <S.HistoryList>
+              {chargeHistory.map((item, index) => (
+                <S.HistoryItem key={index}>
+                  <S.HistoryInfo>
+                    <S.HistoryType>{item.orderName}</S.HistoryType>
+                    <S.HistoryDate>{new Date(item.createdAt).toLocaleDateString()}</S.HistoryDate>
+                  </S.HistoryInfo>
+                  <S.HistoryAmount>{item.chargedPoints > 0 ? `+${item.chargedPoints} P` : `${item.chargedPoints} P`}</S.HistoryAmount>
+                </S.HistoryItem>
+              ))}
+            </S.HistoryList>
+          ) : (
+            <S.NoContent>적립 내용이 없습니다.</S.NoContent>
+          )
         )}
         {activeTab === 'withdrawal' && (
           <S.NoContent>출금 내용이 없습니다.</S.NoContent>

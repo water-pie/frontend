@@ -10,11 +10,12 @@ import useUserStore from "store/useUserStore";
 import { initialize } from "apis/points";
 import { getUserInfoApi } from "apis/user";
 
-const clientKey = import.meta.env.TOSS_CLIENT_KEY;
+const clientKey = import.meta.env.VITE_TOSS_CLIENT_KEY;
 
 interface PaymentProps {
   amount: { currency: string; value: number };
   onClose: () => void;
+  onSuccess: (paymentData: { paymentKey: string; orderId: string; amount: number }) => void;
 }
 
 const Wrapper = styled.div`
@@ -44,7 +45,7 @@ const PaymentButton = styled.button`
 const generateOrderId = () =>
   new Date().getTime() + Math.random().toString(36).substring(2, 9);
 
-export default function TossPaymentWidget({ amount, onClose }: PaymentProps) {
+export default function TossPaymentWidget({ amount, onClose, onSuccess }: PaymentProps) {
   const [widgets, setWidgets] = useState<TossPaymentsWidgets | null>(null);
   const paymentMethodWidgetRef = useRef<WidgetPaymentMethodWidget | null>(null);
   const { userInfo } = useUserStore();
@@ -90,7 +91,7 @@ export default function TossPaymentWidget({ amount, onClose }: PaymentProps) {
     const orderName = `포인트 ${amount.value.toLocaleString()}P 충전`;
 
     try {
-      // 1️⃣ 결제 초기화 (서버에 주문 생성)
+      // 1.결제 초기화 (서버에 주문 생성)
       await initialize(userInfo.token, {
         amount: amount.value,
         chargedPoints: amount.value,
@@ -98,16 +99,24 @@ export default function TossPaymentWidget({ amount, onClose }: PaymentProps) {
         orderName,
       });
 
-      // 2️⃣ Toss 결제 요청
-      await widgets?.requestPayment({
+      // 2. Toss 결제 요청
+      const result = await widgets?.requestPayment({
         orderId,
         orderName,
         customerName: customerInfo.name,
         customerEmail: customerInfo.email,
-        successUrl: `http://localhost:5173/payment/success?orderId=${orderId}`,
-        failUrl: `http://localhost:517/payment/fail`,
       });
-      alert("결제가 완료되었습니다!");
+
+      console.log(result);
+
+      // 3. 결제 성공 시 상위로 전달
+      onSuccess({
+        paymentKey: result?.paymentKey || "",
+        orderId,
+        amount: amount.value,
+      });
+
+      // 4. 모달 닫기
       onClose();
 
     } catch (error) {

@@ -7,14 +7,18 @@ export const HeaderContainer = styled.header`
   border-bottom: 1px solid #eee;
   background-color: white;
   width: 100%;
+
+  @media (max-width: 480px) {
+    padding: 10px 0; /* Reduce padding for very small screens */
+  }
 `;
 
 export const HeaderContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  max-width: 1200px;
+  padding: 20px 0px;
+  max-width: 1180px;
   margin: 0 auto;
   width: 100%;
 
@@ -27,6 +31,13 @@ export const HeaderContent = styled.div`
     padding: 15px 20px;
     align-items: flex-start;
     gap: 15px;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: row; /* Back to row for logo and logout */
+    justify-content: space-between;
+    padding: 10px 20px;
+    gap: 0;
   }
 `;
 
@@ -42,8 +53,9 @@ export const LeftHeader = styled.div`
   }
 
   @media (max-width: 480px) {
-    flex-direction: column; /* Stack logo and nav vertically on very small screens */
-    align-items: flex-start;
+    /* Only logo remains, so no need for complex flex rules */
+    width: auto;
+    gap: 0;
   }
 `;
 
@@ -54,6 +66,14 @@ export const Logo = styled(Link)`
   font-weight: bold;
   color: #007bff;
   white-space: nowrap; /* Prevent text wrapping */
+
+  @media (max-width: 480px) {
+    font-size: 20px; /* Smaller font for logo */
+    img {
+      height: 20px !important; /* Adjust logo image size */
+      margin-right: 5px !important;
+    }
+  }
 `;
 
 export const SearchBar = styled.div`
@@ -72,6 +92,10 @@ export const SearchBar = styled.div`
   @media (max-width: 768px) {
     width: 100%; /* Take full width on tablet/mobile */
     padding: 8px 15px 8px 8px;
+  }
+
+  @media (max-width: 480px) {
+    display: none; /* Hide search bar on very small screens */
   }
 `;
 
@@ -103,8 +127,9 @@ export const RightHeader = styled.div`
   }
 
   @media (max-width: 480px) {
-    flex-direction: column; /* Stack search and auth vertically on very small screens */
-    align-items: flex-start;
+    /* Only logout button remains (if logged in) */
+    width: auto;
+    gap: 0; /* Remove gap */
   }
 `;
 
@@ -118,9 +143,7 @@ export const NavList = styled.div`
   }
 
   @media (max-width: 480px) {
-    flex-direction: column; /* Stack nav items vertically on very small screens */
-    align-items: flex-start;
-    gap: 10px;
+    display: none; /* Hide NavList on very small screens */
   }
 `;
 
@@ -137,13 +160,17 @@ export const Nav = styled(Link)<{ selected: boolean }>`
   }
 
   @media (max-width: 480px) {
-    padding: 5px 0; /* Adjust padding for stacked nav items */
+    /* This will not be visible due to NavList display: none */
   }
 `;
 
 export const ProfileRow = styled.div`
   display: flex;
   gap: 20px;
+
+  @media (max-width: 480px) {
+    gap: 0; /* Remove gap to only show logout button */
+  }
 `;
 
 export const AdminButton = styled(Link)`
@@ -163,10 +190,7 @@ export const AdminButton = styled(Link)`
   }
 
   @media (max-width: 480px) {
-    width: 100%; /* Full width button on very small screens */
-    text-align: center;
-    padding: 8px 15px;
-    font-size: 14px;
+    display: none; /* Hide admin button on very small screens */
   }
 `;
 
@@ -188,10 +212,7 @@ export const AuthButton = styled(Link)`
   }
 
   @media (max-width: 480px) {
-    width: 100%; /* Full width button on very small screens */
-    text-align: center;
-    padding: 8px 15px;
-    font-size: 14px;
+    width: auto; /* Allow button to size content */
   }
 `;
 
@@ -212,10 +233,9 @@ export const LogoutButton = styled.button`
   }
 
   @media (max-width: 480px) {
-    width: 100%; /* Full width button on very small screens */
-    text-align: center;
-    padding: 8px 15px;
-    font-size: 14px;
+    padding: 8px 12px; /* Adjust padding for smaller screens */
+    font-size: 14px; /* Adjust font size */
+    width: auto; /* Allow button to size content, not full width */
   }
 `;
 
@@ -238,6 +258,10 @@ export const LNBContainer = styled.div`
   gap: 2px;
   z-index: 100;
   padding-top: 20px;
+
+  @media (max-width: 480px) {
+    display: none; /* Hide LNB menus on very small screens */
+  }
 `;
 
 export const LNBItem = styled(Link)`
@@ -252,7 +276,11 @@ export const LNBItem = styled(Link)`
   }
 `;
 
-export const ProfileLink = styled(Link)``;
+export const ProfileLink = styled(Link)`
+  @media (max-width: 480px) {
+    display: none; /* Hide profile link (user icon) on very small screens */
+  }
+`;
 
 export const UserProfile = styled.div`
   border-radius: 100%;

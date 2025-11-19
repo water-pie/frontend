@@ -4,9 +4,10 @@ import TossPaymentWidget from "components/Modal/TossPaymentWidget";
 
 interface PointChargeModalProps {
   onClose: () => void;
+  onPaymentComplete: (paymentData: { paymentKey: string; orderId: string; amount: number }) => void;
 }
 
-export default function PointChargeModal({ onClose }: PointChargeModalProps) {
+export default function PointChargeModal({ onClose, onPaymentComplete }: PointChargeModalProps) {
   const [amount, setAmount] = useState(0);
   const [showTossWidget, setShowTossWidget] = useState(false);
 
@@ -23,6 +24,22 @@ export default function PointChargeModal({ onClose }: PointChargeModalProps) {
       return;
     }
     setShowTossWidget(true);
+  };
+
+  // TossPaymentWidget에서 결제 완료 시 호출될 콜백
+  const handleTossPaymentSuccess = (paymentResult: any) => {
+    // paymentResult에서 paymentKey, orderId 등 필요한 값 추출
+    const paymentData = {
+      paymentKey: paymentResult.paymentKey,
+      orderId: paymentResult.orderId,
+      amount,
+    };
+
+    // 상위 컴포넌트에 전달
+    onPaymentComplete(paymentData);
+
+    // 모달 닫기
+    onClose();
   };
 
   return (
@@ -47,7 +64,11 @@ export default function PointChargeModal({ onClose }: PointChargeModalProps) {
             <S.PayButton onClick={handlePayment}>결제하기</S.PayButton>
           </>
         ) : (
-          <TossPaymentWidget amount={{ currency: "KRW", value: amount }} onClose={onClose} />
+          <TossPaymentWidget
+            amount={{ currency: "KRW", value: amount }}
+            onClose={onClose}
+            onSuccess={handleTossPaymentSuccess} // 결제 성공 콜백
+          />
         )}
       </S.ModalContent>
     </S.ModalOverlay>

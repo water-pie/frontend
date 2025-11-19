@@ -2,19 +2,14 @@ import { api } from "./instance";
 import qs from "qs";
 import {
   type Experience,
-  type ExperienceDetail
+  type ExperienceDetail,
+  type GetExperienceListParams
 } from "../types/apis/experience";
 
 interface GetExperienceListResponse {
   status: string;
   message: string;
   data: Experience[];
-}
-
-interface GetExperienceListParams {
-  keyword?: string;
-  channels?: number[];
-  productOfferType?: number;
 }
 
 interface GetExperienceDetailResponse {
@@ -227,6 +222,19 @@ export const getMyReviewsApi = async (token: string): Promise<GetMyReviewsRespon
         },
       }
     );
+    return response.data;
+  } catch (e) {
+    throw new Error(`${e}`);
+  }
+};
+
+export const checkExperienceApplicationApi = async (token: string, id: number) => {
+  try {
+    const response = await api.get(`/experience/${id}/check-application`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response.data;
   } catch (e) {
     throw new Error(`${e}`);

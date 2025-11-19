@@ -1,10 +1,10 @@
 export { default as Main } from './Main';
 export { default as NotFound } from './NotFound';
 export { default as Login } from './Login';
+export { default as FindPassword } from './FindPassword';
 export { Product, Location, Promotion } from './Category';
 export { NoticesAndEvents, PostDetail } from './Post';
 export { SelectSignup, Signup } from './Signup';
-export { CampaignPage, Visiting, Buying, Application, CreationStep1, CreationStep2, CreationStep3, CreationStep4, CreationStep5 } from './Campaign';
 export { default as MyMain } from './My/Main';
 export { default as ProfileEdit } from './My/ProfileEdit';
 export { default as PointManagement } from './My/PointManagement';
@@ -16,5 +16,6 @@ export { default as InquiryWrite } from './My/InquiryWrite';
 export { default as InquiryDetail } from './My/InquiryDetail';
 export { default as PenaltyStatus } from './My/PenaltyStatus';
 export { default as BusinessPointManagement } from './My/Business/PointManagement';
+export * from './Campaign';
 export * from './Payment';
 export * from './My/Business';

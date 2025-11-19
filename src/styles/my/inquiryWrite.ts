@@ -4,6 +4,10 @@ import { borderColor1, textColor, buttonColor, buttonHoverColor } from '../commo
 export const InquiryWriteContainer = styled.div`
   width: 100%; // Fixed width
   padding: 20px;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
 `;
 
 export const Title = styled.h2`
@@ -12,6 +16,11 @@ export const Title = styled.h2`
   margin-bottom: 30px;
   padding-bottom: 10px;
   border-bottom: 1px solid ${borderColor1};
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
 `;
 
 export const FormGroup = styled.div`
@@ -24,6 +33,11 @@ export const FormGroup = styled.div`
     border-radius: 5px;
     font-size: 16px;
     box-sizing: border-box;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+      padding: 8px;
+    }
   }
 `;
 
@@ -41,6 +55,12 @@ export const Toolbar = styled.div`
   border-bottom: 1px solid ${borderColor1};
   background-color: #f9f9f9;
   gap: 5px;
+
+  @media (max-width: 768px) {
+    padding: 8px;
+    gap: 3px;
+    flex-wrap: wrap;
+  }
 `;
 
 export const ToolbarButton = styled.button`
@@ -54,6 +74,11 @@ export const ToolbarButton = styled.button`
 
   &:hover {
     background-color: ${borderColor1};
+  }
+
+  @media (max-width: 768px) {
+    padding: 4px 8px;
+    font-size: 12px;
   }
 `;
 
@@ -69,6 +94,12 @@ export const Textarea = styled.textarea`
 
   &:focus {
     outline: none;
+  }
+
+  @media (max-width: 768px) {
+    min-height: 200px;
+    font-size: 14px;
+    padding: 10px;
   }
 `;
 
@@ -95,5 +126,12 @@ export const SubmitButton = styled.button`
 
   &:hover {
     background-color: ${buttonHoverColor};
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 16px;
+    align-self: center;
   }
 `;

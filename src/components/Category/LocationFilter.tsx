@@ -59,10 +59,11 @@ export const LocationFilter = ({ currentLocation, onClose, onApply }: Props) => 
 
   const handleApply = () => {
     let location = selectedRegion;
+    onApply(location);
     if (selectedDistrict) {
       location += ` ${selectedDistrict}`;
+      onApply(selectedDistrict);
     }
-    onApply(location);
     onClose();
   };
 

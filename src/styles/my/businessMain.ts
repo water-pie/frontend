@@ -2,12 +2,23 @@ import styled from '@emotion/styled';
 
 export const BusinessMainContainer = styled.div`
   width: 100%;
+  padding: 20px;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
 `;
 
 export const BusinessWelcomeSection = styled.section`
   display: flex;
   align-items: center;
   margin-bottom: 40px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
 `;
 
 export const BusinessProfileImage = styled.div`
@@ -16,6 +27,13 @@ export const BusinessProfileImage = styled.div`
   border-radius: 50%;
   background-color: #eee;
   margin-right: 20px;
+
+  @media (max-width: 768px) {
+    width: 80px;
+    height: 80px;
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
 `;
 
 export const BusinessWelcomeText = styled.div`
@@ -28,6 +46,17 @@ export const BusinessWelcomeText = styled.div`
     font-size: 24px;
     font-weight: bold;
   }
+
+  @media (max-width: 768px) {
+    text-align: center;
+    width: 100%;
+    span {
+      font-size: 14px;
+    }
+    h2 {
+      font-size: 20px;
+    }
+  }
 `;
 
 export const BusinessInfoSection = styled.section`
@@ -35,6 +64,10 @@ export const BusinessInfoSection = styled.section`
   grid-template-columns: 1fr 1fr 1fr;
   gap: 20px;
   margin-bottom: 40px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr; /* Stack items on small screens */
+  }
 `;
 
 export const BusinessInfoBox = styled.div`
@@ -51,6 +84,14 @@ export const BusinessInfoBox = styled.div`
     color: #888;
     margin-bottom: 8px;
   }
+
+  @media (max-width: 768px) {
+    padding: 15px;
+    font-size: 16px;
+    label {
+      font-size: 12px;
+    }
+  }
 `;
 
 export const BusinessCampaignActivitySection = styled.section`
@@ -58,6 +99,13 @@ export const BusinessCampaignActivitySection = styled.section`
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 20px;
+  }
+
+  @media (max-width: 768px) {
+    h3 {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
   }
 `;
 
@@ -79,12 +127,28 @@ export const BusinessNoActivity = styled.div`
     border-radius: 5px;
     cursor: pointer;
   }
+
+  @media (max-width: 768px) {
+    padding: 40px 0;
+    p {
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+    button {
+      padding: 8px 15px;
+      font-size: 14px;
+    }
+  }
 `;
 
 export const CampaignGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr; /* Single column on small screens */
+  }
 `;
 
 export const DeleteButton = styled.button`
@@ -96,4 +160,9 @@ export const DeleteButton = styled.button`
   cursor: pointer;
   width: 100%;
   margin-top: 5px;
+
+  @media (max-width: 768px) {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
 `;

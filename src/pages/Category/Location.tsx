@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import LocationFilter from "components/Category/LocationFilter";
 import { getExperienceListApi } from "apis/experience";
-import { type Experience } from "types/apis/experience";
+import { type Experience, type GetExperienceListParams } from "types/apis/experience";
 
 export default function Location() {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,15 +16,11 @@ export default function Location() {
   useEffect(() => {
     const fetchCampaigns = async () => {
       try {
-        const params: {
-          productOfferType: number,
-          keyword?: string,
-          channels?: number[]
-        } = { productOfferType: 1 };
+        const params: GetExperienceListParams = { dataType: 2 };
 
         let keywordParts: string[] = [];
         if (locationFilter) {
-          keywordParts.push(locationFilter);
+          params.sigungu = locationFilter;
         }
         if (categoryFilters.category !== '전체') {
           keywordParts.push(categoryFilters.category);

@@ -13,6 +13,7 @@ import * as P from "pages";
 import Search from "pages/Search";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
+import UserProtectedRoute from "./UserProtectedRoute"; // Import UserProtectedRoute
 
 export default function Router() {
   return (
@@ -39,19 +40,22 @@ export default function Router() {
           <Route path="login" element={<P.Login />}/>
           <Route path="signup" element={<P.SelectSignup />} />
           <Route path="signup/:type" element={<P.Signup />} />
+          <Route path="find-password" element={<P.FindPassword />} />
           <Route path="campaign/:id" element={<P.CampaignPage />} />
           <Route path="campaign/:id/apply" element={<P.Application />} />
-          <Route path="my" element={<MyPageLayout />}>
-            <Route index element={<P.MyMain />} />
-            <Route path="profile" element={<P.ProfileEdit />} />
-            <Route path="points" element={<P.PointManagement />} />
-            <Route path="penalty" element={<P.PenaltyStatus />} />
-            <Route path="campaigns/applied" element={<P.AppliedCampaigns />} />
-            <Route path="campaigns/ongoing" element={<P.OngoingCampaigns />} />
-            <Route path="campaigns/finished" element={<P.FinishedCampaigns />} />
-            <Route path="inquiry" element={<P.Inquiry />} />
-            <Route path="inquiry/write" element={<P.InquiryWrite />} />
-            <Route path="inquiry/:id" element={<P.InquiryDetail />} />
+          <Route element={<UserProtectedRoute />}> {/* Wrap /my routes with UserProtectedRoute */}
+            <Route path="my" element={<MyPageLayout />}>
+              <Route index element={<P.MyMain />} />
+              <Route path="profile" element={<P.ProfileEdit />} />
+              <Route path="points" element={<P.PointManagement />} />
+              <Route path="penalty" element={<P.PenaltyStatus />} />
+              <Route path="campaigns/applied" element={<P.AppliedCampaigns />} />
+              <Route path="campaigns/ongoing" element={<P.OngoingCampaigns />} />
+              <Route path="campaigns/finished" element={<P.FinishedCampaigns />} />
+              <Route path="inquiry" element={<P.Inquiry />} />
+              <Route path="inquiry/write" element={<P.InquiryWrite />} />
+              <Route path="inquiry/:id" element={<P.InquiryDetail />} />
+            </Route>
           </Route>
           <Route path="business" element={<BusinessMyPageLayout />}>
             <Route index element={<P.BusinessMyMain />} />

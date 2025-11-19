@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import * as S from 'styles/adminModal';
+import * as S from 'styles/modal/adminModal';
 import {
   createNoticeApi, getNoticeDetailApi, updateNoticeApi
 } from 'apis/notice';

@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const API_BASE_URL = "https://rehelp.co.kr/api/";
-const IMAGE_BASE_URL = "https://review-helper-image-bucket.s3.ap-northeast-2.amazonaws.com/";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL;
 
 export const api = axios.create({
   baseURL: API_BASE_URL,

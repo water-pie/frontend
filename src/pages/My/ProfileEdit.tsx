@@ -100,7 +100,7 @@ const ProfileEdit = () => {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            disable={true} // Email usually not editable
+            disabled={true} // Email usually not editable
           />
         </S.FormGroup>
         <S.FormGroup>

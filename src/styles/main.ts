@@ -6,6 +6,7 @@ export const TitleBox = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-bottom: 20px;
 
   @media (max-width: 1180px) {
     width: 100%;

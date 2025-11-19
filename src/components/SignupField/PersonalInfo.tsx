@@ -168,7 +168,7 @@ export const InputContainer = styled.div`
   width: 100%;
   display: flex;
   gap: 8px;
-`
+`;
 
 export const SendCodeButton = styled.button`
   word-break: keep-all;
@@ -189,4 +189,4 @@ export const SendCodeButton = styled.button`
     background-color: #c0c0c0;
     cursor: not-allowed;
   }
-`
+`;

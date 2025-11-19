@@ -50,3 +50,12 @@ export interface ExperienceDetail {
   create_at: string;
   update_at: string;
 }
+
+export interface GetExperienceListParams {
+  keyword?: string;
+  channels?: number[];
+  productOfferType?: number;
+  dataType?: number;
+  category?: string;
+  sigungu?: string;
+}

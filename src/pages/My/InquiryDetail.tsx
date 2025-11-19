@@ -8,7 +8,7 @@ import useUserStore from 'store/useUserStore';
 interface InquiryDetailItem {
   id: number;
   title: string;
-  created_at: string;
+  createdAt: string;
   status: number; // Assuming 0 for '답변 중', 1 for '답변 완료'
   content: string;
   answer: string | null;
@@ -79,7 +79,7 @@ const InquiryDetail = () => {
       <S.Header>
         <S.Title>{inquiryDetail.title}</S.Title>
         <S.Meta>
-          <S.Date>{new Date(inquiryDetail.created_at).toLocaleDateString('ko-KR')}</S.Date>
+          <S.Date>{new Date(inquiryDetail.createdAt).toLocaleDateString('ko-KR')}</S.Date>
           <S.Status status={getStatusText(inquiryDetail.status)}>{getStatusText(inquiryDetail.status)}</S.Status>
           {inquiryDetail.status === 0 && ( // Only show edit/delete buttons if status is '답변 중'
             <>

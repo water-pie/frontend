@@ -84,6 +84,10 @@ export default RegisteredCampaignsPage;
 
 const Container = styled.div`
   padding: 20px;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
 `;
 
 const CampaignList = styled.div`
@@ -98,6 +102,12 @@ const CampaignCard = styled.div`
   padding: 20px;
   border-radius: 8px;
   align-items: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+  }
 `;
 
 const CampaignImage = styled.img`
@@ -106,16 +116,34 @@ const CampaignImage = styled.img`
   object-fit: cover;
   margin-right: 20px;
   border-radius: 8px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 150px;
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
 `;
 
 const CampaignInfo = styled.div`
   flex-grow: 1;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-bottom: 15px;
+  }
 `;
 
 const Buttons = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+  }
 `;
 
 const Button = styled.button`
@@ -124,4 +152,10 @@ const Button = styled.button`
   background-color: #f7f7f7;
   border-radius: 5px;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    flex: 1;
+    padding: 10px 5px;
+    font-size: 14px;
+  }
 `;

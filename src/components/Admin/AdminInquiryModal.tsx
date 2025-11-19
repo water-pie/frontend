@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import * as S from 'styles/adminModal';
+import * as S from 'styles/modal/adminModal';
 import { getInquiryByIdForAdmin, addInquiryAnswer, deleteInquiryAnswer } from 'apis/inquires';
 import useUserStore from 'store/useUserStore';
 
@@ -123,8 +123,8 @@ export default function AdminInquiryModal({
             <textarea value={inquiry.content} disabled />
           </S.FormGroup>
           <S.FormGroup>
-            <label>작성자</label>
-            <input type="text" value={inquiry.user?.name || '알 수 없음'} disabled />
+            <label>작성자ID</label>
+            <input type="text" value={inquiry.authorId || '알 수 없음'} disabled />
           </S.FormGroup>
           <S.FormGroup>
             <label htmlFor="answer">답변</label>

@@ -127,7 +127,7 @@ export default function Application() {
                 name="address"
                 placeholder="예) 판교역로 167, 분당 주공211, 분평동 123"
                 value={form.address}
-                disable={true}
+                disabled={true}
               />
               <S.SearchButton
                 onClick={handleComplete}

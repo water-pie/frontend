@@ -113,7 +113,7 @@ export default function Marketing({ type }: Props) {
             detailedAddress: businessInfoForm.detailedAddress,
             businessRegistrationCertificate: certificateFile
         });
-        alert("회원가입이 완료되었습니다.");
+        alert("회원가입이 신청되었습니다. 관리자 승인 이후 로그인이 가능합니다.");
         navigate("/login");
     } catch (e) {
         alert(`회원가입 중 오류가 발생했습니다: ${e}`);

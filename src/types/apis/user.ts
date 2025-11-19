@@ -107,3 +107,13 @@ export interface MarketingAgencyListResponse {
   message: string;
   data: MarketingAgencyAdminInfo[];
 }
+
+export interface RequestPasswordResetPayload {
+  email: string;
+}
+
+export interface ResetPasswordPayload {
+  email: string;
+  newPassword: string;
+  code: string;
+}

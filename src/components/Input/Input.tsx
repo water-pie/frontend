@@ -5,13 +5,13 @@ interface Props {
   name?: string;
   placeholder?: string;
   value?: any;
-  disable?: boolean;
+  disabled?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   maxLength?: number;
 };
 
 export const Input = ({
-  type, name, placeholder, value, onChange, disable, maxLength
+  type, name, placeholder, value, onChange, disabled, maxLength
 }: Props) => {
   return (
     <InputField
@@ -21,7 +21,7 @@ export const Input = ({
       maxLength={maxLength}
       value={value}
       onChange={onChange}
-      disabled={disable}
+      disabled={disabled}
     />
   )
 };

@@ -3,7 +3,7 @@ import * as S from "styles/main";
 import Categories from "components/Category/Categories";
 import { useEffect, useState } from "react";
 import { getExperienceListApi } from "apis/experience";
-import { type Experience } from "types/apis/experience";
+import { type Experience, type GetExperienceListParams } from "types/apis/experience";
 
 export default function Product() {
   const [campaigns, setCampaigns] = useState<Experience[]>([]);
@@ -12,11 +12,7 @@ export default function Product() {
   useEffect(() => {
     const fetchCampaigns = async () => {
       try {
-        const params: {
-          productOfferType: number,
-          keyword?: string,
-          channels?: number[]
-        } = { productOfferType: 3 };
+        const params: GetExperienceListParams = { dataType: 1 };
 
         if (categoryFilters.category !== '전체') {
           params.keyword = categoryFilters.category;

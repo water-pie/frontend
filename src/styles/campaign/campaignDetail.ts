@@ -9,20 +9,46 @@ export const Wrapper = styled.div`
   justify-content: space-between;
   gap: 2rem;
   border-bottom: 1px solid ${borderColor1};
+
+  @media (max-width: 1200px) {
+    width: 100%;
+    padding: 0 1rem;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 992px) {
+    flex-direction: column;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 export const LeftContent = styled.div`
   flex: 1;
   max-width: 700px;
+
+  @media (max-width: 992px) {
+    max-width: 100%;
+  }
 `;
 
 export const RightContent = styled.div`
   width: 350px;
+
+  @media (max-width: 992px) {
+    width: 100%;
+  }
 `;
 
 export const StickyCard = styled.div`
   position: sticky;
   top: 2rem;
+
+  @media (max-width: 992px) {
+    position: static;
+    top: unset;
+  }
 `;
 
 export const Section = styled.section`
@@ -50,6 +76,7 @@ export const TagContainer = styled.div`
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  flex-wrap: wrap;
 `;
 
 export const Tag = styled.span`
@@ -59,6 +86,12 @@ export const Tag = styled.span`
   display: flex;
   align-items: center;
   gap: 4px;
+`;
+
+export const TagList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
 `;
 
 export const PointTag = styled(Tag)`
@@ -93,6 +126,7 @@ export const InfoDiv = styled.div`
 
 export const KeywordContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
 `;
 

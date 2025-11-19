@@ -82,7 +82,7 @@ const MyPageMain = () => {
           <S.SocialSection>
             <S.SocialLink>
               <img src={blog} alt="blog" />
-              {userInfoData?.influencer.blogUrl ? (
+              {userInfoData?.influencer?.blogUrl ? (
                 <a href={userInfoData.influencer.blogUrl} target="_blank" rel="noopener noreferrer" style={{ flexGrow: 1 }}>
                   <span>내 블로그로 이동</span>
                 </a>
@@ -92,7 +92,7 @@ const MyPageMain = () => {
             </S.SocialLink>
             <S.SocialLink>
               <img src={tiktok} alt="tiktok" />
-              {userInfoData?.influencer.tiktokUrl ? (
+              {userInfoData?.influencer?.tiktokUrl ? (
                 <a href={userInfoData.influencer.tiktokUrl} target="_blank" rel="noopener noreferrer" style={{ flexGrow: 1 }}>
                   <span>내 틱톡으로 이동</span>
                 </a>
@@ -102,7 +102,7 @@ const MyPageMain = () => {
             </S.SocialLink>
             <S.SocialLink>
               <img src={youtube} alt="youtube" />
-              {userInfoData?.influencer.youtubeUrl ? (
+              {userInfoData?.influencer?.youtubeUrl ? (
                 <a href={userInfoData.influencer.youtubeUrl} target="_blank" rel="noopener noreferrer" style={{ flexGrow: 1 }}>
                   <span>내 유튜브로 이동</span>
                 </a>
@@ -112,7 +112,7 @@ const MyPageMain = () => {
             </S.SocialLink>
             <S.SocialLink>
               <img src={insta} alt="instagram" />
-              {userInfoData?.influencer.instagramUrl ? (
+              {userInfoData?.influencer?.instagramUrl ? (
                 <a href={userInfoData.influencer.instagramUrl} target="_blank" rel="noopener noreferrer" style={{ flexGrow: 1 }}>
                   <span>내 인스타그램으로 이동</span>
                 </a>

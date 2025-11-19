@@ -6,7 +6,17 @@ import {
   type InfluencerListResponse,
   type BrandManagerListResponse,
   type MarketingAgencyListResponse,
+  type ResetPasswordPayload,
 } from "types/apis/user";
+
+export const resetPassword = async (data: ResetPasswordPayload) => {
+  try {
+    const response = await api.post('/users/reset-password', data);
+    return response.data;
+  } catch (e) {
+    throw new Error(`${e}`);
+  }
+}
 
 export const updateUserInfoApi = async (data: UpdateUserInfoPayload, token: string) => {
   try {

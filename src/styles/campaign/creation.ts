@@ -60,7 +60,7 @@ export const StepLabel = styled.span<{ active?: boolean }>`
 `;
 
 export const FormSection = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 
   h3 {
     font-size: 18px;

@@ -3,6 +3,11 @@ import { buttonColor, buttonHoverColor, borderColor1, textColor } from '../commo
 
 export const ProfileEditContainer = styled.div`
   width: 100%;
+  padding: 20px;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
 `;
 
 export const Title = styled.h2`
@@ -11,6 +16,11 @@ export const Title = styled.h2`
   margin-bottom: 30px;
   padding-bottom: 10px;
   border-bottom: 1px solid ${borderColor1};
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
 `;
 
 export const FormSection = styled.div`
@@ -30,6 +40,12 @@ export const FormGroup = styled.div`
     flex-grow: 1;
     box-sizing: border-box; // Added this
   }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
 `;
 
 export const Label = styled.label`
@@ -37,11 +53,18 @@ export const Label = styled.label`
   font-weight: 500;
   color: ${textColor};
   min-width: 120px;
+
+  @media (max-width: 768px) {
+    min-width: unset;
+    width: 100%;
+    font-size: 14px;
+  }
 `;
 
 export const PasswordInputWrapper = styled.div`
   position: relative;
   flex-grow: 1;
+  width: 100%; // Ensure it takes full width in mobile view
 
   input {
     padding-right: 40px; // Make space for the toggle button
@@ -75,5 +98,11 @@ export const SubmitButton = styled.button`
 
   &:hover {
     background-color: ${buttonHoverColor};
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 16px;
   }
 `;

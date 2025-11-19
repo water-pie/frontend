@@ -132,7 +132,7 @@ const InquiryAnswerModal = ({ inquiryId, token, onClose, onAnswered }: { inquiry
         ) : inquiry ? (
           <div>
             <h3>{inquiry.title}</h3>
-            <p><strong>작성자:</strong> {inquiry.user?.name || '알 수 없음'}</p>
+            <p><strong>작성자ID :</strong> {inquiry.authorId || '알 수 없음'}</p>
             <p><strong>작성일:</strong> {new Date(inquiry.createdAt).toLocaleString()}</p>
             <InquiryContent>{inquiry.content}</InquiryContent>
             <AnswerTextarea
@@ -166,7 +166,7 @@ const InquiryTable = ({ inquiries, onAnswerClick }: { inquiries: any[], onAnswer
                 <tr>
                     <th>ID</th>
                     <th>제목</th>
-                    <th>작성자</th>
+                    <th>작성자ID</th>
                     <th>상태</th>
                     <th>작성일</th>
                     <th>작업</th>
@@ -177,7 +177,7 @@ const InquiryTable = ({ inquiries, onAnswerClick }: { inquiries: any[], onAnswer
                     <tr key={inquiry.id}>
                         <td>{inquiry.id}</td>
                         <td>{inquiry.title}</td>
-                        <td>{inquiry.user?.name || '-'}</td>
+                        <td>{inquiry.authorId || '-'}</td>
                         <td><Status answered={!!inquiry.answer}>{inquiry.answer ? '답변 완료' : '대기중'}</Status></td>
                         <td>{new Date(inquiry.createdAt).toLocaleDateString()}</td>
                         <td>
@@ -202,7 +202,11 @@ export default function InquiryManagement() {
     setLoading(true);
     try {
       const response = await getAllInquiries(userInfo.token);
-      setInquiries(response || []);
+      if (response && response.data && Array.isArray(response.data)) {
+        setInquiries(response.data);
+      } else {
+        setInquiries([]);
+      }
     } catch (error) {
       console.error("문의 목록을 불러오는데 실패했습니다:", error);
       setInquiries([]);

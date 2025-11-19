@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
-import * as S from 'styles/campaign/visiting';
-import * as S2 from 'styles/main';
+import * as S from 'styles/campaign/campaignDetail';
 import { productTypeMapping } from 'apis/Mapping/typeMapping';
 import { useParams, useNavigate } from 'react-router-dom';
-import { cardMocks, CampaignDetail } from 'mocks/campaign';
-import CampaignCard from 'components/Campaign/CampaignCard';
+import { CampaignDetail } from 'mocks/campaign';
 import { insta, blog, tiktok, youtube } from 'utils/importing';
-import { getExperienceDetailApi } from 'apis/experience';
+import { getExperienceDetailApi, checkExperienceApplicationApi } from 'apis/experience'; // Import checkExperienceApplicationApi
 import { type ExperienceDetail } from 'types/apis/experience';
+import useUserStore from 'store/useUserStore';
 
 const channelInfo: { [key: number]: { name: string; icon: string } } = {
   1: { name: '블로그', icon: blog },
@@ -22,7 +21,9 @@ const channelInfo: { [key: number]: { name: string; icon: string } } = {
 export default function BuyingPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { userInfo } = useUserStore();
   const [campaignData, setCampaignData] = useState<ExperienceDetail | null>(null);
+  const [hasApplied, setHasApplied] = useState(false); // New state for application status
 
   useEffect(() => {
     const fetchCampaignDetail = async () => {
@@ -31,13 +32,20 @@ export default function BuyingPage() {
         const response = await getExperienceDetailApi(Number(id));
         if (response.status === "success" && response.data) {
           setCampaignData(response.data);
+          // Check application status if user is logged in
+          if (userInfo?.token) {
+            const checkResponse = await checkExperienceApplicationApi(userInfo.token, Number(id));
+            if (checkResponse.status === "success" && checkResponse.data.applied) {
+              setHasApplied(true);
+            }
+          }
         } else {
           // Fallback to mock data if API returns no data or status is not success
           const mockData = CampaignDetail.find(campaign => campaign.id.toString() === id);
           setCampaignData(mockData as ExperienceDetail || null);
         }
       } catch (error) {
-        console.error("Failed to fetch campaign detail:", error);
+        console.error("Failed to fetch campaign detail or check application status:", error);
         // Fallback to mock data on API error
         const mockData = CampaignDetail.find(campaign => campaign.id.toString() === id);
         setCampaignData(mockData as ExperienceDetail || null);
@@ -45,7 +53,7 @@ export default function BuyingPage() {
     };
 
     fetchCampaignDetail();
-  }, [id]);
+  }, [id, userInfo?.token]); // Add userInfo.token to dependencies
 
   if (!campaignData) {
     return <div>Loading...</div>;
@@ -55,7 +63,17 @@ export default function BuyingPage() {
   const formatDate = (dateStr: string) => new Date(dateStr).toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit', weekday: 'short' });
 
   const handleApplyClick = () => {
-    navigate(`/campaign/${id}/apply`, { state: { campaignData } });
+    if (hasApplied) {
+      alert("이미 신청한 캠페인입니다.");
+      return;
+    }
+
+    if (userInfo && userInfo.token) {
+      navigate(`/campaign/${id}/apply`, { state: { campaignData } });
+    } else {
+      alert("로그인 이후 체험단을 신청할 수 있습니다.");
+      navigate(`/login`);
+    }
   };
 
   return (
@@ -171,32 +189,13 @@ export default function BuyingPage() {
                 </S.DetailRow>
 
                 {/* Apply Button */}
-                <S.ApplyButton onClick={handleApplyClick}>
-                  신청하기
+                <S.ApplyButton onClick={handleApplyClick} disabled={hasApplied}>
+                  {hasApplied ? "신청 완료" : "신청하기"}
                 </S.ApplyButton>
               </S.FloatingCard>
           </S.StickyCard>
         </S.RightContent>
       </S.Wrapper>
-      <S2.TitleBox>
-        <h2>연관 체험단</h2>
-      </S2.TitleBox>
-      <S2.CampaignGrid>
-        {cardMocks.slice(4).map((campaign, index) => (
-          <CampaignCard
-            key={index}
-            id={campaign.id}
-            image_urls={campaign.image_urls}
-            title={campaign.title}
-            offer_content={campaign.offer_content}
-            applicated_num={campaign.applicated_num}
-            member_num={campaign.member_num}
-            channels={campaign.channels}
-            possible_time_application_left={campaign.possible_time_application_left}
-            product_offer_type={campaign.product_offer_type}
-          />
-        ))}
-      </S2.CampaignGrid>
     </>
   );
 };

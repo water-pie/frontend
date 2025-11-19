@@ -2,7 +2,7 @@ import { loginApi } from "apis/login";
 import Input from "components/Input/Input";
 // import FindPasswordModal from "components/Modal/FindPasswordModal";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useUserStore from "store/useUserStore";
 import * as S from 'styles/login';
 
@@ -77,7 +77,12 @@ export default function Login() {
                 autoLogin: !form.autoLogin
               }))}
             />
-            <span>자동 로그인</span>
+            <S.SubTab>
+              <span>자동 로그인</span>
+              <Link to="/find-password">
+                <S.FindPw>비밀번호 찾기</S.FindPw>
+              </Link>
+            </S.SubTab>
           </S.AutoLogin>
           {/* <S.Pw onClick={() => setIsFindPasswordModalOpen(true)}>비밀번호 재설정</S.Pw> */}
         </S.Detail>

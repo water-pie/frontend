@@ -49,7 +49,7 @@ export const deleteInquiry = async (id: number, token: string) => {
 
 // 문의 답변 추가 (관리자)
 export const addInquiryAnswer = async (id: number, answer: string, token: string) => {
-  const response = await api.patch(`/admin/inquiries/${id}`, { answer }, {
+  const response = await api.patch(`/admin/inquiries/${id}/answer`, { answer }, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -84,5 +84,5 @@ export const getInquiryByIdForAdmin = async (id: number, token: string) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  return response.data;
+  return response.data.data;
 };

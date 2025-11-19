@@ -20,6 +20,7 @@ const CampaignCreationStep2Page = () => {
   const detail_address = useCampaignCreationStore(state => state.detail_address);
   const product_url = useCampaignCreationStore(state => state.product_url);
   const category = useCampaignCreationStore(state => state.category);
+  const dataType = useCampaignCreationStore(state => state.dataType); // Import dataType
   const selectedChannels = useCampaignCreationStore(state => state.channels);
   const set = useCampaignCreationStore(state => state.set);
 
@@ -31,6 +32,12 @@ const CampaignCreationStep2Page = () => {
     { id: 5, label: "제공 내역 및 포인트 결제" },
   ];
   const activeStep = 2;
+
+  const dataTypeOptions = [
+    { value: 1, label: "제품" },
+    { value: 2, label: "지역" },
+    { value: 3, label: "기자단" },
+  ];
 
   const handleChannelChange = (channelId: string) => {
     const newChannels = selectedChannels.includes(channelId)
@@ -50,6 +57,7 @@ const CampaignCreationStep2Page = () => {
     if ((promotionType === "방문형" || promotionType === "포장형") && (!address || !detail_address)) return false;
     if ((promotionType === "배송형" || promotionType === "구매형") && !product_url) return false;
     if (!category) return false;
+    if (!dataType) return false; // Add dataType validation
     if (selectedChannels.length === 0) return false;
     return true;
   })();
@@ -141,6 +149,17 @@ const CampaignCreationStep2Page = () => {
             <option value="숙박">숙박</option>
             <option value="문화">문화</option>
             <option value="기타">기타</option>
+          </S.Select>
+        </S.FormSection>
+
+        {/* New DataType Select */}
+        <S.FormSection>
+          <h3>캠페인 분류 *</h3>
+          <S.Select value={dataType || ""} onChange={(e) => set({ dataType: Number(e.target.value) as 1 | 2 | 3 | null }) }>
+            <option value="">선택</option>
+            {dataTypeOptions.map(option => (
+              <option key={option.value} value={option.value}>{option.label}</option>
+            ))}
           </S.Select>
         </S.FormSection>
 

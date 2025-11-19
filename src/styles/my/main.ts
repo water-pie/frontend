@@ -131,6 +131,18 @@ export const SocialLink = styled.a`
     transform: translateY(-4px);
     box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
   }
+
+  @media (max-width: 480px) {
+    padding: 10px;
+    img {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+    span {
+      font-size: 14px;
+    }
+  }
 `;
 
 export const CampaignActivitySection = styled.section`
@@ -158,5 +170,11 @@ export const NoActivity = styled.div`
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+
+    @media (max-width: 480px) {
+      width: 80%;
+      padding: 8px 15px;
+      font-size: 14px;
+    }
   }
 `;

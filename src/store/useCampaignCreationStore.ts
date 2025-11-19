@@ -11,6 +11,7 @@ interface CampaignCreationState {
   detail_address: string;
   product_url: string;
   category: string;
+  dataType: 1 | 2 | 3 | null; // Changed to numeric type
   channels: string[];
   requiresPremiumPoint: boolean;
   // Step 3
@@ -54,6 +55,7 @@ const initialState = {
   detail_address: "",
   product_url: "",
   category: "",
+  dataType: null, // Initial state for new field, null for numeric
   channels: [],
   requiresPremiumPoint: false,
   application_start_date: "",
