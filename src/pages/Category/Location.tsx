@@ -23,7 +23,7 @@ export default function Location() {
           params.sigungu = locationFilter;
         }
         if (categoryFilters.category !== '전체') {
-          keywordParts.push(categoryFilters.category);
+          params.category = categoryFilters.category;
         }
         if (keywordParts.length > 0) {
           params.keyword = keywordParts.join(' ');

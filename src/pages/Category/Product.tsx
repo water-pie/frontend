@@ -15,7 +15,7 @@ export default function Product() {
         const params: GetExperienceListParams = { dataType: 1 };
 
         if (categoryFilters.category !== '전체') {
-          params.keyword = categoryFilters.category;
+          params.category = categoryFilters.category;
         }
 
         if (categoryFilters.channels.length > 0) {

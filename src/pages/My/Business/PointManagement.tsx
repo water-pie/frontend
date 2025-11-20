@@ -17,7 +17,7 @@ const PointManagement = () => {
   const fetchPointData = async () => {
     if (userInfo?.token) {
       try {
-        const pointData = await getPoint(userInfo.token);
+        const pointData = await getPoint();
         setCurrentPoint(pointData.points);
 
         const historyData = await historyPayment(userInfo.token);
@@ -75,7 +75,7 @@ const PointManagement = () => {
 
       <S.PointSummary>
         <S.PointBox>
-          <span>보유 포인트</span>
+          <span>사용 가능 포인트</span>
           <S.PointValue>{currentPoint !== null ? `${currentPoint} P` : '로딩 중...'}</S.PointValue>
         </S.PointBox>
         <S.Divider />

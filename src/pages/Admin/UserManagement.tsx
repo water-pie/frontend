@@ -326,16 +326,16 @@ export default function UserManagement() {
 
       try {
         if (activeMainTab === 'influencer') {
-          const response = await getInfluencerListApi(userInfo.token);
+          const response = await getInfluencerListApi();
           setUsers(response || []);
         } else if (activeMainTab === 'brand') {
-          const response = await getBrandManagerListApi(userInfo.token);
+          const response = await getBrandManagerListApi();
           setUsers(response || []);
         } else if (activeMainTab === 'marketing') {
-          const response = await getMarketingAgencyListApi(userInfo.token);
+          const response = await getMarketingAgencyListApi();
           setUsers(response || []);
         } else if (activeMainTab === 'application') {
-          const response = await getApplicationUserListApi(userInfo.token);
+          const response = await getApplicationUserListApi();
           setApplications(response || []);
         }
       } catch (error) {
@@ -372,7 +372,7 @@ export default function UserManagement() {
     if (!userInfo?.token) return;
     if (window.confirm(`사용자 ${userName}님을 승인하시겠습니까?`)) {
       try {
-        await approveUserApi(userInfo.token, userId);
+        await approveUserApi(userId);
         alert('성공적으로 승인되었습니다.');
         setApplications(prev => prev.filter(app => app.id !== userId));
       } catch (error) {
@@ -386,7 +386,7 @@ export default function UserManagement() {
     if (!userInfo?.token) return;
     if (window.confirm(`사용자 ${userName}님을 거절하시겠습니까?`)) {
       try {
-        await rejectUserApi(userInfo.token, userId);
+        await rejectUserApi(userId);
         alert('성공적으로 거절되었습니다.');
         setApplications(prev => prev.filter(app => app.id !== userId));
       } catch (error) {

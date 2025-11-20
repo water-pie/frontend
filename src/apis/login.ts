@@ -5,8 +5,7 @@ export const loginApi = async (data: {
   password: string;
 }) => {
   try {
-    const response = await api.post("/auth/login", data);
-    return response.data;
+    return (await api.post("/auth/login", data)).data;
   } catch (e: any) {
     if (e.response && e.response.status === 401) {
       alert("이메일 또는 비밀번호가 일치하지 않습니다.");

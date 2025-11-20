@@ -3,7 +3,7 @@ import * as S from "styles/campaign/application";
 import { insta, blog, tiktok, youtube } from "utils/importing";
 import WidgetNoticeImage from "assets/guideBlog.png";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import DaumPost from "components/Address/DaumPost";
+import DaumPostModal from "components/Modal/DaumPostModal";
 import { applyExperienceApi, getExperienceDetailApi } from "apis/experience";
 import useUserStore from "store/useUserStore";
 import { type ExperienceDetail } from "types/apis/experience";
@@ -60,9 +60,22 @@ export default function Application() {
     }
   }, [campaignData, id, navigator]);
 
-  const handleComplete = () => {
-    setPopup(!popup);
-  };
+  const handleAddressSelect = (data: any) => {
+    let fullAddress = data.address;
+    let extraAddress = '';
+
+    if (data.addressType === 'R') {
+      if (data.bname !== '') {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== '') {
+        extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+      }
+      fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
+    }
+    setForm({ address: fullAddress });
+    setPopup(false);
+  }
 
   const handleApply = async () => {
     if (!id) {
@@ -130,7 +143,7 @@ export default function Application() {
                 disabled={true}
               />
               <S.SearchButton
-                onClick={handleComplete}
+                onClick={() => setPopup(true)}
               >
                 찾기
               </S.SearchButton>
@@ -190,7 +203,7 @@ export default function Application() {
         </S.StickyCard>
       </S.RightContent>
 
-      {popup && <DaumPost address={form} setAddress={setForm} handleComplete={handleComplete} />}
+      {popup && <DaumPostModal onClose={() => setPopup(false)} onComplete={handleAddressSelect}/>}
     </S.Wrapper>
   );
 }

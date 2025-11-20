@@ -18,135 +18,85 @@ export const resetPassword = async (data: ResetPasswordPayload) => {
   }
 }
 
-export const updateUserInfoApi = async (data: UpdateUserInfoPayload, token: string) => {
+export const updateUserInfoApi = async (data: UpdateUserInfoPayload) => {
   try {
-    const response = await api.put("/users/me", data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
+    return (await api.put("/users/me", data)).data;
   } catch (e) {
     throw new Error(`${e}`);
   }
 };
 
-export const changePasswordApi = async (data: ChangePasswordPayload, token: string) => {
+export const changePasswordApi = async (data: ChangePasswordPayload) => {
   try {
-    const response = await api.put("/users/me/change-password", data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
+    return (await api.put("/users/me/change-password", data)).data;
   } catch (e) {
     throw new Error(`${e}`);
   }
 };
 
-export const getUserInfoApi = async (token: string) => {
+export const getUserInfoApi = async () => {
   try {
-    const response = await api.get("/users/me", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
+    return (await api.get("/users/me")).data;
   } catch (e) {
     throw new Error(`${e}`);
   }
 };
 
-export const updatePlatformInfoApi = async (data: UpdatePlatformInfoPayload, token: string) => {
+export const updatePlatformInfoApi = async (data: UpdatePlatformInfoPayload, ) => {
   try {
-    const response = await api.patch("/users/update/platform", data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
+    return (await api.patch("/users/update/platform", data)).data;
   } catch (e) {
     throw new Error(`${e}`);
   }
 };
 
 // 인플루언서 목록 (관리자)
-export const getInfluencerListApi = async (token: string) => {
+export const getInfluencerListApi = async () => {
   try {
-    const response = await api.get<InfluencerListResponse>("/users/type/influencers", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data.data;
+    return (await api.get<InfluencerListResponse>("/users/type/influencers")).data.data;
   } catch (e) {
     throw new Error(`${e}`);
   }
 };
 
 // 브랜드 매니저 목록 (관리자)
-export const getBrandManagerListApi = async (token: string) => {
+export const getBrandManagerListApi = async () => {
   try {
-    const response = await api.get<BrandManagerListResponse>("/users/type/brand-managers", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data.data;
+    return (await api.get<BrandManagerListResponse>("/users/type/brand-managers")).data.data;
   } catch (e) {
     throw new Error(`${e}`);
   }
 };
 
 // 마케팅 대행사 목록 (관리자)
-export const getMarketingAgencyListApi = async (token: string) => {
+export const getMarketingAgencyListApi = async () => {
   try {
-    const response = await api.get<MarketingAgencyListResponse>("/users/type/marketing-agencies", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data.data;
+    return (await api.get<MarketingAgencyListResponse>("/users/type/marketing-agencies")).data.data;
   } catch (e) {
     throw new Error(`${e}`);
   }
 };
 
 // 신청 목록 불러오기 (관리자)
-export const getApplicationUserListApi = async (token: string) => {
+export const getApplicationUserListApi = async () => {
   try {
-    const response = await api.get("/admin/users/pending", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      }
-    });
-    return response.data.data;
+    return (await api.get("/admin/users/pending")).data.data;
   } catch (e) {
     throw new Error(`${e}`);
   }
 };
 
-export const approveUserApi = async (token: string, userId: number) => {
+export const approveUserApi = async (userId: number) => {
   try {
-    const response = await api.patch(`/admin/users/${userId}/approve`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      }
-    });
-    console.log(response);
+    await api.patch(`/admin/users/${userId}/approve`);
   } catch (e) {
     throw new Error(`${e}`);
   }
 };
 
-export const rejectUserApi = async (token: string, userId: number) => {
+export const rejectUserApi = async (userId: number) => {
   try {
-    const response = await api.patch(`/admin/users/${userId}/reject`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      }
-    });
-    console.log(response);
+    await api.patch(`/admin/users/${userId}/reject`);
   } catch (e) {
     throw new Error(`${e}`);
   }

@@ -21,16 +21,16 @@ const BottomNavContainer = styled.nav`
   }
 `;
 
-const NavItem = styled(Link)<{ $active: boolean }>` // Use $active for transient prop
+const NavItem = styled(Link)<{ active: boolean }>` // Use active for transient prop
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   flex: 1;
   text-decoration: none;
-  color: ${({ $active }) => ($active ? '#007bff' : '#666')}; // Use $active here
+  color: ${({ active }) => (active ? '#007bff' : '#666')}; // Use active here
   font-size: 12px;
-  font-weight: ${({ $active }) => ($active ? 'bold' : 'normal')}; // Use $active here
+  font-weight: ${({ active }) => (active ? 'bold' : 'normal')}; // Use active here
   transition: color 0.2s ease-in-out;
 
   &:hover {
@@ -59,7 +59,7 @@ const BottomNavigationBar = () => {
         <NavItem
           key={item.name}
           to={item.path}
-          $active={location.pathname === item.path} // Pass as $active
+          active={location.pathname === item.path} // Pass as active
         >
           {item.icon}
           <span>{item.name}</span>

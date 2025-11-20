@@ -21,7 +21,7 @@ const BusinessMainPage = () => {
     const fetchUser = async () => {
       if (token) {
         try {
-          const response = await getUserInfoApi(token);
+          const response = await getUserInfoApi();
           setUserInfoData(response.data);
         } catch (e) {
           handleApiError(e);
@@ -76,8 +76,8 @@ const BusinessMainPage = () => {
           <span>{userInfoData?.email}</span>
         </S.BusinessInfoBox>
         <S.BusinessInfoBox>
-          <label>보유 포인트</label>
-          0 P
+          <label>사용 가능 포인트</label>
+          {userInfoData?.points} P
         </S.BusinessInfoBox>
         <S.BusinessInfoBox>
           <label>등록한 캠페인</label>

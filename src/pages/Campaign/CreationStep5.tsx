@@ -6,12 +6,8 @@ import useUserStore from "store/useUserStore";
 import { registerExperienceApi } from "apis/manage";
 import { type RegisterExperienceRequest } from "types/apis/manage";
 import { useEffect, useState } from "react";
-import { getUserInfoApi } from "apis/user";
 import PointChargeModal from "components/Modal/PointChargeModal";
-
-interface UserInfoData {
-  points: number;
-}
+import { confirmPayment, getPoint } from "apis/points";
 
 const CampaignCreationPage = () => {
   const steps = [
@@ -25,15 +21,15 @@ const CampaignCreationPage = () => {
   const navigate = useNavigate();
   const campaignData = useCampaignCreationStore(state => state);
   const { userInfo } = useUserStore();
-  const [userInfoData, setUserInfoData] = useState<UserInfoData>({ points: 0 });
+  const [points, setPoints] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       if (userInfo?.token) {
         try {
-          const response = await getUserInfoApi(userInfo.token);
-          setUserInfoData(response.data);
+          const response = await getPoint();
+          setPoints(response.points);
         } catch (error) {
           console.error("Failed to fetch user info:", error);
         }
@@ -42,7 +38,7 @@ const CampaignCreationPage = () => {
     fetchUserInfo();
   }, [userInfo?.token]);
   
-  const { offer_content, member_num, each_member_point, set } = campaignData;
+  const { dataType, offer_content, member_num, each_member_point, set } = campaignData;
 
   const totalPoints = member_num * each_member_point;
   const fee = totalPoints * 0.2;
@@ -64,7 +60,7 @@ const CampaignCreationPage = () => {
       return;
     }
 
-    if (totalPoints > userInfoData.points) {
+    if (totalPoints > points) {
       alert("포인트를 충전해주세요.");
       return;
     }
@@ -96,6 +92,11 @@ const CampaignCreationPage = () => {
 
     if (campaignData.requiresPremiumPoint && each_member_point < 5000) {
       alert("프리미엄 채널을 선택한 경우, 1인당 지급할 포인트는 5000P 이상이어야 합니다.");
+      return;
+    }
+
+    if (each_member_point < 0) {
+      alert("포인트는 음수로 입력할 수 없습니다.")
       return;
     }
 
@@ -138,7 +139,7 @@ const CampaignCreationPage = () => {
     };
 
     const requestData: RegisterExperienceRequest = {
-      data_type: campaignData.promotionType === "배송형" || campaignData.promotionType === "구매형" ? 2 : 1,
+      data_type: dataType!,
       company_name: campaignData.company_name,
       manager_call_num: campaignData.manager_call_num,
       product_offer_type: promotionTypeMapping[campaignData.promotionType as keyof typeof promotionTypeMapping],
@@ -175,17 +176,39 @@ const CampaignCreationPage = () => {
     }
   };
 
+  const handlePaymentComplete = async (paymentData: { paymentKey: string; orderId: string; amount: number }) => {
+    try {
+      if (!userInfo?.token) throw new Error("로그인이 필요합니다.");
+
+      // 1. 서버에 결제 확인 요청
+      await confirmPayment(userInfo.token, {
+        paymentKey: paymentData.paymentKey,
+        orderId: paymentData.orderId,
+        amount: paymentData.amount,
+        status: "DONE", // 성공 처리
+      });
+
+      alert("포인트 충전이 완료되었습니다.");
+
+      // 2. 모달 닫기
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("결제 확인 실패", error);
+      alert("포인트 충전 확인에 실패했습니다.");
+    }
+  };
+
   return (
     <S.Wrapper>
       <S.LeftPanel>
         <h2>캠페인 등록</h2>
         <S.StepIndicator>
           {steps.map((step) => (
-            <S.StepItem key={step.id} active={step.id === activeStep} completed={step.id < activeStep}>
-              <S.StepCircle active={step.id === activeStep} completed={step.id < activeStep}>
+            <S.StepItem key={step.id} $active={step.id === activeStep} completed={step.id < activeStep}>
+              <S.StepCircle $active={step.id === activeStep} completed={step.id < activeStep}>
                 {step.id < activeStep ? "✓" : step.id}
               </S.StepCircle>
-              <S.StepLabel active={step.id === activeStep}>{step.label}</S.StepLabel>
+              <S.StepLabel $active={step.id === activeStep}>{step.label}</S.StepLabel>
             </S.StepItem>
           ))}
         </S.StepIndicator>
@@ -205,7 +228,11 @@ const CampaignCreationPage = () => {
         <S.FormSection>
           <h3>체험단 모집 인원 *</h3>
           <S.InputGroup>
-            <Input placeholder="" type="number" value={member_num} onChange={(e) => set({ member_num: Number(e.target.value) })} />
+            <Input
+            placeholder=""
+            type="number"
+            value={member_num}
+            onChange={(e) => set({ member_num: Math.max(0, Number(e.target.value)) })} />
             <span>명</span>
           </S.InputGroup>
         </S.FormSection>
@@ -215,10 +242,18 @@ const CampaignCreationPage = () => {
           <p>포인트 지급을 안하거나 5000P 이상 입력하셔야 합니다.</p>
           <p>실제 포인트 차감은 인플루언서의 리뷰를 승인하면 차감됩니다.</p>
           <S.InputGroup>
-            <Input placeholder="0" type="number" value={each_member_point} onChange={(e) => set({ each_member_point: Number(e.target.value) })} />
+            <Input
+              placeholder="0"
+              type="number"
+              value={each_member_point}
+              onChange={(e) => {
+                const numValue = e.target.value === '' ? 0 : Number(e.target.value);
+                set({ each_member_point: Math.max(0, numValue) });
+              }}
+            />
             <span>포인트</span>
           </S.InputGroup>
-          <S.PurchaseWarning>구매평리뷰는 구매 단가 이상으로 포인트를 지급해주셔야합니다.</S.PurchaseWarning>
+          <S.PurchaseWarning>구매형 리뷰는 구매 단가 이상으로 포인트를 지급해주셔야합니다.</S.PurchaseWarning>
         </S.FormSection>
 
         <S.SummaryBox>
@@ -250,10 +285,10 @@ const CampaignCreationPage = () => {
 
         <S.PointInfo>
           <div>
-            <p>보유 포인트: {userInfoData.points} P</p>
-            { userInfoData.points - requiredPoints > 0
-              ? <p>결제 후 포인트: {userInfoData.points - requiredPoints} P</p>
-              : <p>부족한 포인트: {requiredPoints - userInfoData.points} P</p>
+            <p>사용 가능 포인트: {points} P</p>
+            { points - requiredPoints > 0
+              ? <p>결제 후 포인트: {points - requiredPoints} P</p>
+              : <p>부족한 포인트: {requiredPoints - points} P</p>
             }
           </div>
           <button onClick={handleOpenModal}>충전하기</button>
@@ -264,7 +299,7 @@ const CampaignCreationPage = () => {
           <S.SubmitButton onClick={handleSubmit}>체험단 등록</S.SubmitButton>
         </S.ButtonGroup>
       </S.RightPanel>
-      {isModalOpen && <PointChargeModal onClose={handleCloseModal} />}
+      {isModalOpen && <PointChargeModal onClose={handleCloseModal} onPaymentComplete={handlePaymentComplete} />}
     </S.Wrapper>
   );
 };

@@ -6,6 +6,7 @@ import { CampaignDetail } from 'mocks/campaign';
 import { insta, blog, tiktok, youtube } from 'utils/importing';
 import { getExperienceDetailApi, checkExperienceApplicationApi } from 'apis/experience'; // Import checkExperienceApplicationApi
 import { type ExperienceDetail } from 'types/apis/experience';
+import KakaoMap from 'components/Map/KakaoMap';
 import useUserStore from 'store/useUserStore';
 
 const channelInfo: { [key: number]: { name: string; icon: string } } = {
@@ -24,6 +25,7 @@ export default function VisitingPage() {
   const { userInfo } = useUserStore();
   const [campaignData, setCampaignData] = useState<ExperienceDetail | null>(null);
   const [hasApplied, setHasApplied] = useState(false); // New state for application status
+  const [isApplicationPeriodOver, setIsApplicationPeriodOver] = useState(false); // Add this line
 
   useEffect(() => {
     const fetchCampaignDetail = async () => {
@@ -32,6 +34,9 @@ export default function VisitingPage() {
         const response = await getExperienceDetailApi(Number(id));
         if (response.status === "success" && response.data) {
           setCampaignData(response.data);
+          const applicationEndDate = new Date(response.data.possible_time_application[1]);
+          const currentDate = new Date();
+          setIsApplicationPeriodOver(currentDate > applicationEndDate); // Add this line
           // Check application status if user is logged in
           if (userInfo?.token) {
             const checkResponse = await checkExperienceApplicationApi(userInfo.token, Number(id));
@@ -115,9 +120,7 @@ export default function VisitingPage() {
             <S.SubSection>
               <h2>방문 정보</h2>
               {/* Map API will be used here */}
-              <S.MapPlaceholder>
-                <span>지도 API 표시 영역</span>
-              </S.MapPlaceholder>
+              <KakaoMap address={campaignData.address} />
             </S.SubSection>
             <S.SubSection>
               <h2>방문 위치</h2>
@@ -210,8 +213,8 @@ export default function VisitingPage() {
                 </S.DetailRow>
 
                 {/* Apply Button */}
-                <S.ApplyButton onClick={handleApplyClick} disabled={hasApplied}>
-                  {hasApplied ? "신청 완료" : "신청하기"}
+                <S.ApplyButton onClick={handleApplyClick} disabled={hasApplied || isApplicationPeriodOver}>
+                  {hasApplied ? "신청 완료" : (isApplicationPeriodOver ? "신청 기간 종료" : "신청하기")}
                 </S.ApplyButton>
               </S.FloatingCard>
           </S.StickyCard>

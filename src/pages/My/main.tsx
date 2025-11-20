@@ -28,7 +28,7 @@ const MyPageMain = () => {
       if (token) {
         try {
           const [userInfoRes, penaltyCountRes] = await Promise.all([
-            getUserInfoApi(token),
+            getUserInfoApi(),
             getMyPenaltyCount(token),
           ]);
           setUserInfoData(userInfoRes.data);

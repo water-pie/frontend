@@ -35,13 +35,13 @@ export const StepIndicator = styled.div`
   margin-top: 40px;
 `;
 
-export const StepItem = styled.div<{ active?: boolean; completed?: boolean }>`
+export const StepItem = styled.div<{ $active?: boolean; completed?: boolean }>`
   display: flex;
   align-items: center;
   gap: 12px;
 `;
 
-export const StepCircle = styled.div<{ active?: boolean; completed?: boolean }>`
+export const StepCircle = styled.div<{ $active?: boolean; completed?: boolean }>`
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -49,14 +49,14 @@ export const StepCircle = styled.div<{ active?: boolean; completed?: boolean }>`
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  background-color: ${({ active, completed }) => (active || completed ? buttonColor : borderColor1)};
-  color: ${({ active, completed }) => (active || completed ? "white" : textColor)};
+  background-color: ${({ $active, completed }) => ($active || completed ? buttonColor : borderColor1)};
+  color: ${({ $active, completed }) => ($active || completed ? "white" : textColor)};
 `;
 
-export const StepLabel = styled.span<{ active?: boolean }>`
+export const StepLabel = styled.span<{ $active?: boolean }>`
   font-size: 16px;
-  font-weight: ${({ active }) => (active ? "bold" : "normal")};
-  color: ${({ active }) => (active ? textColor : borderColor2)};
+  font-weight: ${({ $active }) => ($active ? "bold" : "normal")};
+  color: ${({ $active }) => ($active ? textColor : borderColor2)};
 `;
 
 export const FormSection = styled.div`
@@ -74,6 +74,23 @@ export const FormSection = styled.div`
     margin: 0 0 10px 0;
   }
 `;
+
+export const SearchButton = styled.button`
+  word-break: keep-all;
+  white-space: nowrap;
+  font-size: 18px;
+  font-weight: 600;
+  background-color: #96d3ff;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  padding: 0px 20px;
+  cursor: pointer;
+
+  :hover {
+    background-color: #68C0FF;
+  }
+`
 
 export const DateGroup = styled.div`
   display: flex;

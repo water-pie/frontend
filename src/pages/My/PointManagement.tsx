@@ -29,7 +29,7 @@ const PointManagement = () => {
   const fetchPointData = async () => {
     if (userInfo?.token) {
       try {
-        const pointData = await getPoint(userInfo.token);
+        const pointData = await getPoint();
         setCurrentPoint(pointData.points);
 
         const historyData = await historyPayment(userInfo.token);

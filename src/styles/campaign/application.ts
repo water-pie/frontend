@@ -170,7 +170,7 @@ export const AddressBox = styled.div`
     flex-direction: column;
     gap: 0.5rem;
 
-    ${FullWidthInput} {
+    input {
       width: 100%; /* Ensure input takes full width */
     }
   }
@@ -178,6 +178,7 @@ export const AddressBox = styled.div`
 
 export const SearchButton = styled.button`
   word-break: keep-all;
+  white-space: nowrap;
   font-size: 18px;
   font-weight: 600;
   background-color: #96d3ff;

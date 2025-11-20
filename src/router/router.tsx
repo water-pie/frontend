@@ -12,20 +12,23 @@ import MyPageLayout from "components/Layouts/MyPageLayout";
 import * as P from "pages";
 import Search from "pages/Search";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ProtectedRoute from "./ProtectedRoute";
-import UserProtectedRoute from "./UserProtectedRoute"; // Import UserProtectedRoute
+import ProtectedRoute from "./AdminProtectedRoute";
+import BusinessUserProtectedRoute from "./BusinessUserProtectedRoute";
+import UserProtectedRoute from "./UserProtectedRoute";
 
 export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/campaign/creation" element={<CampaignCreationLayout />}>
-          <Route index element={<P.CreationStep1 />} />
-          <Route path="step1" element={<P.CreationStep1 />} />
-          <Route path="step2" element={<P.CreationStep2 />} />
-          <Route path="step3" element={<P.CreationStep3 />} />
-          <Route path="step4" element={<P.CreationStep4 />} />
-          <Route path="step5" element={<P.CreationStep5 />} />
+        <Route element={<BusinessUserProtectedRoute />}>
+          <Route path="/campaign/creation" element={<CampaignCreationLayout />}>
+            <Route index element={<P.CreationStep1 />} />
+            <Route path="step1" element={<P.CreationStep1 />} />
+            <Route path="step2" element={<P.CreationStep2 />} />
+            <Route path="step3" element={<P.CreationStep3 />} />
+            <Route path="step4" element={<P.CreationStep4 />} />
+            <Route path="step5" element={<P.CreationStep5 />} />
+          </Route>
         </Route>
         <Route path="/" element={<Layout />}>
           <Route index element={<P.Main />} />
@@ -42,8 +45,8 @@ export default function Router() {
           <Route path="signup/:type" element={<P.Signup />} />
           <Route path="find-password" element={<P.FindPassword />} />
           <Route path="campaign/:id" element={<P.CampaignPage />} />
-          <Route path="campaign/:id/apply" element={<P.Application />} />
-          <Route element={<UserProtectedRoute />}> {/* Wrap /my routes with UserProtectedRoute */}
+          <Route element={<UserProtectedRoute />}>
+            <Route path="campaign/:id/apply" element={<P.Application />} />
             <Route path="my" element={<MyPageLayout />}>
               <Route index element={<P.MyMain />} />
               <Route path="profile" element={<P.ProfileEdit />} />

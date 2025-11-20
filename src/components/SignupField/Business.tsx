@@ -1,7 +1,7 @@
 import { Input, SendInput } from "../Input/Input";
 import { useState } from "react";
 import styled from "@emotion/styled";
-import DaumPost from "components/Address/DaumPost";
+import DaumPostModal from "components/Modal/DaumPostModal";
 
 interface Props {
   form: {
@@ -16,9 +16,22 @@ interface Props {
 export const Business = ({ form, handleChange, setForm }: Props) => {
   const [popup, setPopup] = useState(false);
 
-  const handleComplete = () => {
-    setPopup(!popup);
-  };
+    const handleAddressSelect = (data: any) => {
+    let fullAddress = data.address;
+    let extraAddress = '';
+
+    if (data.addressType === 'R') {
+      if (data.bname !== '') {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== '') {
+        extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+      }
+      fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
+    }
+    setForm({ address: fullAddress });
+    setPopup(false);
+  }
 
   return (
     <>
@@ -38,7 +51,7 @@ export const Business = ({ form, handleChange, setForm }: Props) => {
           value={form.address}
           disabled={true}
         />
-        <SearchButton onClick={handleComplete}>찾기</SearchButton>
+        <SearchButton onClick={() => setPopup(true)}>찾기</SearchButton>
       </InputContanier>
       <Input
         type="text"
@@ -47,13 +60,12 @@ export const Business = ({ form, handleChange, setForm }: Props) => {
         value={form.detailedAddress}
         onChange={handleChange}
       />
-      {popup && <DaumPost address={form} setAddress={setForm} handleComplete={handleComplete}/>}
+      {popup && <DaumPostModal onComplete={handleAddressSelect} onClose={() => setPopup(false)}/>}
     </>
   );
 };
 
 export default Business;
-
 
 const InputContanier = styled.div`
   width: 100%;
@@ -63,6 +75,7 @@ const InputContanier = styled.div`
 
 export const SearchButton = styled.button`
   word-break: keep-all;
+  white-space: nowrap;
   font-size: 18px;
   font-weight: 600;
   background-color: #96d3ff;

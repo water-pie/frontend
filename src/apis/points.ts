@@ -98,10 +98,6 @@ export const requestWithdrawal = async (
   return response.data;
 };
 
-export const getPoint = async (token: string) => {
-  return (await api.get("/point", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    }
-  })).data.data;
+export const getPoint = async () => {
+  return (await api.get("/point")).data.data;
 }

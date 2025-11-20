@@ -52,12 +52,10 @@ export default function TossPaymentWidget({ amount, onClose, onSuccess }: Paymen
   const [customerInfo, setCustomerInfo] = useState({ name: "", email: "" });
 
   useEffect(() => {
-    if (userInfo?.token) {
-      getUserInfoApi(userInfo.token).then((data) =>
-        setCustomerInfo({ name: data.name, email: data.email })
-      );
-    }
-  }, [userInfo?.token]);
+    getUserInfoApi().then((data) =>
+      setCustomerInfo({ name: data.name, email: data.email })
+    );
+  }, []);
 
   useEffect(() => {
     async function setupWidgets() {

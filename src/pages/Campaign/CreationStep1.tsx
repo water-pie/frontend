@@ -58,11 +58,11 @@ const CampaignCreationStep1Page = () => {
         <h2>캠페인 등록</h2>
         <S.StepIndicator>
           {steps.map((step) => (
-            <S.StepItem key={step.id} active={step.id === activeStep} completed={step.id < activeStep}>
-              <S.StepCircle active={step.id === activeStep} completed={step.id < activeStep}>
+            <S.StepItem key={step.id} $active={step.id === activeStep} completed={step.id < activeStep}>
+              <S.StepCircle $active={step.id === activeStep} completed={step.id < activeStep}>
                 {step.id < activeStep ? "✓" : step.id}
               </S.StepCircle>
-              <S.StepLabel active={step.id === activeStep}>{step.label}</S.StepLabel>
+              <S.StepLabel $active={step.id === activeStep}>{step.label}</S.StepLabel>
             </S.StepItem>
           ))}
         </S.StepIndicator>

@@ -1,5 +1,5 @@
 export interface RegisterExperienceRequest {
-  data_type: 1 | 2; // 1=지역 //2=제품
+  data_type: 1 | 2 | 3; // 1=제품, 2=지역, 3=기자단
   company_name: string;
   manager_call_num: string;
   product_offer_type: 1 | 2 | 3 | 4; // 1=방문형, 2=포장형, 3=배송형, 4=구매형

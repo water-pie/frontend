@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import * as S from "styles/campaign/creation";
 import { Input } from "components/Input/Input";
 import { useCampaignCreationStore } from "store/useCampaignCreationStore";
+import { useState } from "react";
+import DaumPostModal from "components/Modal/DaumPostModal";
 
 const channels = [
   { id: "블로그", description: "블로그 게시물 1건 업로드", necessaryPoint: false },
@@ -23,6 +25,24 @@ const CampaignCreationStep2Page = () => {
   const dataType = useCampaignCreationStore(state => state.dataType); // Import dataType
   const selectedChannels = useCampaignCreationStore(state => state.channels);
   const set = useCampaignCreationStore(state => state.set);
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+
+  const handleAddressSelect = (data: any) => {
+    let fullAddress = data.address;
+    let extraAddress = '';
+
+    if (data.addressType === 'R') {
+      if (data.bname !== '') {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== '') {
+        extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+      }
+      fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
+    }
+    set({ address: fullAddress });
+    setIsAddressModalOpen(false);
+  }
 
   const steps = [
     { id: 1, label: "기본 정보" },
@@ -72,15 +92,16 @@ const CampaignCreationStep2Page = () => {
 
   return (
     <S.Wrapper>
+      {isAddressModalOpen && <DaumPostModal onComplete={handleAddressSelect} onClose={() => setIsAddressModalOpen(false)} />}
       <S.LeftPanel>
         <h2>캠페인 등록</h2>
         <S.StepIndicator>
           {steps.map((step) => (
-            <S.StepItem key={step.id} active={step.id === activeStep} completed={step.id < activeStep}>
-              <S.StepCircle active={step.id === activeStep} completed={step.id < activeStep}>
+            <S.StepItem key={step.id} $active={step.id === activeStep} completed={step.id < activeStep}>
+              <S.StepCircle $active={step.id === activeStep} completed={step.id < activeStep}>
                 {step.id < activeStep ? "✓" : step.id}
               </S.StepCircle>
-              <S.StepLabel active={step.id === activeStep}>{step.label}</S.StepLabel>
+              <S.StepLabel $active={step.id === activeStep}>{step.label}</S.StepLabel>
             </S.StepItem>
           ))}
         </S.StepIndicator>
@@ -127,7 +148,10 @@ const CampaignCreationStep2Page = () => {
         {(promotionType === "방문형" || promotionType === "포장형") && (
           <S.FormSection>
             <h3>주소 *</h3>
-            <Input placeholder="예) 판교역로 167, 분당 주공211, 분평동 123" value={address} onChange={(e) => set({ address: e.target.value })} />
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <Input placeholder="주소를 검색해주세요." value={address} disabled={true} />
+              <S.SearchButton onClick={() => setIsAddressModalOpen(true)}>찾기</S.SearchButton>
+            </div>
             <h3></h3>
             <Input placeholder="상세 주소를 입력해주세요." value={detail_address} onChange={(e) => set({ detail_address: e.target.value })} />
           </S.FormSection>

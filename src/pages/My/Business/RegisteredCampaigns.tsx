@@ -147,6 +147,8 @@ const Buttons = styled.div`
 `;
 
 const Button = styled.button`
+  word-break: keep-all;
+  white-space: nowrap;
   padding: 10px 15px;
   border: 1px solid #ddd;
   background-color: #f7f7f7;

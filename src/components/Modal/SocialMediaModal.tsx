@@ -38,7 +38,7 @@ const SocialMediaModal = ({ isOpen, onClose, userInfoData, onUpdate }: SocialMed
 
     try {
       const payload = { blogUrl, instagramUrl, tiktokUrl, youtubeUrl };
-      const response = await updatePlatformInfoApi(payload, userInfo.token);
+      const response = await updatePlatformInfoApi(payload);
 
       if (response.status === "success") {
         alert("URL이 성공적으로 수정되었습니다!");

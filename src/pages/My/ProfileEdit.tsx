@@ -27,16 +27,14 @@ const ProfileEdit = () => {
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-      if (token) {
-        try {
-          const response = await getUserInfoApi(token);
-          setNickname(response.data.name);
-          setEmail(response.data.email);
-          setContact(response.data.phoneNumber);
-        } catch (error) {
-          console.error("Failed to fetch user info:", error);
-          alert("사용자 정보를 불러오는데 실패했습니다.");
-        }
+      try {
+        const response = await getUserInfoApi();
+        setNickname(response.data.name);
+        setEmail(response.data.email);
+        setContact(response.data.phoneNumber);
+      } catch (error) {
+        console.error("Failed to fetch user info:", error);
+        alert("사용자 정보를 불러오는데 실패했습니다.");
       }
     };
     fetchUserInfo();
@@ -55,7 +53,7 @@ const ProfileEdit = () => {
         email: email,
         phoneNumber: contact,
       };
-      await updateUserInfoApi(userInfoPayload, token);
+      await updateUserInfoApi(userInfoPayload);
 
       if (isEditingPassword) {
         if (newPassword !== confirmNewPassword) {
@@ -71,7 +69,7 @@ const ProfileEdit = () => {
           currentPassword: currentPassword,
           newPassword: newPassword,
         };
-        await changePasswordApi(passwordPayload, token);
+        await changePasswordApi(passwordPayload);
       }
 
       alert("프로필이 성공적으로 수정되었습니다.");

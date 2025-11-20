@@ -35,6 +35,7 @@ export interface BrandManagerInfo {
   businessRegistrationNumber: string;
   address: string;
   detailedAddress: string;
+  points: number;
 }
 
 export interface MarketingAgencyInfo {
@@ -44,6 +45,7 @@ export interface MarketingAgencyInfo {
   businessRegistrationNumber: string;
   address: string;
   detailedAddress: string;
+  points: number;
 }
 
 export interface UpdatePlatformInfoPayload {

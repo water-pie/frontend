@@ -26,6 +26,7 @@ export const InputBox = styled.div`
 
 export const AuthButton = styled.button`
   word-break: keep-all;
+  white-space: nowrap;
   font-size: 18px;
   font-weight: 600;
   background-color: #96d3ff;
