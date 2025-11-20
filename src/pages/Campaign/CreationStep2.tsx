@@ -168,11 +168,11 @@ const CampaignCreationStep2Page = () => {
           <h3>카테고리 *</h3>
           <S.Select value={category} onChange={(e) => set({ category: e.target.value }) }>
             <option value="">선택</option>
-            <option value="맛집/카페">맛집/카페</option>
-            <option value="뷰티">뷰티</option>
-            <option value="숙박">숙박</option>
-            <option value="문화">문화</option>
-            <option value="기타">기타</option>
+            <option value="생활">생활</option>
+            <option value="서비스">서비스</option>
+            <option value="유아">유아</option>
+            <option value="식품">식품</option>
+            <option value="디지털">디지털</option>
           </S.Select>
         </S.FormSection>
 

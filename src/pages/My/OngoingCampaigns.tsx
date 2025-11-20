@@ -100,7 +100,12 @@ const OngoingCampaigns = () => {
       {isModalOpen && selectedCampaign && (
         <ReviewRegistrationModal
           isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
+          onClose={(shouldRefresh) => {
+            setIsModalOpen(false);
+            if (shouldRefresh) {
+              fetchOngoingCampaigns();
+            }
+          }}
           campaignDetails={selectedCampaign as CampaignItem & { exp_id: number }}
         />
       )}

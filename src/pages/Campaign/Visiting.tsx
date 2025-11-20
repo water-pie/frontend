@@ -120,7 +120,7 @@ export default function VisitingPage() {
             <S.SubSection>
               <h2>방문 정보</h2>
               {/* Map API will be used here */}
-              <KakaoMap address={campaignData.address} />
+              {/* <KakaoMap address={campaignData.address} /> */}
             </S.SubSection>
             <S.SubSection>
               <h2>방문 위치</h2>
